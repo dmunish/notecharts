@@ -46,10 +46,14 @@ class EChartsWidget:
 
     def __init__(self, options, width="100%", height="400px", renderer = "svg", theme = "light"):
         self.options = options
-        self.width = width
-        self.height = height
-        self.renderer = renderer
-        self.theme = theme
+        self.width = width.strip()
+        self.height = height.strip()
+        self.renderer = renderer.lower().strip()
+        self.theme = theme.lower().strip()
+
+        # Explicitly set default behaviour
+        if self.theme == "light" and "backgroundColor" not in self.options:
+            self.options["backgroundColor"] = "white"
 
     # ------------------------------------------------------------------
     # Serialisation
@@ -87,7 +91,7 @@ class EChartsWidget:
             function initChart(id) {{
                 var dom = document.getElementById(id);
                 if (!dom) return;
-                var chart = echarts.init(dom, '{self.theme.lower()}', {{renderer: '{self.renderer.lower()}'}});
+                var chart = echarts.init(dom, '{self.theme}', {{renderer: '{self.renderer}'}});
                 chart.setOption({options_js});
                 window.addEventListener('resize', function() {{
                     chart.resize();
