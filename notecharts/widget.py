@@ -71,7 +71,6 @@ class Chart:
     # HTML generation
     # ------------------------------------------------------------------
     def _make_chart_html(self, chart_id=None) -> str:
-        """Build the <div> + <script> for a unique chart instance."""
         if chart_id is None:
             chart_id = f"echart_{uuid.uuid4().hex}"
         options_js = self._serialise_options()
@@ -79,23 +78,42 @@ class Chart:
         <div id="{chart_id}" style="width:{self.width};height:{self.height};"></div>
         <script>
         (function() {{
-            if (typeof echarts === 'undefined') {{
-                var script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js';
-                script.onload = function() {{ initChart('{chart_id}'); }};
-                document.head.appendChild(script);
-            }} else {{
-                initChart('{chart_id}');
+            var EC_URL = 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js';
+            var GL_URL = 'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js';
+
+            function loadScript(url, callback) {{
+                var s = document.createElement('script');
+                s.src = url;
+                s.onload = callback;
+                document.head.appendChild(s);
             }}
 
-            function initChart(id) {{
-                var dom = document.getElementById(id);
+            function initChart() {{
+                var dom = document.getElementById('{chart_id}');
                 if (!dom) return;
                 var chart = echarts.init(dom, '{self.theme}', {{renderer: '{self.renderer}'}});
                 chart.setOption({options_js});
                 window.addEventListener('resize', function() {{
                     chart.resize();
                 }});
+            }}
+
+            if (typeof echarts === 'undefined') {{
+                loadScript(EC_URL, function() {{
+                    if (typeof echarts._glLoaded === 'undefined') {{
+                        echarts._glLoaded = true;
+                        loadScript(GL_URL, initChart);
+                    }} else {{
+                        initChart();
+                    }}
+                }});
+            }} else {{
+                if (typeof echarts._glLoaded === 'undefined') {{
+                    echarts._glLoaded = true;
+                    loadScript(GL_URL, initChart);
+                }} else {{
+                    initChart();
+                }}
             }}
         }})();
         </script>
