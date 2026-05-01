@@ -44,7 +44,7 @@ class Chart:
         widget.display()   # or just `widget` at the end of a cell
     """
 
-    def __init__(self, options, width="100%", height="600px", renderer = "svg", theme = "light"):
+    def __init__(self, options, width="99%", height="600px", renderer = "svg", theme = "light"):
         self.options = options
         self.width = width.strip()
         self.height = height.strip()
