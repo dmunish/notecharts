@@ -26,7 +26,7 @@ class _EChartsEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
-class EChartsWidget:
+class Chart:
     """
     Render Apache ECharts directly in a Jupyter notebook from a Python dict.
 
@@ -34,17 +34,17 @@ class EChartsWidget:
     symbol size functions, linear gradients, etc.).
 
     Usage:
-        from notecharts import EChartsWidget, JSCode
+        from notecharts import Chart, JSCode
 
         options = {
             "tooltip": {"formatter": JSCode("function(p){ return p.value; }")},
             ...
         }
-        widget = EChartsWidget(options)
+        widget = Chart(options)
         widget.display()   # or just `widget` at the end of a cell
     """
 
-    def __init__(self, options, width="100%", height="400px", renderer = "svg", theme = "light"):
+    def __init__(self, options, width="100%", height="600px", renderer = "svg", theme = "light"):
         self.options = options
         self.width = width.strip()
         self.height = height.strip()
@@ -81,7 +81,7 @@ class EChartsWidget:
         (function() {{
             if (typeof echarts === 'undefined') {{
                 var script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js';
+                script.src = 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js';
                 script.onload = function() {{ initChart('{chart_id}'); }};
                 document.head.appendChild(script);
             }} else {{
