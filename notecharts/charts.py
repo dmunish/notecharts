@@ -3,11 +3,25 @@ import colorsys
 from .widget import Chart, JSCode
 
 def _format_data(data):
+    """Formats the input data for ECharts.
+
+    Args:
+        data (list-of-lists, list-of-dicts, or DataFrame): The input data.
+
+    Returns:
+        list: The formatted data.
+    """
     if hasattr(data, "to_dict") and hasattr(data, "columns"):
         return data.to_dict(orient="records")
     return data
 
 def _deep_update(d, u):
+    """Recursively updates a dictionary.
+
+    Args:
+        d (dict): The dictionary to update.
+        u (dict): The update dictionary.
+    """
     for k, v in u.items():
         if isinstance(v, dict) and k in d and isinstance(d[k], dict):
             _deep_update(d[k], v)
@@ -15,11 +29,15 @@ def _deep_update(d, u):
             d[k] = v
 
 def _get_harmony_hues(base_hue, harmony):
-    """
-    Return list of hue angles for the given harmony scheme.
-    base_hue: float 0-360
-    harmony: str one of 'monochromatic','complementary','triadic',
-             'tetradic','split-complementary','analogous'
+    """Returns a list of hue angles for the given harmony scheme.
+
+    Args:
+        base_hue (float): Base hue angle (0-360).
+        harmony (str): Harmony scheme Name. One of 'monochromatic', 'complementary',
+            'triadic', 'tetradic', 'split-complementary', or 'analogous'.
+
+    Returns:
+        list[float]: List of hue angles.
     """
     base = base_hue % 360
     if harmony == "monochromatic":
@@ -38,6 +56,22 @@ def _get_harmony_hues(base_hue, harmony):
         return [base]
 
 def _hsv_palette(n_colors, color_theme="pastel", base_hue=None, chart_theme="light", harmony="auto"):
+    """Generates a cohesive HEX color palette based on HSV values and harmonies.
+
+    Args:
+        n_colors (int): Number of colors to generate.
+        color_theme (str, optional): Preset saturation/value ('pastel', 'neon', 'professional').
+            Defaults to "pastel".
+        base_hue (float, optional): Seed hue (0-360). Defaults to None.
+        chart_theme (str, optional): 'light' or 'dark' background context. Defaults to "light".
+        harmony (str, optional): Color harmony scheme or 'auto'. Defaults to "auto".
+
+    Returns:
+        list[str]: List of HEX color strings.
+
+    Raises:
+        ValueError: If color_theme is unknown.
+    """
     if n_colors <= 0:
         return []
 
@@ -103,19 +137,9 @@ def _hsv_palette(n_colors, color_theme="pastel", base_hue=None, chart_theme="lig
     return colors
 
 class Bar(Chart):
-    """
-    Pre-built modern Bar Chart.
+    """Pre-built modern Bar Chart.
 
-    Parameters
-    ----------
-    data : list-of-lists, list-of-dicts, DataFrame
-    x : str
-    y : str or list of str
-    title : str, optional
-    width, height, renderer, theme : same as Chart
-    custom_options : dict, optional
-    user_colors : list of hex str, optional
-    **kwargs : forwarded to Chart
+    Notecharts' Bar integration handles automatic layout, tooltips, and themes.
     """
 
     def __init__(
@@ -132,6 +156,21 @@ class Bar(Chart):
         user_colors=None,
         **kwargs
     ):
+        """Initializes a Bar Chart.
+
+        Args:
+            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+            x (str): Column name for the x-axis.
+            y (str or list[str]): Column name(s) for the y-axis.
+            title (str, optional): Chart title. Defaults to None.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+            custom_options (dict, optional): Extra options to merge into the ECharts dict.
+            user_colors (list[str], optional): List of hex colors. Defaults to None.
+            **kwargs: Forwarded to the base Chart class.
+        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -238,6 +277,11 @@ class Bar(Chart):
         )
 
 class Line(Chart):
+    """Pre-built modern Line Chart.
+
+    Supports smooth lines, area fill, and automatic color palettes.
+    """
+
     def __init__(
         self,
         data,
@@ -254,6 +298,23 @@ class Line(Chart):
         user_colors=None,
         **kwargs
     ):
+        """Initializes a Line Chart.
+
+        Args:
+            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+            x (str): Column name for the x-axis.
+            y (str or list[str]): Column name(s) for the y-axis.
+            title (str, optional): Chart title. Defaults to None.
+            area (bool, optional): Whether to show area fill. Defaults to True.
+            smooth (bool, optional): Whether to smooth the line. Defaults to True.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+            custom_options (dict, optional): Extra options to merge into the ECharts dict.
+            user_colors (list[str], optional): List of hex colors. Defaults to None.
+            **kwargs: Forwarded to the base Chart class.
+        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -361,6 +422,11 @@ class Line(Chart):
         )
 
 class Scatter(Chart):
+    """Pre-built modern Scatter Plot.
+    
+    Optimized for high-density visualizations with clear tooltips.
+    """
+
     def __init__(
         self,
         data,
@@ -376,6 +442,22 @@ class Scatter(Chart):
         user_colors=None,
         **kwargs
     ):
+        """Initializes a Scatter Plot.
+
+        Args:
+            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+            x (str): Column name for the x-axis.
+            y (str or list[str]): Column name(s) for the y-axis.
+            title (str, optional): Chart title. Defaults to None.
+            name_col (str, optional): Column name for series names. Defaults to None.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+            custom_options (dict, optional): Extra options to merge into the ECharts dict.
+            user_colors (list[str], optional): List of hex colors. Defaults to None.
+            **kwargs: Forwarded to the base Chart class.
+        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -486,6 +568,11 @@ class Scatter(Chart):
         )
 
 class Donut(Chart):
+    """Pre-built modern Donut/Pie Chart.
+
+    Supports Nightingale Rose charts and automatic total label centering.
+    """
+
     def __init__(
         self,
         data,
@@ -502,6 +589,23 @@ class Donut(Chart):
         user_colors=None,
         **kwargs
     ):
+        """Initializes a Donut Chart.
+
+        Args:
+            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+            label_col (str): Column name for slice labels.
+            value_col (str): Column name for slice values.
+            title (str, optional): Chart title. Defaults to None.
+            rose (bool, optional): Whether to use 'rose' type (Nightingale Chart). Defaults to False.
+            show_total (bool, optional): Whether to show the total value in the center. Defaults to True.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+            custom_options (dict, optional): Extra options to merge into the ECharts dict.
+            user_colors (list[str], optional): List of hex colors. Defaults to None.
+            **kwargs: Forwarded to the base Chart class.
+        """
         formatted_data = _format_data(data)
 
         pie_data = [{"name": str(row[label_col]), "value": row[value_col]} for row in formatted_data]
@@ -607,20 +711,9 @@ class Donut(Chart):
         )
 
 class Radar(Chart):
-    """
-    Pre-built modern Radar Chart.
+    """Pre-built modern Radar Chart.
 
-    Parameters
-    ----------
-    data : list-of-lists, list-of-dicts, DataFrame
-    name_col : str
-        Column that identifies each series (e.g. 'player').
-    dimensions : list of str
-        Column names for the radar axes (e.g. ['speed','power','accuracy']).
-    title : str, optional
-    width, height, renderer, theme : same as Chart
-    custom_options : dict, optional
-    user_colors : list of hex str, optional
+    Radar charts are ideal for displaying multivariate data on a 2D chart.
     """
 
     def __init__(
@@ -637,6 +730,21 @@ class Radar(Chart):
         user_colors=None,
         **kwargs
     ):
+        """Initializes a Radar Chart.
+
+        Args:
+            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+            name_col (str): Column that identifies each series (e.g., 'player').
+            dimensions (list[str]): Column names for the radar axes (e.g., ['speed', 'power']).
+            title (str, optional): Chart title. Defaults to None.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+            custom_options (dict, optional): Extra options to merge into the ECharts dict.
+            user_colors (list[str], optional): List of hex colors. Defaults to None.
+            **kwargs: Forwarded to the base Chart class.
+        """
         formatted_data = _format_data(data)
 
         # Group data by series name
