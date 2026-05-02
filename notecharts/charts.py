@@ -359,3 +359,128 @@ class Line(Chart):
             theme=theme,
             **kwargs
         )
+
+class Scatter(Chart):
+    def __init__(
+        self,
+        data,
+        x,
+        y,
+        title=None,
+        name_col=None,
+        width="99%",
+        height="500px",
+        renderer="canvas",
+        theme="light",
+        custom_options=None,
+        user_colors=None,
+        **kwargs
+    ):
+        formatted_data = _format_data(data)
+        y_cols = y if isinstance(y, list) else [y]
+
+        series = []
+        for y_col in y_cols:
+            series.append({
+                "type": "scatter",
+                "encode": {"x": x, "y": y_col},
+                "name": str(y_col),
+                "symbolSize": 14,
+                "animationDuration": 1000,
+                "animationEasing": "cubicOut",
+            })
+
+        if user_colors is not None:
+            palette = user_colors
+        else:
+            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
+
+        options = {
+            "color": palette,
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            },
+            "tooltip": {
+                "trigger": "item",
+                "borderWidth": 0,
+                "padding": [14, 18],
+                "shadowBlur": 10,
+                "shadowColor": "rgba(0, 0, 0, 0.12)",
+                "extraCssText": "border-radius: 12px;",
+                "formatter": JSCode(
+                    f"""function(params) {{
+                        var row = params.data;
+                        var lines = [];
+                        var nameVal = '{name_col}' ? row['{name_col}'] : null;
+                        if (nameVal !== undefined && nameVal !== null) {{
+                            lines.push('<strong>' + nameVal + '</strong>');
+                        }}
+                        var val, display;
+                        for (var key in row) {{
+                            if (row.hasOwnProperty(key) && key !== '{name_col}') {{
+                                val = row[key];
+                                display = (typeof val === 'number') ? val.toFixed(3) : val;
+                                lines.push(key + ': ' + display);
+                            }}
+                        }}
+                        return lines.join('<br/>');
+                    }}"""
+                )
+            },
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "saveAsImage": {
+                        "name": title if title else "Chart",
+                        "pixelRatio": 3
+                    },
+                    "dataZoom": {}
+                }
+            },
+            "dataZoom": {
+                "type": JSCode("'inside'")
+            },
+            "legend": {
+                "bottom": 20,
+                "type": "scroll",
+                "icon": "circle",
+                "textStyle": {"fontSize": 13},
+            },
+            "grid": {
+                "left": "5%",
+                "right": "5%",
+                "bottom": "18%",
+                "top": "18%",
+                "containLabel": True,
+            },
+            "xAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed"}},
+                "axisLabel": {"fontSize": 12},
+            },
+            "yAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed"}},
+                "axisLabel": {"fontSize": 12},
+            },
+            "dataset": {"source": formatted_data},
+            "series": series,
+        }
+
+        if title is None:
+            del options["title"]
+
+        if custom_options:
+            _deep_update(options, custom_options)
+
+        super().__init__(
+            options=options,
+            width=width,
+            height=height,
+            renderer=renderer,
+            theme=theme,
+            **kwargs
+        )
