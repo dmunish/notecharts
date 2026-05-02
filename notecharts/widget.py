@@ -5,8 +5,17 @@ from IPython.display import display, HTML
 
 
 class JSCode:
-    """Wrap a raw JavaScript string so it is inserted unquoted into the option object."""
+    """Wraps a raw JavaScript string to be inserted unquoted into the ECharts options.
+
+    Attributes:
+        js (str): The raw JavaScript code string.
+    """
     def __init__(self, js: str):
+        """Initializes JSCode with the given JavaScript string.
+
+        Args:
+            js (str): The JavaScript code.
+        """
         self.js = js
 
     def __repr__(self):
@@ -27,24 +36,18 @@ class _EChartsEncoder(json.JSONEncoder):
 
 
 class Chart:
-    """
-    Render Apache ECharts directly in a Jupyter notebook from a Python 'options' dict.
+    """Renders Apache ECharts directly in a Jupyter notebook from a Python 'options' dict.
 
-    Features:
-      - Automatic Google Fonts loading from any 'fontFamily' value found
-        inside the options dictionary (deep search).
-      - Global font setting via `textStyle.fontFamily` at the root level.
+    Features include automatic Google Fonts loading from any 'fontFamily' value found
+    inside the options dictionary and global font setting via `textStyle.fontFamily`.
 
-    Args:
+    Attributes:
         options (dict): The ECharts option dictionary.
         width (str): CSS width of the chart container.
         height (str): CSS height of the chart container.
-        renderer (str): 'canvas' or 'svg'.
-        theme (str): 'light' or 'dark'.
-
-    Raises:
-        ValueError: If an unsupported `renderer` or `theme` is provided.
-        TypeError: If `options` is not a dictionary.
+        renderer (str): The renderer type ('canvas' or 'svg').
+        theme (str): The chart theme ('light' or 'dark').
+        fonts (list): List of discovered custom font families.
     """
 
     # Generic CSS font families that should not be loaded from Google Fonts
@@ -63,6 +66,19 @@ class Chart:
         renderer: str = "canvas",
         theme: str = "light",
     ):
+        """Initializes the Chart with options and display settings.
+
+        Args:
+            options (dict): The ECharts option dictionary.
+            width (str, optional): CSS width. Defaults to "99%".
+            height (str, optional): CSS height. Defaults to "500px".
+            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+            theme (str, optional): 'light' or 'dark'. Defaults to "light".
+
+        Raises:
+            TypeError: If options is not a dictionary.
+            ValueError: If renderer or theme is invalid.
+        """
         if not isinstance(options, dict):
             raise TypeError(
                 f"Chart options must be a dictionary, got {type(options).__name__}."
