@@ -7,7 +7,7 @@ name = "notecharts"
 version = "0.1.0"
 description = "Beautiful, interactive charts in notebooks with Apache ECharts' powerful declarative API"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Danish Munib", email = "danishmunibcontact@gmail.com"},
 ]
@@ -16,7 +16,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: Jupyter",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Topic :: Scientific/Engineering :: Visualization",
 ]
