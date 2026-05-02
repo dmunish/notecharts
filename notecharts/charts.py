@@ -605,3 +605,129 @@ class Donut(Chart):
             theme=theme,
             **kwargs
         )
+
+class Radar(Chart):
+    """
+    Pre-built modern Radar Chart.
+
+    Parameters
+    ----------
+    data : list-of-lists, list-of-dicts, DataFrame
+    name_col : str
+        Column that identifies each series (e.g. 'player').
+    dimensions : list of str
+        Column names for the radar axes (e.g. ['speed','power','accuracy']).
+    title : str, optional
+    width, height, renderer, theme : same as Chart
+    custom_options : dict, optional
+    user_colors : list of hex str, optional
+    """
+
+    def __init__(
+        self,
+        data,
+        name_col,
+        dimensions,
+        title=None,
+        width="99%",
+        height="500px",
+        renderer="canvas",
+        theme="light",
+        custom_options=None,
+        user_colors=None,
+        **kwargs
+    ):
+        formatted_data = _format_data(data)
+
+        # Group data by series name
+        series_map = {}
+        for row in formatted_data:
+            name = row[name_col]
+            series_map.setdefault(name, []).append(row)
+
+        # Compute max per dimension for indicator range
+        dim_max = {d: 0 for d in dimensions}
+        for row in formatted_data:
+            for d in dimensions:
+                if row[d] > dim_max[d]:
+                    dim_max[d] = row[d]
+
+        indicators = [{"name": d, "max": dim_max[d]} for d in dimensions]
+
+        # Build series list
+        series = []
+        for idx, (name, rows) in enumerate(series_map.items()):
+            row = rows[0]
+            values = [row[d] for d in dimensions]
+            series.append({
+                "type": "radar",
+                "data": [{"value": values, "name": str(name)}],
+                "areaStyle": {"opacity": 0.2},
+                "symbol": "circle",
+                "symbolSize": 6,
+                "lineStyle": {"width": 2},
+            })
+
+        if user_colors is not None:
+            palette = user_colors
+        else:
+            palette = _hsv_palette(len(series), color_theme="neon", chart_theme=theme, harmony="auto")
+
+        options = {
+            "color": palette,
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            },
+            "tooltip": {
+                "trigger": "item",
+                "borderWidth": 0,
+                "padding": [14, 18],
+                "shadowBlur": 10,
+                "shadowColor": "rgba(0, 0, 0, 0.12)",
+                "extraCssText": "border-radius: 12px;",
+            },
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "saveAsImage": {
+                        "name": title if title else "Chart",
+                        "pixelRatio": 3
+                    },
+                }
+            },
+            "legend": {
+                "bottom": 20,
+                "type": "scroll",
+                "icon": "circle",
+                "textStyle": {"fontSize": 13},
+            },
+            "radar": {
+                "indicator": indicators,
+                "splitArea": {
+                    "areaStyle": {
+                        "color": ["rgba(0,0,0,0.02)", "rgba(0,0,0,0.04)"]
+                    }
+                },
+                "axisLine": {"lineStyle": {"color": "rgba(0,0,0,0.1)"}},
+                "splitLine": {"lineStyle": {"color": "rgba(0,0,0,0.1)"}},
+            },
+            "series": series,
+        }
+
+        if title is None:
+            del options["title"]
+
+        if custom_options:
+            _deep_update(options, custom_options)
+
+        super().__init__(
+            options=options,
+            width=width,
+            height=height,
+            renderer=renderer,
+            theme=theme,
+            **kwargs
+        )
