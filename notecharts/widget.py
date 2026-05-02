@@ -28,30 +28,55 @@ class _EChartsEncoder(json.JSONEncoder):
 
 class Chart:
     """
-    Render Apache ECharts directly in a Jupyter notebook from a Python dict.
+    Render Apache ECharts directly in a Jupyter notebook from a Python 'options' dict.
 
-    Use `JSCode` for any value that should be raw JavaScript (formatters,
-    symbol size functions, linear gradients, etc.).
+    This class serializes a Python dictionary into a JSON object and embeds
+    it within an HTML structure that loads and initializes ECharts.
+
+    Use `JSCode` for any value that should remain raw JavaScript (such as
+    formatters, symbol size functions, or linear gradients).
+
+    Args:
+        options (dict): The ECharts option dictionary.
+        width (str): The CSS width of the chart container.
+        height (str): The CSS height of the chart container.
+        renderer (str): The ECharts rendering engine, either "canvas" or "svg".
+        theme (str): The chart theme, either "light", "dark".
+
+    Raises:
+        ValueError: If an unsupported `renderer` is provided.
+        TypeError: If `options` is not a dictionary.
 
     Usage:
         from notecharts import Chart, JSCode
 
         options = {
+            "title": {"text": "Simple Chart"},
             "tooltip": {"formatter": JSCode("function(p){ return p.value; }")},
             ...
         }
         widget = Chart(options)
-        widget.display()   # or just `widget` at the end of a cell
+        widget.display()
     """
 
-    def __init__(self, options, width="99%", height="500px", renderer = "canvas", theme = "light"):
-        self.options = options
-        self.width = width.strip()
-        self.height = height.strip()
-        self.renderer = renderer.lower().strip()
-        self.theme = theme.lower().strip()
+    def __init__(self, options: dict, width: str = "99%", height: str = "500px", renderer: str = "canvas", theme: str = "light"):
 
-        # Explicitly set default behaviour
+        if not isinstance(options, dict):
+            raise TypeError(f"Chart options must be a dictionary, got {type(options).__name__}.")
+
+        self.options = options
+        self.width = width.strip() if isinstance(width, str) else str(width)
+        self.height = height.strip() if isinstance(height, str) else str(height)
+        
+        self.renderer = renderer.lower().strip()
+        if self.renderer not in ["canvas", "svg"]:
+            raise ValueError(f"Invalid renderer '{self.renderer}'. Supported values are 'canvas' and 'svg'.")
+            
+        self.theme = theme.lower().strip()
+        if self.theme not in ["light", "dark"]:
+            raise ValueError(f"Invalid theme '{self.theme}' - Supported values are 'light' and 'dark'.")
+
+        # Explicitly set background color for light theme if not specified
         if self.theme == "light" and "backgroundColor" not in self.options:
             self.options["backgroundColor"] = "white"
 
