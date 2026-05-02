@@ -74,7 +74,7 @@ def _hsv_palette(n_colors, color_theme="pastel", base_hue=None, chart_theme="lig
         elif n_colors == 5:
             harmony = "split-complementary"
         else:
-            harmony = "tetradic"   # use tetradic and then generate variants
+            harmony = "tetradic"
 
     base_hues = _get_harmony_hues(base_hue, harmony)
     colors = []
