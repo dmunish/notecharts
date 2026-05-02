@@ -164,8 +164,6 @@ class Chart:
         <div id="{chart_id}" style="width:{self.width};height:{self.height};"></div>
         <script>
         (function() {{
-            var EC_URL = 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js';
-            var GL_URL = 'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js';
 
             // ── wait for the div to exist in the DOM ──────────────────────────
             function waitForDom(id, cb) {{
@@ -189,9 +187,10 @@ class Chart:
                 }}, 100);
             }}
 
-            function initChart() {{
+            // ── chart init ─────
+            function initChart(ec) {{
                 waitForDom('{chart_id}', function(dom) {{
-                    var chart = echarts.init(dom, '{self.theme}', {{
+                    var chart = ec.init(dom, '{self.theme}', {{
                         renderer: '{self.renderer}', devicePixelRatio: 3
                     }});
                     chart.setOption({options_js});
@@ -199,6 +198,7 @@ class Chart:
                 }});
             }}
 
+            // ── plain <script> loader (Colab / plain Jupyter) ─────────────────
             function loadScript(url, cb) {{
                 var s = document.createElement('script');
                 s.src = url;
@@ -207,23 +207,40 @@ class Chart:
                 document.head.appendChild(s);
             }}
 
-            function loadEchartsAndInit() {{
-                if (typeof echarts === 'undefined') {{
-                    loadScript(EC_URL, function() {{
-                        if (typeof echarts._glLoaded === 'undefined') {{
-                            echarts._glLoaded = true;
-                            loadScript(GL_URL, initChart);
-                        }} else {{
-                            initChart();
-                        }}
+            function loadViaScript() {{
+                loadScript('https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js', function() {{
+                    loadScript('https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js', function() {{
+                        initChart(window.echarts);
                     }});
-                }} else {{
-                    if (typeof echarts._glLoaded === 'undefined') {{
-                        echarts._glLoaded = true;
-                        loadScript(GL_URL, initChart);
-                    }} else {{
-                        initChart();
+                }});
+            }}
+
+            // ── RequireJS loader (VS Code webview) ────────────────────────────
+            function loadViaRequire() {{
+                // Reset any cached failed/partial module state
+                require.undef('echarts');
+                require.undef('echarts-gl');
+                require.config({{
+                    paths: {{
+                        'echarts': 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min',
+                        'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min'
                     }}
+                }});
+                require(['echarts'], function(ec) {{
+                    require(['echarts-gl'], function() {{
+                        initChart(ec);
+                    }});
+                }}, function(err) {{
+                    console.error('ECharts wrapper: RequireJS failed to load', err);
+                }});
+            }}
+
+            // ── font gate → then load echarts ─────────────────────────────────
+            function loadEchartsAndInit() {{
+                if (typeof require !== 'undefined' && typeof require.config === 'function') {{
+                    loadViaRequire();
+                }} else {{
+                    loadViaScript();
                 }}
             }}
 
