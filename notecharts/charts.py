@@ -12,21 +12,42 @@ def _format_data(data):
         return data.to_dict(orient="records")
     return data
 
-class BaseDataChart(Chart):
-    """
-    Base class for data-driven pre-built charts.
-    """
-    def __init__(self, data, x, y, title=None, theme="light", width="99%", height="500px", 
-                 custom_options=None, **kwargs):
-        self.data = _format_data(data)
-        self.x = x
-        self.y = y if isinstance(y, list) else [y]
+def _deep_update(d, u):
+    """Recursively update dictionary d with u."""
+    for k, v in u.items():
+        if isinstance(v, dict) and k in d and isinstance(d[k], dict):
+            _deep_update(d[k], v)
+        else:
+            d[k] = v
+
+
+class Bar(Chart):
+    """Pre-built Bar Chart."""
+    def __init__(self, data, x, y, title=None, custom_options=None, **kwargs):
+        formatted_data = _format_data(data)
+        y_list = y if isinstance(y, list) else [y]
         
-        self.base_options = {
-            "title": {"text": title, "left": "center", "top": 10, "textStyle": {"fontWeight": "normal"}},
+        series = []
+        for y_col in y_list:
+            series_config = {
+                "type": "bar",
+                "encode": {"x": x, "y": y_col},
+                "name": str(y_col),
+                "animationDuration": 1500,
+                "animationEasing": "cubicOut"
+            }
+            series.append(series_config)
+
+        options = {
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 10,
+                "textStyle": {"fontWeight": "normal"}
+            },
             "tooltip": {
-                "trigger": "axis" if self.__class__.__name__ != "Scatter" else "item",
-                "axisPointer": {"type": "cross" if self.__class__.__name__ == "Scatter" else "shadow"},
+                "trigger": "axis",
+                "axisPointer": {"type": "shadow"},
                 "backgroundColor": "rgba(255, 255, 255, 0.9)",
                 "borderColor": "#eee",
                 "borderWidth": 1,
@@ -35,62 +56,30 @@ class BaseDataChart(Chart):
             "dataZoom": {"type": JSCode("'inside'")},
             "legend": {"bottom": 10, "type": "scroll"},
             "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
-            "dataset": {"source": self.data},
+            "dataset": {"source": formatted_data},
             "xAxis": {"type": "category"},
             "yAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}}},
-            "series": []
+            "series": series
         }
         
-        # Build series definition
-        self._build_series(**kwargs)
-        
-        # Allows user to inject or override everything (e.g. customized colors, advanced axes)
         if custom_options:
-            self._deep_update(self.base_options, custom_options)
+            _deep_update(options, custom_options)
             
-        super().__init__(self.base_options, width=width, height=height, theme=theme)
-
-    def _build_series(self, **kwargs):
-        raise NotImplementedError("Subclasses must implement _build_series")
-
-    def _deep_update(self, d, u):
-        """Recursively update dictionary d with u."""
-        for k, v in u.items():
-            if isinstance(v, dict) and k in d and isinstance(d[k], dict):
-                self._deep_update(d[k], v)
-            else:
-                d[k] = v
+        super().__init__(options)
 
 
-class Bar(BaseDataChart):
-    """Pre-built Bar Chart."""
-    def _build_series(self, stacked=False, rounded=True, **kwargs):
-        for y_col in self.y:
-            series_config = {
-                "type": "bar",
-                "encode": {"x": self.x, "y": y_col},
-                "name": str(y_col),
-                "animationDuration": 1500,
-                "animationEasing": "cubicOut"
-            }
-            if stacked:
-                series_config["stack"] = "total"
-            if rounded:
-                series_config["itemStyle"] = {"borderRadius": [4, 4, 0, 0]}
-                
-            self.base_options["series"].append(series_config)
-
-
-class Line(BaseDataChart):
+class Line(Chart):
     """Pre-built Line Chart."""
-    def _build_series(self, smooth=True, area=False, stacked=False, **kwargs):
-        # Line charts usually look better with a boundary gap on the X axis set to false
-        self.base_options["xAxis"]["boundaryGap"] = False
+    def __init__(self, data, x, y, title=None, theme="light", width="99%", height="500px", 
+                 smooth=True, area=False, stacked=False, custom_options=None, **kwargs):
+        formatted_data = _format_data(data)
+        y_list = y if isinstance(y, list) else [y]
 
-        for y_col in self.y:
+        series = []
+        for y_col in y_list:
             series_config = {
                 "type": "line",
-                "encode": {"x": self.x, "y": y_col},
+                "encode": {"x": x, "y": y_col},
                 "name": str(y_col),
                 "smooth": smooth,
                 "symbol": "circle",
@@ -101,25 +90,89 @@ class Line(BaseDataChart):
                 series_config["stack"] = "total"
             if area:
                 series_config["areaStyle"] = {"opacity": 0.3}
-                
-            self.base_options["series"].append(series_config)
+            series.append(series_config)
+            
+        options = {
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 10,
+                "textStyle": {"fontWeight": "normal"}
+            },
+            "tooltip": {
+                "trigger": "axis",
+                "axisPointer": {"type": "shadow"},
+                "backgroundColor": "rgba(255, 255, 255, 0.9)",
+                "borderColor": "#eee",
+                "borderWidth": 1,
+                "textStyle": {"color": "#333"}
+            },
+            "dataZoom": {"type": JSCode("'inside'")},
+            "legend": {"bottom": 10, "type": "scroll"},
+            "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
+            "dataset": {"source": formatted_data},
+            "xAxis": {"type": "category", "boundaryGap": False},
+            "yAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}}},
+            "series": series
+        }
+        
+        if custom_options:
+            _deep_update(options, custom_options)
+            
+        super().__init__(options, width=width, height=height, theme=theme)
 
 
-class Scatter(BaseDataChart):
+class Scatter(Chart):
     """Pre-built Scatter Chart."""
-    def _build_series(self, symbol_size=10, **kwargs):
-        # Scatters require both X and Y to be values (usually)
-        self.base_options["xAxis"]["type"] = "value"
-        self.base_options["xAxis"]["splitLine"] = {"show": True, "lineStyle": {"type": "dashed", "color": "#f0f0f0"}}
-        self.base_options["xAxis"]["scale"] = True   # Don't force X axis to start at 0
-        self.base_options["yAxis"]["scale"] = True   # Don't force Y axis to start at 0
+    def __init__(self, data, x, y, title=None, theme="light", width="99%", height="500px", 
+                 symbol_size=10, custom_options=None, **kwargs):
+        formatted_data = _format_data(data)
+        y_list = y if isinstance(y, list) else [y]
 
-        for y_col in self.y:
+        series = []
+        for y_col in y_list:
             series_config = {
                 "type": "scatter",
-                "encode": {"x": self.x, "y": y_col},
+                "encode": {"x": x, "y": y_col},
                 "name": str(y_col),
                 "symbolSize": symbol_size,
                 "itemStyle": {"opacity": 0.8}
             }
-            self.base_options["series"].append(series_config)
+            series.append(series_config)
+
+        options = {
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 10,
+                "textStyle": {"fontWeight": "normal"}
+            },
+            "tooltip": {
+                "trigger": "item",
+                "axisPointer": {"type": "cross"},
+                "backgroundColor": "rgba(255, 255, 255, 0.9)",
+                "borderColor": "#eee",
+                "borderWidth": 1,
+                "textStyle": {"color": "#333"}
+            },
+            "dataZoom": {"type": JSCode("'inside'")},
+            "legend": {"bottom": 10, "type": "scroll"},
+            "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
+            "dataset": {"source": formatted_data},
+            "xAxis": {
+                "type": "value",
+                "splitLine": {"show": True, "lineStyle": {"type": "dashed", "color": "#f0f0f0"}},
+                "scale": True
+            },
+            "yAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}},
+                "scale": True
+            },
+            "series": series
+        }
+        
+        if custom_options:
+            _deep_update(options, custom_options)
+            
+        super().__init__(options, width=width, height=height, theme=theme)
