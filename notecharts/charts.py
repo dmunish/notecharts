@@ -236,3 +236,126 @@ class Bar(Chart):
             theme=theme,
             **kwargs
         )
+
+class Line(Chart):
+    def __init__(
+        self,
+        data,
+        x,
+        y,
+        title=None,
+        area=True,
+        smooth=True,
+        width="99%",
+        height="500px",
+        renderer="canvas",
+        theme="light",
+        custom_options=None,
+        user_colors=None,
+        **kwargs
+    ):
+        formatted_data = _format_data(data)
+        y_cols = y if isinstance(y, list) else [y]
+
+        if user_colors is not None:
+            palette = user_colors
+        else:
+            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
+
+        series = []
+        for i, y_col in enumerate(y_cols):
+            color = palette[i % len(palette)]
+            ser = {
+                "type": "line",
+                "encode": {"x": x, "y": y_col},
+                "name": str(y_col),
+                "smooth": smooth,
+                "symbol": "circle",
+                "symbolSize": 8,
+                "lineStyle": {"width": 3},
+                "animationDuration": 1000,
+                "animationEasing": "cubicOut",
+            }
+            if area:
+                ser["areaStyle"] = {
+                    "color": {
+                        "type": "linear",
+                        "x": 0, "y": 0, "x2": 0, "y2": 1,
+                        "colorStops": [
+                            {"offset": 0, "color": f"{color}40"},
+                            {"offset": 1, "color": f"{color}00"}
+                        ]
+                    }
+                }
+            series.append(ser)
+
+        options = {
+            "color": palette,
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            },
+            "tooltip": {
+                "trigger": "axis",
+                "borderWidth": 0,
+                "padding": [14, 18],
+                "shadowBlur": 10,
+                "shadowColor": "rgba(0, 0, 0, 0.12)",
+                "extraCssText": "border-radius: 12px;",
+            },
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "magicType": {"type": ["bar", "stack"]},
+                    "saveAsImage": {
+                        "name": title if title else "Chart",
+                        "pixelRatio": 3
+                    },
+                    "dataZoom": {}
+                }
+            },
+            "dataZoom": {"type": JSCode("'inside'")},
+            "legend": {
+                "bottom": 20,
+                "type": "scroll",
+                "icon": "circle",
+                "textStyle": {"fontSize": 13},
+            },
+            "grid": {
+                "left": "5%",
+                "right": "5%",
+                "bottom": "18%",
+                "top": "18%",
+                "containLabel": True,
+            },
+            "xAxis": {
+                "type": "category",
+                "axisLine": {"show": False},
+                "axisTick": {"show": False},
+                "axisLabel": {"fontSize": 12},
+            },
+            "yAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed"}},
+                "axisLabel": {"fontSize": 12},
+            },
+            "dataset": {"source": formatted_data},
+            "series": series,
+        }
+
+        if title is None:
+            del options["title"]
+
+        if custom_options:
+            _deep_update(options, custom_options)
+
+        super().__init__(
+            options=options,
+            width=width,
+            height=height,
+            renderer=renderer,
+            theme=theme,
+            **kwargs
+        )
