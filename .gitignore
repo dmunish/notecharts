@@ -1,3 +1,7 @@
 venv/
 test/
 .vscode/
+dist/
+build/
+*.egg-info/
+__pycache__/
