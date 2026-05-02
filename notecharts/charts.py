@@ -182,7 +182,7 @@ class Bar(Chart):
                         "type": ["line", "stack"]
                     },
                     "saveAsImage": {
-                        "title": title if title else "Chart"
+                        "name": title if title else "Chart"
                     }
                 }
             },
