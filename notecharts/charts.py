@@ -484,3 +484,124 @@ class Scatter(Chart):
             theme=theme,
             **kwargs
         )
+
+class Donut(Chart):
+    def __init__(
+        self,
+        data,
+        label_col,
+        value_col,
+        title=None,
+        rose=False,
+        show_total=True,
+        width="99%",
+        height="500px",
+        renderer="canvas",
+        theme="light",
+        custom_options=None,
+        user_colors=None,
+        **kwargs
+    ):
+        formatted_data = _format_data(data)
+
+        pie_data = [{"name": str(row[label_col]), "value": row[value_col]} for row in formatted_data]
+
+        total = sum(row[value_col] for row in formatted_data)
+
+        series = {
+            "type": "pie",
+            "radius": ["45%", "75%"] if not rose else ["30%", "75%"],
+            "center": ["50%", "50%"],
+            "data": pie_data,
+            "label": {
+                "show": True,
+                "position": "outside",
+                "formatter": "{b}: {c} ({d}%)",
+                "fontSize": 12,
+            },
+            "emphasis": {
+                "label": {"fontSize": 16, "fontWeight": "bold"},
+                "scale": True,
+                "scaleSize": 10,
+            },
+            "animationType": "scale",
+            "animationEasing": "elasticOut",
+        }
+
+        if rose:
+            series["roseType"] = "radius"
+
+        graphic = None
+        if show_total and not rose:
+            graphic = [
+                {
+                    "type": "text",
+                    "left": "center",
+                    "top": "center",
+                    "style": {
+                        "text": f"{total}",
+                        "textAlign": "center",
+                        "fontSize": 24,
+                        "fontWeight": "bold",
+                        "fill": "#333" if theme == "light" else "#eee",
+                    },
+                }
+            ]
+
+        if user_colors is not None:
+            palette = user_colors
+        else:
+            palette = _hsv_palette(len(pie_data), color_theme="neon", chart_theme=theme, harmony="auto")
+
+        options = {
+            "color": palette,
+            "title": {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            },
+            # "tooltip": {
+            #     "trigger": "item",
+            #     "formatter": "{b}: {c} ({d}%)",
+            #     "borderWidth": 0,
+            #     "padding": [14, 18],
+            #     "shadowBlur": 10,
+            #     "shadowColor": "rgba(0, 0, 0, 0.12)",
+            #     "extraCssText": "border-radius: 12px;",
+            # },
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "saveAsImage": {
+                        "name": title if title else "Chart",
+                        "pixelRatio": 3
+                    },
+                }
+            },
+            "legend": {
+                "bottom": 20,
+                "type": "scroll",
+                "icon": "circle",
+                "textStyle": {"fontSize": 13},
+            },
+            "series": [series],
+        }
+
+        if graphic:
+            options["graphic"] = graphic
+
+        if title is None:
+            del options["title"]
+
+        if custom_options:
+            _deep_update(options, custom_options)
+
+        super().__init__(
+            options=options,
+            width=width,
+            height=height,
+            renderer=renderer,
+            theme=theme,
+            **kwargs
+        )
