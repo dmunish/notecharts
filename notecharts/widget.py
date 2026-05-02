@@ -44,7 +44,7 @@ class Chart:
         widget.display()   # or just `widget` at the end of a cell
     """
 
-    def __init__(self, options, width="99%", height="500px", renderer = "svg", theme = "light"):
+    def __init__(self, options, width="99%", height="500px", renderer = "canvas", theme = "light"):
         self.options = options
         self.width = width.strip()
         self.height = height.strip()
@@ -91,7 +91,7 @@ class Chart:
             function initChart() {{
                 var dom = document.getElementById('{chart_id}');
                 if (!dom) return;
-                var chart = echarts.init(dom, '{self.theme}', {{renderer: '{self.renderer}'}});
+                var chart = echarts.init(dom, '{self.theme}', {{renderer: '{self.renderer}', devicePixelRatio: 3}});
                 chart.setOption({options_js});
                 window.addEventListener('resize', function() {{
                     chart.resize();
