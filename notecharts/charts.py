@@ -1,178 +1,237 @@
+import random
+import colorsys
 from .widget import Chart, JSCode
 
 def _format_data(data):
-    """
-    Normalizes data into a format ECharts dataset.source accepts natively:
-    list of dicts, or list of lists.
-    Auto-detects pandas DataFrames and converts them.
-    """
-    # Check if it's a pandas DataFrame without explicitly importing pandas
     if hasattr(data, "to_dict") and hasattr(data, "columns"):
-        # Convert DataFrame to list of dicts
         return data.to_dict(orient="records")
     return data
 
 def _deep_update(d, u):
-    """Recursively update dictionary d with u."""
     for k, v in u.items():
         if isinstance(v, dict) and k in d and isinstance(d[k], dict):
             _deep_update(d[k], v)
         else:
             d[k] = v
 
+def _get_harmony_hues(base_hue, harmony):
+    """
+    Return list of hue angles for the given harmony scheme.
+    base_hue: float 0-360
+    harmony: str one of 'monochromatic','complementary','triadic',
+             'tetradic','split-complementary','analogous'
+    """
+    base = base_hue % 360
+    if harmony == "monochromatic":
+        return [base]
+    elif harmony == "complementary":
+        return [base, (base + 180) % 360]
+    elif harmony == "triadic":
+        return [base, (base + 120) % 360, (base + 240) % 360]
+    elif harmony == "tetradic":
+        return [base, (base + 90) % 360, (base + 180) % 360, (base + 270) % 360]
+    elif harmony == "split-complementary":
+        return [base, (base + 150) % 360, (base + 210) % 360]
+    elif harmony == "analogous":
+        return [(base - 30) % 360, base, (base + 30) % 360]
+    else:
+        return [base]
+
+def _hsv_palette(n_colors, color_theme="pastel", base_hue=None, chart_theme="light", harmony="auto"):
+    if n_colors <= 0:
+        return []
+
+    if chart_theme == "dark":
+        presets = {
+            "pastel":       (0.25, 0.90),
+            "neon":         (0.80, 0.95),
+            "professional": (0.45, 0.80),
+        }
+    else:
+        presets = {
+            "pastel":       (0.40, 0.80),
+            "neon":         (0.75, 1.00),
+            "professional": (0.50, 0.75),
+        }
+    if color_theme not in presets:
+        raise ValueError(f"Unknown color_theme '{color_theme}'. Choose from {list(presets.keys())}.")
+    sat, val = presets[color_theme]
+
+    if base_hue is None:
+        random.seed(42)
+        base_hue = random.random() * 360
+
+    # Auto-select harmony based on number of colors
+    if harmony == "auto":
+        if n_colors == 1:
+            harmony = "monochromatic"
+        elif n_colors == 2:
+            harmony = "complementary"
+        elif n_colors == 3:
+            harmony = "triadic"
+        elif n_colors == 4:
+            harmony = "tetradic"
+        elif n_colors == 5:
+            harmony = "split-complementary"
+        else:
+            harmony = "tetradic"   # use tetradic and then generate variants
+
+    base_hues = _get_harmony_hues(base_hue, harmony)
+    colors = []
+    for i in range(n_colors):
+        if i < len(base_hues):
+            hue = base_hues[i]
+            s = sat
+            v = val
+        else:
+            # Generate variants by cycling through base hues and subtly altering sat/val
+            cycle = (i - len(base_hues)) // len(base_hues)
+            idx = (i - len(base_hues)) % len(base_hues)
+            hue = base_hues[idx]
+            # Alternate between slightly desaturated/lighter and slightly darkened
+            if cycle % 2 == 0:
+                s = sat * 0.85
+                v = min(1.0, val * 1.15)
+            else:
+                s = sat * 1.0
+                v = max(0.0, val * 0.85)
+        rgb = colorsys.hsv_to_rgb(hue / 360.0, s, v)
+        hex_color = "#{:02x}{:02x}{:02x}".format(
+            int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
+        )
+        colors.append(hex_color)
+    return colors
 
 class Bar(Chart):
-    """Pre-built Bar Chart."""
-    def __init__(self, data, x, y, title=None, custom_options=None, **kwargs):
+    """
+    Pre-built modern Bar Chart.
+
+    Parameters
+    ----------
+    data : list-of-lists, list-of-dicts, DataFrame
+    x : str
+    y : str or list of str
+    title : str, optional
+    width, height, renderer, theme : same as Chart
+    custom_options : dict, optional
+    user_colors : list of hex str, optional
+    **kwargs : forwarded to Chart
+    """
+
+    def __init__(
+        self,
+        data,
+        x,
+        y,
+        title=None,
+        width="99%",
+        height="500px",
+        renderer="canvas",
+        theme="light",
+        custom_options=None,
+        user_colors=None,
+        **kwargs
+    ):
         formatted_data = _format_data(data)
-        y_list = y if isinstance(y, list) else [y]
-        
+        y_cols = y if isinstance(y, list) else [y]
+
         series = []
-        for y_col in y_list:
-            series_config = {
+        for y_col in y_cols:
+            series.append({
                 "type": "bar",
                 "encode": {"x": x, "y": y_col},
                 "name": str(y_col),
-                "animationDuration": 1500,
-                "animationEasing": "cubicOut"
-            }
-            series.append(series_config)
+                "itemStyle": {
+                    "borderRadius": [6, 6, 0, 0],
+                },
+                "animationDuration": 1200,
+                "animationEasing": "cubicOut",
+            })
+
+        # Use user-provided colors if given, else auto-generate harmonious palette
+        if user_colors is not None:
+            palette = user_colors
+        else:
+            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
 
         options = {
+            "color": palette,
             "title": {
                 "text": title,
                 "left": "center",
-                "top": 10,
-                "textStyle": {"fontWeight": "normal"}
+                "top": 24,
+                "textStyle": {
+                    "fontSize": 22,
+                    "fontWeight": 600,
+                },
             },
             "tooltip": {
                 "trigger": "axis",
                 "axisPointer": {"type": "shadow"},
-                "backgroundColor": "rgba(255, 255, 255, 0.9)",
-                "borderColor": "#eee",
-                "borderWidth": 1,
-                "textStyle": {"color": "#333"}
+                "borderWidth": 0,
+                "padding": [14, 18],
+                "extraCssText": (
+                    "box-shadow: 0 8px 24px rgba(0,0,0,0.12); "
+                    "border-radius: 12px;"
+                ),
             },
-            "dataZoom": {"type": JSCode("'inside'")},
-            "legend": {"bottom": 10, "type": "scroll"},
-            "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
-            "dataset": {"source": formatted_data},
-            "xAxis": {"type": "category"},
-            "yAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}}},
-            "series": series
-        }
-        
-        if custom_options:
-            _deep_update(options, custom_options)
-            
-        super().__init__(options)
-
-
-class Line(Chart):
-    """Pre-built Line Chart."""
-    def __init__(self, data, x, y, title=None, theme="light", width="99%", height="500px", 
-                 smooth=True, area=False, stacked=False, custom_options=None, **kwargs):
-        formatted_data = _format_data(data)
-        y_list = y if isinstance(y, list) else [y]
-
-        series = []
-        for y_col in y_list:
-            series_config = {
-                "type": "line",
-                "encode": {"x": x, "y": y_col},
-                "name": str(y_col),
-                "smooth": smooth,
-                "symbol": "circle",
-                "symbolSize": 6,
-                "showSymbol": False,  # Only show points on hover for a cleaner look
-            }
-            if stacked:
-                series_config["stack"] = "total"
-            if area:
-                series_config["areaStyle"] = {"opacity": 0.3}
-            series.append(series_config)
-            
-        options = {
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 10,
-                "textStyle": {"fontWeight": "normal"}
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "magicType": {
+                        "type": ["line", "stack"]
+                    },
+                    "saveAsImage": {
+                        "title": title if title else "Chart"
+                    }
+                }
             },
-            "tooltip": {
-                "trigger": "axis",
-                "axisPointer": {"type": "shadow"},
-                "backgroundColor": "rgba(255, 255, 255, 0.9)",
-                "borderColor": "#eee",
-                "borderWidth": 1,
-                "textStyle": {"color": "#333"}
+            "dataZoom": {
+                "type": JSCode("'inside'")
             },
-            "dataZoom": {"type": JSCode("'inside'")},
-            "legend": {"bottom": 10, "type": "scroll"},
-            "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
-            "dataset": {"source": formatted_data},
-            "xAxis": {"type": "category", "boundaryGap": False},
-            "yAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}}},
-            "series": series
-        }
-        
-        if custom_options:
-            _deep_update(options, custom_options)
-            
-        super().__init__(options, width=width, height=height, theme=theme)
-
-
-class Scatter(Chart):
-    """Pre-built Scatter Chart."""
-    def __init__(self, data, x, y, title=None, theme="light", width="99%", height="500px", 
-                 symbol_size=10, custom_options=None, **kwargs):
-        formatted_data = _format_data(data)
-        y_list = y if isinstance(y, list) else [y]
-
-        series = []
-        for y_col in y_list:
-            series_config = {
-                "type": "scatter",
-                "encode": {"x": x, "y": y_col},
-                "name": str(y_col),
-                "symbolSize": symbol_size,
-                "itemStyle": {"opacity": 0.8}
-            }
-            series.append(series_config)
-
-        options = {
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 10,
-                "textStyle": {"fontWeight": "normal"}
+            "legend": {
+                "bottom": 20,
+                "type": "scroll",
+                "icon": "roundRect",
+                "textStyle": {"fontSize": 13},
             },
-            "tooltip": {
-                "trigger": "item",
-                "axisPointer": {"type": "cross"},
-                "backgroundColor": "rgba(255, 255, 255, 0.9)",
-                "borderColor": "#eee",
-                "borderWidth": 1,
-                "textStyle": {"color": "#333"}
+            "grid": {
+                "left": "5%",
+                "right": "5%",
+                "bottom": "18%",
+                "top": "18%",
+                "containLabel": True,
             },
-            "dataZoom": {"type": JSCode("'inside'")},
-            "legend": {"bottom": 10, "type": "scroll"},
-            "grid": {"left": "5%", "right": "5%", "bottom": "15%", "top": "15%", "containLabel": True},
-            "dataset": {"source": formatted_data},
             "xAxis": {
-                "type": "value",
-                "splitLine": {"show": True, "lineStyle": {"type": "dashed", "color": "#f0f0f0"}},
-                "scale": True
+                "type": "category",
+                "axisLine": {"show": False},
+                "axisTick": {"show": False},
+                "axisLabel": {"fontSize": 12},
             },
             "yAxis": {
                 "type": "value",
-                "splitLine": {"lineStyle": {"type": "dashed", "color": "#f0f0f0"}},
-                "scale": True
+                "splitLine": {
+                    "lineStyle": {
+                        "type": "dashed",
+                    }
+                },
+                "axisLabel": {"fontSize": 12},
             },
-            "series": series
+            "dataset": {"source": formatted_data},
+            "series": series,
         }
-        
+
+        if title is None:
+            del options["title"]
+
         if custom_options:
             _deep_update(options, custom_options)
-            
-        super().__init__(options, width=width, height=height, theme=theme)
+
+        super().__init__(
+            options=options,
+            width=width,
+            height=height,
+            renderer=renderer,
+            theme=theme,
+            **kwargs
+        )
