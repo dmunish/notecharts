@@ -170,10 +170,11 @@ class Bar(Chart):
                 "axisPointer": {"type": "shadow"},
                 "borderWidth": 0,
                 "padding": [14, 18],
-                "extraCssText": (
-                    "box-shadow: 0 8px 24px rgba(0,0,0,0.12); "
-                    "border-radius: 12px;"
-                ),
+                "shadowBlur": 10,
+                "shadowColor": "rgba(0, 0, 0, 0.4)",
+                "shadowOffsetX": 0,
+                "shadowOffsetY": 4,
+                "extraCssText": "border-radius: 12px;"
             },
             "toolbox": {
                 "feature": {
