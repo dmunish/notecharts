@@ -150,7 +150,6 @@ class Chart:
             chart_id = f"echart_{uuid.uuid4().hex}"
         options_js = self._serialise_options()
 
-        # Build Google Fonts <link> if needed
         font_link = ""
         if self.fonts:
             base_url = "https://fonts.googleapis.com/css2"
@@ -168,23 +167,44 @@ class Chart:
             var EC_URL = 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js';
             var GL_URL = 'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js';
 
-            function loadScript(url, callback) {{
-                var s = document.createElement('script');
-                s.src = url;
-                s.onload = callback;
-                document.head.appendChild(s);
+            // ── wait for the div to exist in the DOM ──────────────────────────
+            function waitForDom(id, cb) {{
+                var dom = document.getElementById(id);
+                if (dom) {{ cb(dom); return; }}
+                var observer = new MutationObserver(function() {{
+                    var el = document.getElementById(id);
+                    if (el) {{ observer.disconnect(); cb(el); }}
+                }});
+                observer.observe(document.body || document.documentElement, {{
+                    childList: true, subtree: true
+                }});
+                var attempts = 0;
+                var poll = setInterval(function() {{
+                    var el = document.getElementById(id);
+                    if (el) {{ clearInterval(poll); observer.disconnect(); cb(el); return; }}
+                    if (++attempts > 100) {{
+                        clearInterval(poll); observer.disconnect();
+                        console.error('ECharts wrapper: #{chart_id} never appeared in DOM');
+                    }}
+                }}, 100);
             }}
 
             function initChart() {{
-                var dom = document.getElementById('{chart_id}');
-                if (!dom) return;
-                var chart = echarts.init(dom, '{self.theme}', {{
-                    renderer: '{self.renderer}', devicePixelRatio: 3
+                waitForDom('{chart_id}', function(dom) {{
+                    var chart = echarts.init(dom, '{self.theme}', {{
+                        renderer: '{self.renderer}', devicePixelRatio: 3
+                    }});
+                    chart.setOption({options_js});
+                    window.addEventListener('resize', function() {{ chart.resize(); }});
                 }});
-                chart.setOption({options_js});
-                window.addEventListener('resize', function() {{
-                    chart.resize();
-                }});
+            }}
+
+            function loadScript(url, cb) {{
+                var s = document.createElement('script');
+                s.src = url;
+                s.onload = cb;
+                s.onerror = function() {{ console.error('ECharts wrapper: failed to load ' + url); }};
+                document.head.appendChild(s);
             }}
 
             function loadEchartsAndInit() {{
@@ -207,7 +227,6 @@ class Chart:
                 }}
             }}
 
-            // If custom fonts are requested, wait for them to be ready
             if ({has_fonts}) {{
                 if (document.fonts && document.fonts.ready) {{
                     document.fonts.ready.then(loadEchartsAndInit);
