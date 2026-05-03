@@ -140,6 +140,19 @@ class Bar(Chart):
     """Pre-built modern Bar Chart.
 
     Notecharts' Bar integration handles automatic layout, tooltips, and themes.
+
+    Args:
+        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+        x (str): Column name for the x-axis.
+        y (str or list[str]): Column name(s) for the y-axis.
+        title (str, optional): Chart title. Defaults to None.
+        width (str, optional): CSS width. Defaults to "99%".
+        height (str, optional): CSS height. Defaults to "500px".
+        renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+        theme (str, optional): 'light' or 'dark'. Defaults to "light".
+        custom_options (dict, optional): Extra options to merge into the ECharts dict.
+        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
@@ -156,21 +169,6 @@ class Bar(Chart):
         user_colors=None,
         **kwargs
     ):
-        """Initializes a Bar Chart.
-
-        Args:
-            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-            x (str): Column name for the x-axis.
-            y (str or list[str]): Column name(s) for the y-axis.
-            title (str, optional): Chart title. Defaults to None.
-            width (str, optional): CSS width. Defaults to "99%".
-            height (str, optional): CSS height. Defaults to "500px".
-            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
-            theme (str, optional): 'light' or 'dark'. Defaults to "light".
-            custom_options (dict, optional): Extra options to merge into the ECharts dict.
-            user_colors (list[str], optional): List of hex colors. Defaults to None.
-            **kwargs: Forwarded to the base Chart class.
-        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -280,6 +278,21 @@ class Line(Chart):
     """Pre-built modern Line Chart.
 
     Supports smooth lines, area fill, and automatic color palettes.
+
+    Args:
+        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+        x (str): Column name for the x-axis.
+        y (str or list[str]): Column name(s) for the y-axis.
+        title (str, optional): Chart title. Defaults to None.
+        area (bool, optional): Whether to show area fill. Defaults to True.
+        smooth (bool, optional): Whether to smooth the line. Defaults to True.
+        width (str, optional): CSS width. Defaults to "99%".
+        height (str, optional): CSS height. Defaults to "500px".
+        renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+        theme (str, optional): 'light' or 'dark'. Defaults to "light".
+        custom_options (dict, optional): Extra options to merge into the ECharts dict.
+        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
@@ -298,23 +311,6 @@ class Line(Chart):
         user_colors=None,
         **kwargs
     ):
-        """Initializes a Line Chart.
-
-        Args:
-            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-            x (str): Column name for the x-axis.
-            y (str or list[str]): Column name(s) for the y-axis.
-            title (str, optional): Chart title. Defaults to None.
-            area (bool, optional): Whether to show area fill. Defaults to True.
-            smooth (bool, optional): Whether to smooth the line. Defaults to True.
-            width (str, optional): CSS width. Defaults to "99%".
-            height (str, optional): CSS height. Defaults to "500px".
-            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
-            theme (str, optional): 'light' or 'dark'. Defaults to "light".
-            custom_options (dict, optional): Extra options to merge into the ECharts dict.
-            user_colors (list[str], optional): List of hex colors. Defaults to None.
-            **kwargs: Forwarded to the base Chart class.
-        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -425,6 +421,20 @@ class Scatter(Chart):
     """Pre-built modern Scatter Plot.
     
     Optimized for high-density visualizations with clear tooltips.
+
+    Args:
+        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+        x (str): Column name for the x-axis.
+        y (str or list[str]): Column name(s) for the y-axis.
+        title (str, optional): Chart title. Defaults to None.
+        name_col (str, optional): Column name for series names. Defaults to None.
+        width (str, optional): CSS width. Defaults to "99%".
+        height (str, optional): CSS height. Defaults to "500px".
+        renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+        theme (str, optional): 'light' or 'dark'. Defaults to "light".
+        custom_options (dict, optional): Extra options to merge into the ECharts dict.
+        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
@@ -442,22 +452,6 @@ class Scatter(Chart):
         user_colors=None,
         **kwargs
     ):
-        """Initializes a Scatter Plot.
-
-        Args:
-            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-            x (str): Column name for the x-axis.
-            y (str or list[str]): Column name(s) for the y-axis.
-            title (str, optional): Chart title. Defaults to None.
-            name_col (str, optional): Column name for series names. Defaults to None.
-            width (str, optional): CSS width. Defaults to "99%".
-            height (str, optional): CSS height. Defaults to "500px".
-            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
-            theme (str, optional): 'light' or 'dark'. Defaults to "light".
-            custom_options (dict, optional): Extra options to merge into the ECharts dict.
-            user_colors (list[str], optional): List of hex colors. Defaults to None.
-            **kwargs: Forwarded to the base Chart class.
-        """
         formatted_data = _format_data(data)
         y_cols = y if isinstance(y, list) else [y]
 
@@ -571,6 +565,19 @@ class Radar(Chart):
     """Pre-built modern Radar Chart.
 
     Radar charts are ideal for displaying multivariate data on a 2D chart.
+
+    Args:
+        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
+        name_col (str): Column that identifies each series (e.g., 'player').
+        dimensions (list[str]): Column names for the radar axes (e.g., ['speed', 'power']).
+        title (str, optional): Chart title. Defaults to None.
+        width (str, optional): CSS width. Defaults to "99%".
+        height (str, optional): CSS height. Defaults to "500px".
+        renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
+        theme (str, optional): 'light' or 'dark'. Defaults to "light".
+        custom_options (dict, optional): Extra options to merge into the ECharts dict.
+        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
@@ -587,21 +594,6 @@ class Radar(Chart):
         user_colors=None,
         **kwargs
     ):
-        """Initializes a Radar Chart.
-
-        Args:
-            data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-            name_col (str): Column that identifies each series (e.g., 'player').
-            dimensions (list[str]): Column names for the radar axes (e.g., ['speed', 'power']).
-            title (str, optional): Chart title. Defaults to None.
-            width (str, optional): CSS width. Defaults to "99%".
-            height (str, optional): CSS height. Defaults to "500px".
-            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
-            theme (str, optional): 'light' or 'dark'. Defaults to "light".
-            custom_options (dict, optional): Extra options to merge into the ECharts dict.
-            user_colors (list[str], optional): List of hex colors. Defaults to None.
-            **kwargs: Forwarded to the base Chart class.
-        """
         formatted_data = _format_data(data)
 
         # Group data by series name
