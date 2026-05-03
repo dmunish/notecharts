@@ -1,19 +1,7 @@
-import random
-import colorsys
+"""Pre-built chart classes for common visualization patterns."""
+
 from .widget import Chart, JSCode
 
-def _format_data(data):
-    """Formats the input data for ECharts.
-
-    Args:
-        data (list-of-lists, list-of-dicts, or DataFrame): The input data.
-
-    Returns:
-        list: The formatted data.
-    """
-    if hasattr(data, "to_dict") and hasattr(data, "columns"):
-        return data.to_dict(orient="records")
-    return data
 
 def _deep_update(d, u):
     """Recursively updates a dictionary.
@@ -28,136 +16,27 @@ def _deep_update(d, u):
         else:
             d[k] = v
 
-def _get_harmony_hues(base_hue, harmony):
-    """Returns a list of hue angles for the given harmony scheme.
-
-    Args:
-        base_hue (float): Base hue angle (0-360).
-        harmony (str): Harmony scheme Name. One of 'monochromatic', 'complementary',
-            'triadic', 'tetradic', 'split-complementary', or 'analogous'.
-
-    Returns:
-        list[float]: List of hue angles.
-    """
-    base = base_hue % 360
-    if harmony == "monochromatic":
-        return [base]
-    elif harmony == "complementary":
-        return [base, (base + 180) % 360]
-    elif harmony == "triadic":
-        return [base, (base + 120) % 360, (base + 240) % 360]
-    elif harmony == "tetradic":
-        return [base, (base + 90) % 360, (base + 180) % 360, (base + 270) % 360]
-    elif harmony == "split-complementary":
-        return [base, (base + 150) % 360, (base + 210) % 360]
-    elif harmony == "analogous":
-        return [(base - 30) % 360, base, (base + 30) % 360]
-    else:
-        return [base]
-
-def _hsv_palette(n_colors, color_theme="pastel", base_hue=None, chart_theme="light", harmony="auto"):
-    """Generates a cohesive HEX color palette based on HSV values and harmonies.
-
-    Args:
-        n_colors (int): Number of colors to generate.
-        color_theme (str, optional): Preset saturation/value ('pastel', 'neon', 'professional').
-            Defaults to "pastel".
-        base_hue (float, optional): Seed hue (0-360). Defaults to None.
-        chart_theme (str, optional): 'light' or 'dark' background context. Defaults to "light".
-        harmony (str, optional): Color harmony scheme or 'auto'. Defaults to "auto".
-
-    Returns:
-        list[str]: List of HEX color strings.
-
-    Raises:
-        ValueError: If color_theme is unknown.
-    """
-    if n_colors <= 0:
-        return []
-
-    if chart_theme == "dark":
-        presets = {
-            "pastel":       (0.25, 0.90),
-            "neon":         (0.80, 0.95),
-            "professional": (0.45, 0.80),
-        }
-    else:
-        presets = {
-            "pastel":       (0.40, 0.80),
-            "neon":         (0.75, 1.00),
-            "professional": (0.50, 0.75),
-        }
-    if color_theme not in presets:
-        raise ValueError(f"Unknown color_theme '{color_theme}'. Choose from {list(presets.keys())}.")
-    sat, val = presets[color_theme]
-
-    if base_hue is None:
-        random.seed(42)
-        base_hue = random.random() * 360
-
-    # Auto-select harmony based on number of colors
-    if harmony == "auto":
-        if n_colors == 1:
-            harmony = "monochromatic"
-        elif n_colors == 2:
-            harmony = "complementary"
-        elif n_colors == 3:
-            harmony = "triadic"
-        elif n_colors == 4:
-            harmony = "tetradic"
-        elif n_colors == 5:
-            harmony = "split-complementary"
-        else:
-            harmony = "tetradic"
-
-    base_hues = _get_harmony_hues(base_hue, harmony)
-    colors = []
-    for i in range(n_colors):
-        if i < len(base_hues):
-            hue = base_hues[i]
-            s = sat
-            v = val
-        else:
-            # Generate variants by cycling through base hues and subtly altering sat/val
-            cycle = (i - len(base_hues)) // len(base_hues)
-            idx = (i - len(base_hues)) % len(base_hues)
-            hue = base_hues[idx]
-            # Alternate between slightly desaturated/lighter and slightly darkened
-            if cycle % 2 == 0:
-                s = sat * 0.85
-                v = min(1.0, val * 1.15)
-            else:
-                s = sat * 1.0
-                v = max(0.0, val * 0.85)
-        rgb = colorsys.hsv_to_rgb(hue / 360.0, s, v)
-        hex_color = "#{:02x}{:02x}{:02x}".format(
-            int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
-        )
-        colors.append(hex_color)
-    return colors
 
 class Bar(Chart):
     """Pre-built modern Bar Chart.
 
-    Notecharts' Bar integration handles automatic layout, tooltips, and themes.
+    Creates a 2D bar chart from x-axis categories and one or more y-series.
+    Automatically determines n_colors based on the number of series.
 
     Args:
-        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-        x (str): Column name for the x-axis.
-        y (str or list[str]): Column name(s) for the y-axis.
+        x (list): X-axis categories (labels).
+        y (dict): Mapping of series names to data lists, e.g. {"Sales": [10, 20, 30]}.
         title (str, optional): Chart title. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
-        custom_options (dict, optional): Extra options to merge into the ECharts dict.
-        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        options (dict, optional): ECharts options to merge/override.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
-        data,
         x,
         y,
         title=None,
@@ -165,19 +44,18 @@ class Bar(Chart):
         height="500px",
         renderer="canvas",
         theme="light",
-        custom_options=None,
-        user_colors=None,
+        options=None,
         **kwargs
     ):
-        formatted_data = _format_data(data)
-        y_cols = y if isinstance(y, list) else [y]
+        n_series = len(y) if isinstance(y, dict) else 1
 
+        # Build series array from y dict
         series = []
-        for y_col in y_cols:
+        for series_name, data in (y.items() if isinstance(y, dict) else [(None, y)]):
             series.append({
                 "type": "bar",
-                "encode": {"x": x, "y": y_col},
-                "name": str(y_col),
+                "name": str(series_name) if series_name else "value",
+                "data": data,
                 "itemStyle": {
                     "borderRadius": [6, 6, 0, 0],
                 },
@@ -185,22 +63,19 @@ class Bar(Chart):
                 "animationEasing": "cubicOut",
             })
 
-        # Use user-provided colors if given, else auto-generate harmonious palette
-        if user_colors is not None:
-            palette = user_colors
-        else:
-            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
-
-        options = {
-            "color": palette,
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {
-                    "fontSize": 22,
-                    "fontWeight": 600,
-                },
+        # Build base options
+        base_options = {
+            "xAxis": {
+                "type": "category",
+                "data": x,
+                "axisLine": {"show": False},
+                "axisTick": {"show": False},
+                "axisLabel": {"fontSize": 12},
+            },
+            "yAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed"}},
+                "axisLabel": {"fontSize": 12},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -211,22 +86,16 @@ class Bar(Chart):
                 "shadowColor": "rgba(0, 0, 0, 0.4)",
                 "shadowOffsetX": 0,
                 "shadowOffsetY": 4,
-                "extraCssText": "border-radius: 12px;"
+                "extraCssText": "border-radius: 12px;",
             },
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "magicType": {
-                        "type": ["line", "stack"]
-                    },
-                    "saveAsImage": {
-                        "name": title if title else "Chart"
-                    }
+                    "magicType": {"type": ["line", "stack"]},
+                    "saveAsImage": {"name": title if title else "Chart"},
                 }
             },
-            "dataZoom": {
-                "type": JSCode("'inside'")
-            },
+            "dataZoom": {"type": JSCode("'inside'")},
             "legend": {
                 "bottom": 20,
                 "type": "scroll",
@@ -240,33 +109,23 @@ class Bar(Chart):
                 "top": "18%",
                 "containLabel": True,
             },
-            "xAxis": {
-                "type": "category",
-                "axisLine": {"show": False},
-                "axisTick": {"show": False},
-                "axisLabel": {"fontSize": 12},
-            },
-            "yAxis": {
-                "type": "value",
-                "splitLine": {
-                    "lineStyle": {
-                        "type": "dashed",
-                    }
-                },
-                "axisLabel": {"fontSize": 12},
-            },
-            "dataset": {"source": formatted_data},
             "series": series,
         }
 
-        if title is None:
-            del options["title"]
+        if title is not None:
+            base_options["title"] = {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            }
 
-        if custom_options:
-            _deep_update(options, custom_options)
+        # Merge user options
+        if options:
+            _deep_update(base_options, options)
 
         super().__init__(
-            options=options,
+            options=base_options,
             width=width,
             height=height,
             renderer=renderer,
@@ -274,15 +133,16 @@ class Bar(Chart):
             **kwargs
         )
 
+
 class Line(Chart):
     """Pre-built modern Line Chart.
 
-    Supports smooth lines, area fill, and automatic color palettes.
+    Creates a line chart with optional area fill and smooth interpolation.
+    Automatically determines n_colors based on the number of series.
 
     Args:
-        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-        x (str): Column name for the x-axis.
-        y (str or list[str]): Column name(s) for the y-axis.
+        x (list): X-axis categories (labels).
+        y (dict): Mapping of series names to data lists.
         title (str, optional): Chart title. Defaults to None.
         area (bool, optional): Whether to show area fill. Defaults to True.
         smooth (bool, optional): Whether to smooth the line. Defaults to True.
@@ -290,14 +150,12 @@ class Line(Chart):
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
-        custom_options (dict, optional): Extra options to merge into the ECharts dict.
-        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        options (dict, optional): ECharts options to merge/override.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
-        data,
         x,
         y,
         title=None,
@@ -307,25 +165,16 @@ class Line(Chart):
         height="500px",
         renderer="canvas",
         theme="light",
-        custom_options=None,
-        user_colors=None,
+        options=None,
         **kwargs
     ):
-        formatted_data = _format_data(data)
-        y_cols = y if isinstance(y, list) else [y]
-
-        if user_colors is not None:
-            palette = user_colors
-        else:
-            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
-
+        # Build series array from y dict
         series = []
-        for i, y_col in enumerate(y_cols):
-            color = palette[i % len(palette)]
+        for series_name, data in (y.items() if isinstance(y, dict) else [(None, y)]):
             ser = {
                 "type": "line",
-                "encode": {"x": x, "y": y_col},
-                "name": str(y_col),
+                "name": str(series_name) if series_name else "value",
+                "data": data,
                 "smooth": smooth,
                 "symbol": "circle",
                 "symbolSize": 8,
@@ -334,25 +183,21 @@ class Line(Chart):
                 "animationEasing": "cubicOut",
             }
             if area:
-                ser["areaStyle"] = {
-                    "color": {
-                        "type": "linear",
-                        "x": 0, "y": 0, "x2": 0, "y2": 1,
-                        "colorStops": [
-                            {"offset": 0, "color": f"{color}40"},
-                            {"offset": 1, "color": f"{color}00"}
-                        ]
-                    }
-                }
+                ser["areaStyle"] = {"opacity": 0.3}
             series.append(ser)
 
-        options = {
-            "color": palette,
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
+        base_options = {
+            "xAxis": {
+                "type": "category",
+                "data": x,
+                "axisLine": {"show": False},
+                "axisTick": {"show": False},
+                "axisLabel": {"fontSize": 12},
+            },
+            "yAxis": {
+                "type": "value",
+                "splitLine": {"lineStyle": {"type": "dashed"}},
+                "axisLabel": {"fontSize": 12},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -366,11 +211,7 @@ class Line(Chart):
                 "feature": {
                     "restore": {},
                     "magicType": {"type": ["bar", "stack"]},
-                    "saveAsImage": {
-                        "name": title if title else "Chart",
-                        "pixelRatio": 3
-                    },
-                    "dataZoom": {}
+                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
                 }
             },
             "dataZoom": {"type": JSCode("'inside'")},
@@ -387,29 +228,22 @@ class Line(Chart):
                 "top": "18%",
                 "containLabel": True,
             },
-            "xAxis": {
-                "type": "category",
-                "axisLine": {"show": False},
-                "axisTick": {"show": False},
-                "axisLabel": {"fontSize": 12},
-            },
-            "yAxis": {
-                "type": "value",
-                "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12},
-            },
-            "dataset": {"source": formatted_data},
             "series": series,
         }
 
-        if title is None:
-            del options["title"]
+        if title is not None:
+            base_options["title"] = {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            }
 
-        if custom_options:
-            _deep_update(options, custom_options)
+        if options:
+            _deep_update(base_options, options)
 
         super().__init__(
-            options=options,
+            options=base_options,
             width=width,
             height=height,
             renderer=renderer,
@@ -417,68 +251,57 @@ class Line(Chart):
             **kwargs
         )
 
+
 class Scatter(Chart):
     """Pre-built modern Scatter Plot.
-    
-    Optimized for high-density visualizations with clear tooltips.
+
+    Creates a 2D or 3D scatter plot depending on whether z is provided.
+    Automatically determines n_colors based on the number of series.
 
     Args:
-        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-        x (str): Column name for the x-axis.
-        y (str or list[str]): Column name(s) for the y-axis.
+        x (list): X-axis data.
+        y (list): Y-axis data.
+        z (list, optional): Z-axis data for 3D scatter. Defaults to None.
         title (str, optional): Chart title. Defaults to None.
-        name_col (str, optional): Column name for series names. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
-        custom_options (dict, optional): Extra options to merge into the ECharts dict.
-        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        options (dict, optional): ECharts options to merge/override.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
-        data,
         x,
         y,
+        z=None,
         title=None,
-        name_col=None,
         width="99%",
         height="500px",
         renderer="canvas",
         theme="light",
-        custom_options=None,
-        user_colors=None,
+        options=None,
         **kwargs
     ):
-        formatted_data = _format_data(data)
-        y_cols = y if isinstance(y, list) else [y]
+        is_3d = z is not None
 
-        series = []
-        for y_col in y_cols:
-            series.append({
-                "type": "scatter",
-                "encode": {"x": x, "y": y_col},
-                "name": str(y_col),
-                "symbolSize": 14,
-                "animationDuration": 1000,
-                "animationEasing": "cubicOut",
-            })
-
-        if user_colors is not None:
-            palette = user_colors
+        # Build data points
+        if is_3d:
+            data = [[x[i], y[i], z[i]] for i in range(len(x))]
         else:
-            palette = _hsv_palette(len(y_cols), color_theme="neon", chart_theme=theme, harmony="auto")
+            data = [[x[i], y[i]] for i in range(len(x))]
 
-        options = {
-            "color": palette,
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
-            },
+        series = [{
+            "type": "scatter3D" if is_3d else "scatter",
+            "name": "data",
+            "data": data,
+            "symbolSize": 10,
+            "animationDuration": 1000,
+            "animationEasing": "cubicOut",
+        }]
+
+        base_options = {
             "tooltip": {
                 "trigger": "item",
                 "borderWidth": 0,
@@ -486,74 +309,49 @@ class Scatter(Chart):
                 "shadowBlur": 10,
                 "shadowColor": "rgba(0, 0, 0, 0.12)",
                 "extraCssText": "border-radius: 12px;",
-                "formatter": JSCode(
-                    f"""function(params) {{
-                        var row = params.data;
-                        var lines = [];
-                        var nameVal = '{name_col}' ? row['{name_col}'] : null;
-                        if (nameVal !== undefined && nameVal !== null) {{
-                            lines.push('<strong>' + nameVal + '</strong>');
-                        }}
-                        var val, display;
-                        for (var key in row) {{
-                            if (row.hasOwnProperty(key) && key !== '{name_col}') {{
-                                val = row[key];
-                                display = (typeof val === 'number') ? val.toFixed(3) : val;
-                                lines.push(key + ': ' + display);
-                            }}
-                        }}
-                        return lines.join('<br/>');
-                    }}"""
-                )
             },
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "saveAsImage": {
-                        "name": title if title else "Chart",
-                        "pixelRatio": 3
-                    },
-                    "dataZoom": {}
+                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
                 }
             },
-            "dataZoom": {
-                "type": JSCode("'inside'")
-            },
-            "legend": {
-                "bottom": 20,
-                "type": "scroll",
-                "icon": "circle",
-                "textStyle": {"fontSize": 13},
-            },
-            "grid": {
-                "left": "5%",
-                "right": "5%",
-                "bottom": "18%",
-                "top": "18%",
-                "containLabel": True,
-            },
-            "xAxis": {
-                "type": "value",
-                "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12},
-            },
-            "yAxis": {
-                "type": "value",
-                "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12},
-            },
-            "dataset": {"source": formatted_data},
             "series": series,
         }
 
-        if title is None:
-            del options["title"]
+        if is_3d:
+            base_options.update({
+                "grid3D": {"boxWidth": 100, "boxDepth": 100, "boxHeight": 100},
+                "xAxis3D": {"type": "value"},
+                "yAxis3D": {"type": "value"},
+                "zAxis3D": {"type": "value"},
+            })
+        else:
+            base_options.update({
+                "xAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed"}}},
+                "yAxis": {"type": "value", "splitLine": {"lineStyle": {"type": "dashed"}}},
+                "grid": {
+                    "left": "5%",
+                    "right": "5%",
+                    "bottom": "15%",
+                    "top": "15%",
+                    "containLabel": True,
+                },
+            })
 
-        if custom_options:
-            _deep_update(options, custom_options)
+        if title is not None:
+            base_options["title"] = {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            }
+
+        if options:
+            _deep_update(base_options, options)
 
         super().__init__(
-            options=options,
+            options=base_options,
             width=width,
             height=height,
             renderer=renderer,
@@ -561,83 +359,61 @@ class Scatter(Chart):
             **kwargs
         )
 
+
 class Radar(Chart):
     """Pre-built modern Radar Chart.
 
     Radar charts are ideal for displaying multivariate data on a 2D chart.
+    Each series represents a different entity with values across multiple dimensions.
 
     Args:
-        data (list-of-lists, list-of-dicts, or DataFrame): The source data.
-        name_col (str): Column that identifies each series (e.g., 'player').
-        dimensions (list[str]): Column names for the radar axes (e.g., ['speed', 'power']).
+        series_data (dict): Mapping of series names to lists of values.
+                            e.g. {"Player A": [80, 90, 70], "Player B": [85, 80, 95]}
+        dimensions (list[str]): Names of the radar axes. e.g. ["Speed", "Power", "Agility"]
         title (str, optional): Chart title. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
-        custom_options (dict, optional): Extra options to merge into the ECharts dict.
-        user_colors (list[str], optional): List of hex colors. Defaults to None.
+        options (dict, optional): ECharts options to merge/override.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
-        data,
-        name_col,
+        series_data,
         dimensions,
         title=None,
         width="99%",
         height="500px",
         renderer="canvas",
         theme="light",
-        custom_options=None,
-        user_colors=None,
+        options=None,
         **kwargs
     ):
-        formatted_data = _format_data(data)
+        # Build radar axes
+        radar_config = {
+            "indicator": [{"name": dim} for dim in dimensions],
+            "splitNumber": 4,
+            "name": {"textStyle": {"color": "#666"}},
+            "splitLine": {"lineStyle": {"color": ["#eee", "#ddd", "#ccc", "#bbb", "#aaa"]}},
+            "splitArea": {"areaStyle": {"color": ["rgba(0,0,0,0.01)", "rgba(0,0,0,0.02)"]}},
+        }
 
-        # Group data by series name
-        series_map = {}
-        for row in formatted_data:
-            name = row[name_col]
-            series_map.setdefault(name, []).append(row)
-
-        # Compute max per dimension for indicator range
-        dim_max = {d: 0 for d in dimensions}
-        for row in formatted_data:
-            for d in dimensions:
-                if row[d] > dim_max[d]:
-                    dim_max[d] = row[d]
-
-        indicators = [{"name": d, "max": dim_max[d]} for d in dimensions]
-
-        # Build series list
+        # Build series from series_data dict
         series = []
-        for idx, (name, rows) in enumerate(series_map.items()):
-            row = rows[0]
-            values = [row[d] for d in dimensions]
+        for series_name, values in series_data.items():
             series.append({
-                "type": "radar",
-                "data": [{"value": values, "name": str(name)}],
-                "areaStyle": {"opacity": 0.2},
-                "symbol": "circle",
-                "symbolSize": 6,
-                "lineStyle": {"width": 2},
+                "name": str(series_name),
+                "value": values,
+                "areaStyle": {"opacity": 0.3},
+                "animationDuration": 1000,
+                "animationEasing": "cubicOut",
             })
 
-        if user_colors is not None:
-            palette = user_colors
-        else:
-            palette = _hsv_palette(len(series), color_theme="neon", chart_theme=theme, harmony="auto")
-
-        options = {
-            "color": palette,
-            "title": {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
-            },
+        base_options = {
+            "radar": radar_config,
+            "series": [{"type": "radar", "data": series}],
             "tooltip": {
                 "trigger": "item",
                 "borderWidth": 0,
@@ -646,42 +422,27 @@ class Radar(Chart):
                 "shadowColor": "rgba(0, 0, 0, 0.12)",
                 "extraCssText": "border-radius: 12px;",
             },
-            "toolbox": {
-                "feature": {
-                    "restore": {},
-                    "saveAsImage": {
-                        "name": title if title else "Chart",
-                        "pixelRatio": 3
-                    },
-                }
-            },
             "legend": {
                 "bottom": 20,
                 "type": "scroll",
                 "icon": "circle",
                 "textStyle": {"fontSize": 13},
             },
-            "radar": {
-                "indicator": indicators,
-                "splitArea": {
-                    "areaStyle": {
-                        "color": ["rgba(0,0,0,0.02)", "rgba(0,0,0,0.04)"]
-                    }
-                },
-                "axisLine": {"lineStyle": {"color": "rgba(0,0,0,0.1)"}},
-                "splitLine": {"lineStyle": {"color": "rgba(0,0,0,0.1)"}},
-            },
-            "series": series,
         }
 
-        if title is None:
-            del options["title"]
+        if title is not None:
+            base_options["title"] = {
+                "text": title,
+                "left": "center",
+                "top": 24,
+                "textStyle": {"fontSize": 22, "fontWeight": 600},
+            }
 
-        if custom_options:
-            _deep_update(options, custom_options)
+        if options:
+            _deep_update(base_options, options)
 
         super().__init__(
-            options=options,
+            options=base_options,
             width=width,
             height=height,
             renderer=renderer,
