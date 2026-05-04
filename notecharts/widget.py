@@ -3,6 +3,7 @@ import uuid
 import urllib.parse
 import importlib
 from IPython.display import display, HTML
+from typing import Literal
 
 _PALETTES_MAPPING = {
     "Accent": "colorbrewer.qualitative.Accent_7",
@@ -203,28 +204,66 @@ _PALETTES_MAPPING = {
     "red": "cubehelix.red_16"
 }
 
+PaletteName = Literal[
+    "Accent", "Acton", "Algae", "Amp", "Antique", "Aquatic1", "Aquatic2",
+    "Aquatic3", "ArmyRose", "Balance", "Bamako", "Batlow", "Berlin", "Bilbao",
+    "BluGrn", "BluYl", "BlueDarkOrange12", "BlueDarkOrange18", "BlueDarkRed12",
+    "BlueDarkRed18", "BlueGray", "BlueGreen", "BlueGrey", "BlueOrange10",
+    "BlueOrange12", "BlueOrange8", "BlueOrangeRed", "BlueRed", "Blues",
+    "Blues10", "Blues7", "Bold", "BrBG", "BrewerMap", "Broc", "BrownBlue10",
+    "BrownBlue12", "BrwnYl", "BuGn", "BuPu", "Buda", "Burg", "BurgYl",
+    "CartoColorsMap", "Cavalcanti", "Chevalier", "CmoceanMap", "ColorBlind",
+    "Cork", "Cube1", "CubeYF", "Cubehelix", "Curl", "Darjeeling1",
+    "Darjeeling2", "Darjeeling3", "Darjeeling4", "Dark2", "DarkMint", "Davos",
+    "Deep", "Delta", "Dense", "Devon", "Earth", "Emrld", "Fall",
+    "FantasticFox1", "FantasticFox2", "Geyser", "GnBu", "GrandBudapest1",
+    "GrandBudapest2", "GrandBudapest3", "GrandBudapest4", "GrandBudapest5",
+    "Gray", "GrayC", "GreenMagenta", "GreenOrange", "Greens", "Greys",
+    "Haline", "Hawaii", "Ice", "Imola", "Inferno", "IsleOfDogs1",
+    "IsleOfDogs2", "IsleOfDogs3", "LaJolla", "LaPaz", "LightBartleinMap",
+    "LinearL", "Lisbon", "Magenta", "Magma", "Margot1", "Margot2", "Margot3",
+    "MatplotlibMap", "Matter", "Mendl", "Mint", "Moonrise1", "Moonrise2",
+    "Moonrise3", "Moonrise4", "Moonrise5", "Moonrise6", "Moonrise7",
+    "MycartaMap", "Nuuk", "Oleron", "OrRd", "OrYel", "Oranges", "Oslo", "Oxy",
+    "PRGn", "Paired", "Palette", "Pastel", "Pastel1", "Pastel2", "Peach",
+    "Phase", "PiYG", "PinkYl", "Plasma", "Prism", "PuBu", "PuBuGn", "PuOr",
+    "PuRd", "Purp", "PurpOr", "PurpleGray", "Purples", "RdBu", "RdGy", "RdPu",
+    "RdYlBu", "RdYlGn", "RedOr", "RedYellowBlue", "Reds", "Roma", "Royal1",
+    "Royal2", "Royal3", "Safe", "ScientificMap", "Set1", "Set2", "Set3",
+    "Solar", "Spectral", "Speed", "Sunset", "SunsetDark", "Tableau",
+    "TableauLight", "TableauMap", "TableauMedium", "Teal", "TealGrn",
+    "TealRose", "Tempo", "Temps", "Thermal", "Tofino", "Tokyo",
+    "TrafficLight", "Tropic", "Turbid", "Turku", "Vik", "Viridis", "Vivid",
+    "WesAndersonMap", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", "Zissou",
+    "agGrnYl", "agSunset", "classic", "cubehelix1", "cubehelix2", "cubehelix3",
+    "jim_special", "perceptual_rainbow", "purple", "red"
+]
 
-def _sample_colors(colors, n):
+def _sample_colors(colors, n, padding=0.1):
     """
     Interpolates 'n' colors from a list of RGB tuples via linear interpolation.
 
     Args:
         colors (list[tuple]): List of RGB tuples with values in [0, 1].
         n (int): Number of colors to sample.
+        padding (float): Ratio to exclude from start and end of the palette. Defaults to 0.1.
 
     Returns:
         list[tuple]: List of n interpolated RGB tuples.
     """
     if n <= 0:
         return []
-    if n == len(colors):
-        return colors
     if n == 1:
         return [colors[len(colors) // 2]]
 
     result = []
+    
+    start_pos = padding * (len(colors) - 1)
+    end_pos = (1.0 - padding) * (len(colors) - 1)
+    span = end_pos - start_pos
+
     for i in range(n):
-        pos = i / (n - 1) * (len(colors) - 1)
+        pos = start_pos + (i / (n - 1)) * span
         idx = int(pos)
         fract = pos - idx
 
@@ -403,12 +442,14 @@ class Chart:
     def _resolve_palettes_impl(self, obj, n_colors):
         """Implementation of palette resolution."""
         if isinstance(obj, dict):
-            for key, value in obj.items():
+            for key, value in list(obj.items()):
                 if key == "color" and isinstance(value, str):
                     # Replace palette string with interpolated hex array
                     hex_palette = self._get_palette_as_hex(value, n_colors)
                     if hex_palette is not None:
                         obj[key] = hex_palette
+                    elif obj is self.options:
+                        del obj[key]
                 else:
                     self._resolve_palettes_impl(value, n_colors)
         elif isinstance(obj, list):
