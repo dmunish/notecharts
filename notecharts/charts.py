@@ -1,6 +1,7 @@
 """Pre-built chart classes for common visualization patterns."""
 
-from .widget import Chart, JSCode
+from typing import Union
+from .widget import Chart, JSCode, PaletteName
 
 
 def _deep_update(d, u):
@@ -27,6 +28,7 @@ class Bar(Chart):
         x (list): X-axis categories (labels).
         y (dict): Mapping of series names to data lists, e.g. {"Sales": [10, 20, 30]}.
         title (str, optional): Chart title. Defaults to None.
+        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -40,6 +42,7 @@ class Bar(Chart):
         x,
         y,
         title=None,
+        colors: Union[list, PaletteName, str] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -120,6 +123,9 @@ class Bar(Chart):
                 "textStyle": {"fontSize": 22, "fontWeight": 600},
             }
 
+        if colors is not None:
+            base_options["color"] = colors
+
         # Merge user options
         if options:
             _deep_update(base_options, options)
@@ -144,8 +150,7 @@ class Line(Chart):
         x (list): X-axis categories (labels).
         y (dict): Mapping of series names to data lists.
         title (str, optional): Chart title. Defaults to None.
-        area (bool, optional): Whether to show area fill. Defaults to True.
-        smooth (bool, optional): Whether to smooth the line. Defaults to True.
+        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -159,8 +164,7 @@ class Line(Chart):
         x,
         y,
         title=None,
-        area=True,
-        smooth=True,
+        colors: Union[list, PaletteName, str] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -175,15 +179,13 @@ class Line(Chart):
                 "type": "line",
                 "name": str(series_name) if series_name else "value",
                 "data": data,
-                "smooth": smooth,
+                "smooth": False,
                 "symbol": "circle",
                 "symbolSize": 8,
                 "lineStyle": {"width": 3},
                 "animationDuration": 1000,
                 "animationEasing": "cubicOut",
             }
-            if area:
-                ser["areaStyle"] = {"opacity": 0.3}
             series.append(ser)
 
         base_options = {
@@ -239,6 +241,9 @@ class Line(Chart):
                 "textStyle": {"fontSize": 22, "fontWeight": 600},
             }
 
+        if colors is not None:
+            base_options["color"] = colors
+
         if options:
             _deep_update(base_options, options)
 
@@ -263,6 +268,7 @@ class Scatter(Chart):
         y (list): Y-axis data.
         z (list, optional): Z-axis data for 3D scatter. Defaults to None.
         title (str, optional): Chart title. Defaults to None.
+        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -277,6 +283,7 @@ class Scatter(Chart):
         y,
         z=None,
         title=None,
+        colors: Union[list, PaletteName, str] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -347,6 +354,9 @@ class Scatter(Chart):
                 "textStyle": {"fontSize": 22, "fontWeight": 600},
             }
 
+        if colors is not None:
+            base_options["color"] = colors
+
         if options:
             _deep_update(base_options, options)
 
@@ -371,6 +381,7 @@ class Radar(Chart):
                             e.g. {"Player A": [80, 90, 70], "Player B": [85, 80, 95]}
         dimensions (list[str]): Names of the radar axes. e.g. ["Speed", "Power", "Agility"]
         title (str, optional): Chart title. Defaults to None.
+        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -384,6 +395,7 @@ class Radar(Chart):
         series_data,
         dimensions,
         title=None,
+        colors: Union[list, PaletteName, str] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -437,6 +449,9 @@ class Radar(Chart):
                 "top": 24,
                 "textStyle": {"fontSize": 22, "fontWeight": 600},
             }
+
+        if colors is not None:
+            base_options["color"] = colors
 
         if options:
             _deep_update(base_options, options)
