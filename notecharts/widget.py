@@ -325,7 +325,7 @@ class Chart:
         height (str): CSS height of the chart container.
         renderer (str): The renderer type ('canvas' or 'svg').
         theme (str): The chart theme ('light' or 'dark').
-        fonts (list): List of discovered custom font families.
+        devicePixelRatio (str): The pixel ratio at which to render when using Canvas. Default is 1.
     """
 
     # Generic CSS font families that should not be loaded from Google Fonts
@@ -343,6 +343,7 @@ class Chart:
         height: str = "500px",
         renderer: str = "canvas",
         theme: str = "light",
+        devicePixelRatio = 1
     ):
         """Initializes the Chart with options and display settings.
 
@@ -463,17 +464,19 @@ class Chart:
                     self._resolve_palettes_impl(item, n_colors)
 
     def _infer_n_colors(self, obj):
-        """Infer the number of colors needed from the options structure."""
-        # Look for series array to count them
         if isinstance(obj, dict):
             if "series" in obj and isinstance(obj["series"], list):
-                return len(obj["series"])
-            # Recursively search
+                series_list = obj["series"]
+                if series_list and "categories" in series_list[0]:
+                    cats = series_list[0]["categories"]
+                    if isinstance(cats, list):
+                        return len(cats)
+                return len(series_list)   # fallback to series count
             for value in obj.values():
                 n = self._infer_n_colors(value)
                 if n > 0:
                     return n
-        return 10  # Default fallback
+        return 10
 
     def _get_palette_as_hex(self, palette_name, n_colors):
         """
@@ -575,7 +578,7 @@ class Chart:
             function initChart(ec) {{
                 waitForDom('{chart_id}', function(dom) {{
                     var chart = ec.init(dom, '{self.theme}', {{
-                        renderer: '{self.renderer}', devicePixelRatio: 3
+                        renderer: '{self.renderer}', devicePixelRatio: {self.devicePixelRatio}
                     }});
                     chart.setOption({options_js});
                     window.addEventListener('resize', function() {{ chart.resize(); }});
