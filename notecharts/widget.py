@@ -39,9 +39,11 @@ class Chart:
 
     Features include automatic Google Fonts loading from any 'fontFamily' value found
     inside the options dictionary and global font setting via `textStyle.fontFamily`.
+    Supports registering GeoJSON maps for map-type charts.
 
     Attributes:
         options (dict): The ECharts option dictionary.
+        maps (dict): Dictionary mapping map names to GeoJSON data.
         width (str): CSS width of the chart container.
         height (str): CSS height of the chart container.
         renderer (str): The renderer type ('canvas' or 'svg').
@@ -64,7 +66,8 @@ class Chart:
         height: str = "500px",
         renderer: str = "canvas",
         theme: str = "light",
-        devicePixelRatio = 1
+        devicePixelRatio = 1,
+        maps: dict = None
     ):
         """Initializes the Chart with options and display settings.
 
@@ -75,16 +78,24 @@ class Chart:
             renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
             theme (str, optional): 'light' or 'dark'. Defaults to "light".
             devicePixelRatio(int, optional): The pixel ratio at which to render when using Canvas. Default is 1.
+            maps (dict, optional): Dictionary mapping map names to GeoJSON data. Defaults to None.
 
         Raises:
-            TypeError: If options is not a dictionary.
+            TypeError: If options is not a dictionary or maps is not a dictionary/None.
             ValueError: If renderer or theme is invalid.
         """
         if not isinstance(options, dict):
             raise TypeError(
                 f"Chart options must be a dictionary, got {type(options).__name__}."
             )
+        
+        if maps is not None and not isinstance(maps, dict):
+            raise TypeError(
+                f"Chart maps must be a dictionary or None, got {type(maps).__name__}."
+            )
+        
         self.options = options
+        self.maps = maps or {}
         self.width = width.strip() if isinstance(width, str) else str(width)
         self.height = height.strip() if isinstance(height, str) else str(height)
 
@@ -168,6 +179,9 @@ class Chart:
         if chart_id is None:
             chart_id = f"echart_{uuid.uuid4().hex}"
         options_js = self._serialise_options()
+        
+        # Serialize maps to JSON
+        maps_json = json.dumps(self.maps) if self.maps else "{}"
 
         font_link = ""
         if self.fonts:
@@ -177,6 +191,7 @@ class Chart:
             font_link = f'<link href="{base_url}?{query_string}" rel="stylesheet">'
 
         has_fonts = "true" if self.fonts else "false"
+        has_maps = "true" if self.maps else "false"
 
         return f"""
         {font_link}
@@ -212,6 +227,15 @@ class Chart:
                     var chart = ec.init(dom, '{self.theme}', {{
                         renderer: '{self.renderer}', devicePixelRatio: {self.devicePixelRatio}
                     }});
+                    
+                    // Register maps if provided
+                    if ({has_maps}) {{
+                        var maps = {maps_json};
+                        Object.entries(maps).forEach(function([name, data]) {{
+                            ec.registerMap(name, data);
+                        }});
+                    }}
+                    
                     chart.setOption({options_js});
                     window.addEventListener('resize', function() {{ chart.resize(); }});
                 }});
