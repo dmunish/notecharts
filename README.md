@@ -4,7 +4,6 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/notecharts.svg?style=flat-square)](https://pypi.org/project/notecharts/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Python Versions](https://img.shields.io/pypi/pyversions/notecharts.svg?style=flat-square)](https://pypi.org/project/notecharts/)
 
 **notecharts** (note-charts or not-echarts) is an ultra-lightweight, zero-config wrapper for Apache ECharts in Jupyter environments. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
 
@@ -16,9 +15,11 @@ If you've used ECharts in Python before, you likely encountered two extremes:
 
 **notecharts** bridges this gap. It provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, and serialization.
 
-| ![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true) | ![Multi-Line](https://github.com/dmunish/notecharts/blob/main/assets/line.png?raw=true) |
+| Force Directed Graph | Multi-Line |
 |:---:|:---:|
-| ![Graph Network](assets/graph-network.png) | ![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true) |
+| ![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true) | ![Multi-Line](https://github.com/dmunish/notecharts/blob/main/assets/line.png?raw=true) |
+| **Geo/Map** | **3D Scatter** |
+| ![Map](https://github.com/dmunish/notecharts/blob/main/assets/geo.png?raw=true) | ![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true) |
 
 ## Key Features
 
