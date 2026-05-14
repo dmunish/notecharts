@@ -1,5 +1,6 @@
 import re
 import importlib
+import random
 from typing import Literal, Union, List, Tuple, Optional
 
 # ============================================================================
@@ -571,6 +572,7 @@ def Palette(
     value: Optional[float] = None,
     saturation: Optional[float] = None,
     alpha: float = 1.0,
+    shuffle: Optional[Union[bool, int]] = None,
 ) -> List[str]:
     """
     Generate a list of colors from a palette or custom color specification.
@@ -619,6 +621,13 @@ def Palette(
         Alpha transparency value in [0, 1]. Defaults to 1.0 (opaque).
         Only applies to 'rgba' format or 'hex' format with alpha.
         Has no effect on 'rgb' or 'hsv' formats.
+
+    shuffle : bool or int, optional
+        Whether to shuffle the sampled colors. Can be:
+        
+        - None: No shuffling (default).
+        - True: Shuffle using the default random state.
+        - int: Shuffle using the given integer as a random seed for reproducibility.
 
     Returns
     -------
@@ -693,9 +702,16 @@ def Palette(
     if not (0 <= alpha <= 1):
         raise ValueError(f"Parameter 'alpha' must be in [0, 1], got {alpha}.")
 
+    # Validate shuffle
+    if shuffle is not None:
+        if not isinstance(shuffle, (bool, int)):
+            raise TypeError(f"Parameter 'shuffle' must be a boolean or integer, got {type(shuffle).__name__}.")
+        if isinstance(shuffle, int) and shuffle < 0:
+            raise ValueError(f"Parameter 'shuffle' seed must be non-negative, got {shuffle}.")
+
     # ========================================================================
     # Load/Parse Colors
-    # ========================================================================
+    # ==========================================================================
 
     if isinstance(palette, str):
         # Try palette name first
@@ -739,6 +755,17 @@ def Palette(
     # ========================================================================
 
     sampled_colors = _sample_colors(colors_rgb, n)
+
+    # ========================================================================
+    # Shuffle Colors
+    # ========================================================================
+
+    if shuffle is not None:
+        if isinstance(shuffle, int):
+            rng = random.Random(shuffle)
+            rng.shuffle(sampled_colors)
+        else:  # shuffle is True
+            random.shuffle(sampled_colors)
 
     # ========================================================================
     # Apply Transformations
