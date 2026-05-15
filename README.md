@@ -2,8 +2,14 @@
   <img src="https://github.com/dmunish/notecharts/blob/main/assets/notecharts-banner.png?raw=true" height=400 width="auto" />
 </p>
 
-[![PyPI version](https://img.shields.io/pypi/v/notecharts.svg?style=flat-square)](https://pypi.org/project/notecharts/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+<div align="center">
+    <a href="https://pypi.org/project/notecharts/">
+        <img src="https://img.shields.io/pypi/v/notecharts.svg?style=for-the-badge" alt="PyPI"/>
+    </a>
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License"/>
+    </a>
+</div>
 
 **notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
 
@@ -21,9 +27,11 @@ Apache ECharts is an incredibly powerful web plotting library. While there have 
 
 | Force Directed Graph | Multi-Line |
 |:---:|:---:|
-| ![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true) | ![Multi-Line](https://github.com/dmunish/notecharts/blob/main/assets/line.png?raw=true) |
+| [![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/force-directed-graph.ipynb) | [![Multi-Line](https://github.com/dmunish/notecharts/blob/main/assets/line.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/line-bar.ipynb) |
 | **Geo/Map** | **3D Scatter** |
-| ![Map](https://github.com/dmunish/notecharts/blob/main/assets/geo.png?raw=true) | ![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true) |
+| [![Map](https://github.com/dmunish/notecharts/blob/main/assets/geo.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/geo.ipynb) | [![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/scatter-3D.ipynb) |
+
+Click the charts to view how to create them.
 
 ## Key Features
 
@@ -127,7 +135,8 @@ Bar(
 
 - **notecharts** is licensed under the [MIT License](LICENSE).
 - **Apache ECharts**: This library is a wrapper for [Apache ECharts](https://echarts.apache.org/en/index.html) which is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). 
-- *Apache ECharts, ECharts, Apache, the Apache feather, and the Apache ECharts project logo are either registered trademarks or trademarks of the Apache Software Foundation.*
+- Apache ECharts, ECharts, Apache, the Apache feather, and the Apache ECharts project logo are either registered trademarks or trademarks of the Apache Software Foundation.
+- Part of the [![Featured on Awesome README](https://awesome.re/badge-flat.svg)](https://github.com/matiassingers/awesome-readme) project.
 
 ## References
 See the [ECharts gallery](https://echarts.apache.org/examples/en/index.html) for bespoke examples, or the [official docs](https://echarts.apache.org/en/option.html) for an in-depth explanation of features and how to use them.
