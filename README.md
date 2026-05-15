@@ -5,15 +5,19 @@
 [![PyPI version](https://img.shields.io/pypi/v/notecharts.svg?style=flat-square)](https://pypi.org/project/notecharts/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-**notecharts** (note-charts or not-echarts) is an ultra-lightweight, zero-config wrapper for Apache ECharts in Jupyter environments. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
+**notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
 
 ## Why notecharts?
 
-If you've used ECharts in Python before, you likely encountered two extremes:
-- **pyecharts:** Powerful, but wraps the API in a deep "Pythonic" abstraction that often deviates from the official ECharts documentation, making it hard to translate JS examples to Python.
-- **ipecharts:** Often lacks the interactivity or ease of use, API is buggy or unclear sometimes.
+If you've done data visualization in Python before, you've likely encountered these standard tools:
+- **matplotlib:** Excellent for publication-quality static charts, but lacks out-of-the-box interactivity.
+- **plotly.py:** Great for interactive charts, but can require extensive configuration to achieve a polished, modern aesthetic or smooth animations.
 
-**notecharts** bridges this gap. It provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, and serialization.
+Apache ECharts is an incredibly powerful web plotting library. While there have been previous attempts to bring it to Jupyter, they often come with trade-offs:
+- **pyecharts:** Powerful, but introduces a deep "Pythonic" abstraction. This deviates from the official ECharts API, making it difficult to translate JavaScript examples from the docs into Python.
+- **ipecharts:** Provides widget integration, but can have inconsistent interactivity and currently lacks support for environments like Google Colab.
+
+**notecharts** bridges this gap. It provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, dynamic palettes, and serialization.
 
 | Force Directed Graph | Multi-Line |
 |:---:|:---:|
@@ -24,10 +28,10 @@ If you've used ECharts in Python before, you likely encountered two extremes:
 ## Key Features
 
 - **Declarative API:** Pass a dictionary, get a chart. No complex class hierarchies to learn.
-- **`JSCode` Support:** Inject raw JavaScript functions for formatters, tooltips, and custom logic.
-- **Smart Font Discovery:** Automatically detect `fontFamily` declarations in your options fetch the corresponding fonts (if available) from Google Fonts.
-- **Rich Color Palettes:** Access ~200 professionally-designed color palettes from [Palettable](https://jiffyclub.github.io/palettable/).
-- **Pre-built Modern Charts:** Includes high-level classes like `Bar`, `Line`, `Scatter`, and `Radar` with beautiful defaults.
+- **`JSCode` Support:** Inject raw JavaScript functions for formatters, tooltips, and custom processing logic.
+- **Font Injection:** Automatically detect font declarations in your config, fetch the corresponding fonts (if available) from Google Fonts.
+- **Rich Color Palettes:** Access 196 professionally-designed color palettes from [Palettable](https://jiffyclub.github.io/palettable/) and customize them.
+- **Pre-built Charts:** Includes pre-built primitives like `Bar`, `Line`, `Scatter`, and `Radar` with beautiful defaults.
 - **Environment Agnostic:** Works seamlessly in VS Code, JupyterLab, and Google Colab.
 
 ## Installation
@@ -42,65 +46,75 @@ pip install notecharts
 If you can find an example on the [ECharts Gallery](https://echarts.apache.org/examples/en/index.html), you can run it in `notecharts`.
 
 ```python
-from notecharts import Chart, JSCode
+from notecharts import Chart, JSCode, Palette
 
 options = {
-    "title": {"text": "Basic Chart"},
-    "xAxis": {"data": ["Mon", "Tue", "Wed", "Thu", "Fri"]},
+    "title": {"text": "Bar Chart"},
+    "textStyle": {"fontFamily": "Josefin Sans"},  # Automatically loaded from Google Fonts
+    "xAxis": {"data": ["Mon", "Tue", "Wed", "Thurs", "Fri"]},
     "yAxis": {},
-    "series": [{
-        "type": "bar",
-        "data": [23, 24, 18, 25, 27], # or any other list from outside the object
-        "label": {
-            "show": True,
-            "formatter": JSCode("function(p) { return p.value + ' units'; }")
+    "tooltip": {
+        "trigger": "axis",
+        "formatter": JSCode("function(params) { return params[0].name + ': $' + params[0].value; }")
+    },
+    "legend": {},
+    "series": [
+        {
+            "name": "Sales",
+            "type": "bar",
+            "data": [120, 150, 200, 180, 220]
+        },
+        {
+            "name": "Expenses",
+            "type": "bar",
+            "data": [80, 100, 120, 110, 140]
+        },
+        {
+            "name": "Profit",
+            "type": "bar",
+            "data": [40, 50, 80, 70, 80]
         }
-    }],
-    "color": "Viridis",  # Reference a palette by name from Palettable
-    "textStyle": {
-        "fontFamily": "Inter"  # Automatically load fonts from Google Fonts
-    }
+    ],
+    "color": Palette("Plasma", 3),  # Load the Plasma palette with 3 colors
 }
 
-Chart(options, width = "60%", renderer = "svg").display()
+Chart(options, width="60%").display()
 ```
 
-### The Quick Way (Pre-built Charts)
-Use the pre-configured classes for common visualizations with sensible defaults.
+### The Quick Way
+Use the pre-configured classes for common visualizations with sensible defaults and automatic palette generation.
+
+```python
+from notecharts import Line
+
+Line(
+    x=["Mon", "Tue", "Wed", "Thu", "Fri"],
+    y={
+        "Product A": [120, 200, 150, 220, 280],
+        "Product B": [180, 160, 200, 240, 290]
+    },
+    title="Weekly Sales Comparison",
+    palette="Blues"
+).display()
+```
+
+With palette options:
 
 ```python
 from notecharts import Bar
 
-# Simple chart with default colors
 Bar(
-    x=["Mon", "Tue", "Wed"],
-    y={"Sales": [150, 230, 224]},
-    title="Weekly Sales"
-).display()
-```
-
-With a Palettable palette:
-
-```python
-# Use a named palette from Palettable
-Bar(
-    x=["Mon", "Tue", "Wed"],
-    y={"Sales": [150, 230, 224], "Expenses": [100, 120, 140]},
-    title="Weekly Sales",
-    colors="Set2",  # Any palette name from the Available Palettes list
-    theme="dark"
-).display()
-```
-
-Or with custom colors:
-
-```python
-# Use your own color array
-Bar(
-    x=["Mon", "Tue", "Wed"],
-    y={"Sales": [150, 230, 224]},
-    colors=["#FF6B6B", "#4ECDC4"],
-    title="Weekly Sales"
+    x=["Jan", "Feb", "Mar", "Apr"],
+    y={
+        "Sales": [150, 230, 224, 310],
+        "Expenses": [120, 150, 180, 210]
+    },
+    title="Revenue vs Expenses",
+    palette={
+        "palette": "Set2",
+        "saturation": 0.7,  # Adjust saturation
+        "alpha": 0.85       # Control opacity
+    }
 ).display()
 ```
 
@@ -113,7 +127,7 @@ Bar(
 
 - **notecharts** is licensed under the [MIT License](LICENSE).
 - **Apache ECharts**: This library is a wrapper for [Apache ECharts](https://echarts.apache.org/en/index.html) which is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0). 
-  - *Apache ECharts, ECharts, Apache, the Apache feather, and the Apache ECharts project logo are either registered trademarks or trademarks of the Apache Software Foundation.*
+- *Apache ECharts, ECharts, Apache, the Apache feather, and the Apache ECharts project logo are either registered trademarks or trademarks of the Apache Software Foundation.*
 
 ## References
 See the [ECharts gallery](https://echarts.apache.org/examples/en/index.html) for bespoke examples, or the [official docs](https://echarts.apache.org/en/option.html) for an in-depth explanation of features and how to use them.
