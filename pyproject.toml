@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notecharts"
-version = "0.2.0"
+version = "0.3.0"
 description = "Light-weight wrapper bringing modern, interactive charts to Jupyter with Apache ECharts"
 readme = "README.md"
 license = "MIT"
