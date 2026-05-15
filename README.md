@@ -2,14 +2,8 @@
   <img src="https://github.com/dmunish/notecharts/blob/main/assets/notecharts-banner.png?raw=true" height=400 width="auto" />
 </p>
 
-<div align="center">
-    <a href="https://pypi.org/project/notecharts/">
-        <img src="https://img.shields.io/pypi/v/notecharts.svg?style=for-the-badge" alt="PyPI"/>
-    </a>
-    <a href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License"/>
-    </a>
-</div>
+[![PyPI](https://img.shields.io/pypi/v/notecharts.svg?style=for-the-badge)](https://pypi.org/project/notecharts)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 **notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
 
