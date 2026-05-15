@@ -1,7 +1,30 @@
 """Pre-built chart classes for common visualization patterns."""
 
-from typing import Union
-from .widget import Chart, JSCode, PaletteName
+from typing import Union, Optional, List, Literal
+from typing import TypedDict
+from .widget import Chart, JSCode
+from .palette import PaletteName, Palette
+
+
+class PaletteOptions(TypedDict, total=False):
+    """Options dictionary for palette generation.
+    
+    The 'palette' key is required. All other keys are optional.
+    
+    Attributes:
+        palette: The palette name (PaletteName) or a list of color strings.
+        format: Color format - 'hex', 'hsv', 'rgb', or 'rgba'. Defaults to 'hex'.
+        value: Adjust the value (brightness) of colors. Optional.
+        saturation: Adjust saturation of colors. Optional.
+        alpha: Opacity value (0-1). Defaults to 1.0.
+        shuffle: Whether to shuffle colors, or seed for shuffling. Optional.
+    """
+    palette: Union[PaletteName, str, List[str]]
+    format: Literal["hex", "hsv", "rgb", "rgba"]
+    value: Optional[float]
+    saturation: Optional[float]
+    alpha: float
+    shuffle: Optional[Union[bool, int]]
 
 
 def _deep_update(d, u):
@@ -28,7 +51,15 @@ class Bar(Chart):
         x (list): X-axis categories (labels).
         y (dict): Mapping of series names to data lists, e.g. {"Sales": [10, 20, 30]}.
         title (str, optional): Chart title. Defaults to None.
-        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
+        palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
+            Color palette specification. Can be:
+            
+            - A palette name string (e.g., "Viridis", "Set2") to generate colors automatically.
+            - A PaletteOptions dict with 'palette' key plus optional parameters (format, value,
+              saturation, alpha, shuffle) for advanced color generation.
+            - A list of color strings for direct color specification.
+            
+            Defaults to None (uses default colors).
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -42,7 +73,7 @@ class Bar(Chart):
         x,
         y,
         title=None,
-        colors: Union[list, PaletteName, str] = None,
+        palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -65,6 +96,21 @@ class Bar(Chart):
                 "animationDuration": 1200,
                 "animationEasing": "cubicOut",
             })
+
+        # Generate colors from palette parameter
+        colors = None
+        if palette is not None:
+            if isinstance(palette, dict):
+                # dict mode: extract palette name and pass other params to Palette()
+                palette_dict = palette.copy()
+                palette_name = palette_dict.pop("palette")
+                colors = Palette(palette_name, n_series, **palette_dict)
+            elif isinstance(palette, str):
+                # str mode: palette name string
+                colors = Palette(palette, n_series)
+            elif isinstance(palette, list):
+                # list mode: direct color specification
+                colors = palette
 
         # Build base options
         base_options = {
@@ -150,7 +196,15 @@ class Line(Chart):
         x (list): X-axis categories (labels).
         y (dict): Mapping of series names to data lists.
         title (str, optional): Chart title. Defaults to None.
-        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
+        palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
+            Color palette specification. Can be:
+            
+            - A palette name string (e.g., "Viridis", "Set2") to generate colors automatically.
+            - A PaletteOptions dict with 'palette' key plus optional parameters (format, value,
+              saturation, alpha, shuffle) for advanced color generation.
+            - A list of color strings for direct color specification.
+            
+            Defaults to None (uses default colors).
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -164,7 +218,7 @@ class Line(Chart):
         x,
         y,
         title=None,
-        colors: Union[list, PaletteName, str] = None,
+        palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -172,6 +226,8 @@ class Line(Chart):
         options=None,
         **kwargs
     ):
+        n_series = len(y) if isinstance(y, dict) else 1
+
         # Build series array from y dict
         series = []
         for series_name, data in (y.items() if isinstance(y, dict) else [(None, y)]):
@@ -187,6 +243,21 @@ class Line(Chart):
                 "animationEasing": "cubicOut",
             }
             series.append(ser)
+
+        # Generate colors from palette parameter
+        colors = None
+        if palette is not None:
+            if isinstance(palette, dict):
+                # dict mode: extract palette name and pass other params to Palette()
+                palette_dict = palette.copy()
+                palette_name = palette_dict.pop("palette")
+                colors = Palette(palette_name, n_series, **palette_dict)
+            elif isinstance(palette, str):
+                # str mode: palette name string
+                colors = Palette(palette, n_series)
+            elif isinstance(palette, list):
+                # list mode: direct color specification
+                colors = palette
 
         base_options = {
             "xAxis": {
@@ -268,7 +339,15 @@ class Scatter(Chart):
         y (list): Y-axis data.
         z (list, optional): Z-axis data for 3D scatter. Defaults to None.
         title (str, optional): Chart title. Defaults to None.
-        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
+        palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
+            Color palette specification. Can be:
+            
+            - A palette name string (e.g., "Viridis", "Set2") to generate colors automatically.
+            - A PaletteOptions dict with 'palette' key plus optional parameters (format, value,
+              saturation, alpha, shuffle) for advanced color generation.
+            - A list of color strings for direct color specification.
+            
+            Defaults to None (uses default colors).
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -283,7 +362,7 @@ class Scatter(Chart):
         y,
         z=None,
         title=None,
-        colors: Union[list, PaletteName, str] = None,
+        palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -307,6 +386,21 @@ class Scatter(Chart):
             "animationDuration": 1000,
             "animationEasing": "cubicOut",
         }]
+
+        # Generate colors from palette parameter (single series, so n=1)
+        colors = None
+        if palette is not None:
+            if isinstance(palette, dict):
+                # dict mode: extract palette name and pass other params to Palette()
+                palette_dict = palette.copy()
+                palette_name = palette_dict.pop("palette")
+                colors = Palette(palette_name, 1, **palette_dict)
+            elif isinstance(palette, str):
+                # str mode: palette name string
+                colors = Palette(palette, 1)
+            elif isinstance(palette, list):
+                # list mode: direct color specification
+                colors = palette
 
         base_options = {
             "tooltip": {
@@ -381,7 +475,15 @@ class Radar(Chart):
                             e.g. {"Player A": [80, 90, 70], "Player B": [85, 80, 95]}
         dimensions (list[str]): Names of the radar axes. e.g. ["Speed", "Power", "Agility"]
         title (str, optional): Chart title. Defaults to None.
-        colors (list or str, optional): Optional list of colors, or the name of a palette. Defaults to None.
+        palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
+            Color palette specification. Can be:
+            
+            - A palette name string (e.g., "Viridis", "Set2") to generate colors automatically.
+            - A PaletteOptions dict with 'palette' key plus optional parameters (format, value,
+              saturation, alpha, shuffle) for advanced color generation.
+            - A list of color strings for direct color specification.
+            
+            Defaults to None (uses default colors).
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -395,7 +497,7 @@ class Radar(Chart):
         series_data,
         dimensions,
         title=None,
-        colors: Union[list, PaletteName, str] = None,
+        palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width="99%",
         height="500px",
         renderer="canvas",
@@ -403,6 +505,8 @@ class Radar(Chart):
         options=None,
         **kwargs
     ):
+        n_series = len(series_data) if isinstance(series_data, dict) else 1
+
         # Build radar axes
         radar_config = {
             "indicator": [{"name": dim} for dim in dimensions],
@@ -422,6 +526,21 @@ class Radar(Chart):
                 "animationDuration": 1000,
                 "animationEasing": "cubicOut",
             })
+
+        # Generate colors from palette parameter
+        colors = None
+        if palette is not None:
+            if isinstance(palette, dict):
+                # dict mode: extract palette name and pass other params to Palette()
+                palette_dict = palette.copy()
+                palette_name = palette_dict.pop("palette")
+                colors = Palette(palette_name, n_series, **palette_dict)
+            elif isinstance(palette, str):
+                # str mode: palette name string
+                colors = Palette(palette, n_series)
+            elif isinstance(palette, list):
+                # list mode: direct color specification
+                colors = palette
 
         base_options = {
             "radar": radar_config,
