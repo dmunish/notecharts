@@ -93,10 +93,15 @@ Line(
     x=["Mon", "Tue", "Wed", "Thu", "Fri"],
     y={
         "Product A": [120, 200, 150, 220, 280],
-        "Product B": [180, 160, 200, 240, 290]
+        "Product B": [180, 160, 200, 240, 290],
+        "Product C": [160, 120, 140, 190, 250]
     },
-    title="Weekly Sales Comparison",
-    palette="Blues"
+    title="Weekly Sales",
+    palette="agGrnYl",
+    width="650px",
+    options= { # Override class defaults
+        "textStyle": {"fontFamily": "Josefin Sans"}, 
+    }
 ).display()
 ```
 
@@ -113,10 +118,11 @@ Bar(
     },
     title="Revenue vs Expenses",
     palette={
-        "palette": "Set2",
-        "saturation": 0.7,  # Adjust saturation
-        "alpha": 0.85       # Control opacity
-    }
+        "palette": "BluYl",
+        "saturation": 0.5,  # Adjust saturation
+    },
+    theme="dark",
+    width="650px"
 ).display()
 ```
 
