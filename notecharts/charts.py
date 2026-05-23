@@ -15,14 +15,12 @@ class PaletteOptions(TypedDict, total=False):
         value: Adjust the value (brightness) of colors. Optional.
         saturation: Adjust saturation of colors. Optional.
         alpha: Opacity value (0-1). Defaults to 1.0.
-        shuffle: Whether to shuffle colors, or seed for shuffling. Optional.
     """
     palette: Union[PaletteName, str, List[str]]
     format: Literal["hex", "hsv", "rgb", "rgba"]
     value: Optional[float]
     saturation: Optional[float]
     alpha: float
-    shuffle: Optional[Union[bool, int]]
 
 
 def _deep_update(d, u):
@@ -75,6 +73,7 @@ class Bar(Chart):
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
         dataframe (optional): A pandas DataFrame to extract x and y from.
+        font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -90,6 +89,7 @@ class Bar(Chart):
         theme="light",
         options=None,
         dataframe=None,
+        font=None,
         **kwargs
     ):
         # Extract columns from dataframe if provided
@@ -109,7 +109,7 @@ class Bar(Chart):
                 "itemStyle": {
                     "borderRadius": [4, 4, 0, 0],
                 },
-                "animationDuration": 1200,
+                "animationDuration": 1000,
                 "animationEasing": "cubicOut",
             })
 
@@ -140,7 +140,7 @@ class Bar(Chart):
             "yAxis": {
                 "type": "value",
                 "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12, "margin": 10},
+                "axisLabel": {"fontSize": 12, "margin": 12},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -166,10 +166,10 @@ class Bar(Chart):
                             }
                         }
                     },
-                    "saveAsImage": {"pixelRatio": 3},
+                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
                 }
             },
-            "dataZoom": {"type": JSCode("'inside'")},
+            "dataZoom": {"type": "inside"},
             "legend": {
                 "bottom": 20,
                 "type": "scroll",
@@ -197,6 +197,9 @@ class Bar(Chart):
 
         if colors is not None:
             base_options["color"] = colors
+
+        if font is not None:
+            base_options["textStyle"] = {"fontFamily": font}
 
         # Merge user options
         if options:
@@ -238,6 +241,7 @@ class Line(Chart):
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
         dataframe (optional): A pandas DataFrame to extract x and y from.
+        font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -253,6 +257,7 @@ class Line(Chart):
         theme="light",
         options=None,
         dataframe=None,
+        font=None,
         **kwargs
     ):
         # Extract columns from dataframe if provided
@@ -299,7 +304,7 @@ class Line(Chart):
                 "data": x,
                 "axisLine": {"show": False},
                 "axisTick": {"show": False},
-                "axisLabel": {"fontSize": 12},
+                "axisLabel": {"fontSize": 12, "margin": 12},
             },
             "yAxis": {
                 "type": "value",
@@ -318,15 +323,17 @@ class Line(Chart):
                 "feature": {
                     "restore": {},
                     "magicType": {"type": ["bar", "stack"]},
-                    "saveAsImage": {"pixelRatio": 3},
+                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
                 }
             },
-            "dataZoom": {"type": JSCode("'inside'")},
+            "dataZoom": {"type": "inside"},
             "legend": {
                 "bottom": 20,
                 "type": "scroll",
                 "icon": "circle",
                 "textStyle": {"fontSize": 13},
+                "itemGap": 14
+
             },
             "grid": {
                 "left": "5%",
@@ -348,6 +355,9 @@ class Line(Chart):
 
         if colors is not None:
             base_options["color"] = colors
+
+        if font is not None:
+            base_options["textStyle"] = {"fontFamily": font}
 
         if options:
             _deep_update(base_options, options)
@@ -388,6 +398,7 @@ class Scatter(Chart):
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
         dataframe (optional): A pandas DataFrame to extract x, y, z from.
+        font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -404,6 +415,7 @@ class Scatter(Chart):
         theme="light",
         options=None,
         dataframe=None,
+        font=None,
         **kwargs
     ):
         # Extract columns from dataframe if provided
@@ -457,7 +469,7 @@ class Scatter(Chart):
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "saveAsImage": {"pixelRatio": 3},
+                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
                 }
             },
             "series": series,
@@ -493,6 +505,9 @@ class Scatter(Chart):
 
         if colors is not None:
             base_options["color"] = colors
+
+        if font is not None:
+            base_options["textStyle"] = {"fontFamily": font}
 
         if options:
             _deep_update(base_options, options)
@@ -534,6 +549,7 @@ class Radar(Chart):
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
         dataframe (optional): A pandas DataFrame to extract series_data from.
+        font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -549,6 +565,7 @@ class Radar(Chart):
         theme="light",
         options=None,
         dataframe=None,
+        font=None,
         **kwargs
     ):
         # Extract columns from dataframe if provided
@@ -621,6 +638,9 @@ class Radar(Chart):
 
         if colors is not None:
             base_options["color"] = colors
+
+        if font is not None:
+            base_options["textStyle"] = {"fontFamily": font}
 
         if options:
             _deep_update(base_options, options)
