@@ -1,5 +1,3 @@
-"""Pre-built chart classes for common visualization patterns."""
-
 from typing import Union, Optional, List, Literal
 from typing import TypedDict
 from .widget import Chart, JSCode
@@ -41,6 +39,16 @@ def _deep_update(d, u):
             d[k] = v
 
 
+def _extract_column(df, col_name):
+    """Extract single column from dataframe as list."""
+    return df[col_name].tolist()
+
+
+def _extract_columns_dict(df, col_dict):
+    """Extract multiple columns from dataframe as dict of lists."""
+    return {name: df[col].tolist() for name, col in col_dict.items()}
+
+
 class Bar(Chart):
     """Pre-built modern Bar Chart.
 
@@ -48,8 +56,9 @@ class Bar(Chart):
     Automatically determines n_colors based on the number of series.
 
     Args:
-        x (list): X-axis categories (labels).
+        x (list or str): X-axis categories (labels), or column name if dataframe is provided.
         y (dict): Mapping of series names to data lists, e.g. {"Sales": [10, 20, 30]}.
+                  If dataframe is provided, map series names to column names.
         title (str, optional): Chart title. Defaults to None.
         palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
             Color palette specification. Can be:
@@ -65,6 +74,7 @@ class Bar(Chart):
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
+        dataframe (optional): A pandas DataFrame to extract x and y from.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -79,8 +89,14 @@ class Bar(Chart):
         renderer="canvas",
         theme="light",
         options=None,
+        dataframe=None,
         **kwargs
     ):
+        # Extract columns from dataframe if provided
+        if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
+            x = _extract_column(dataframe, x)
+            y = _extract_columns_dict(dataframe, y)
+        
         n_series = len(y) if isinstance(y, dict) else 1
 
         # Build series array from y dict
@@ -91,7 +107,7 @@ class Bar(Chart):
                 "name": str(series_name) if series_name else "value",
                 "data": data,
                 "itemStyle": {
-                    "borderRadius": [6, 6, 0, 0],
+                    "borderRadius": [4, 4, 0, 0],
                 },
                 "animationDuration": 1200,
                 "animationEasing": "cubicOut",
@@ -124,7 +140,7 @@ class Bar(Chart):
             "yAxis": {
                 "type": "value",
                 "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12},
+                "axisLabel": {"fontSize": 12, "margin": 10},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -140,16 +156,26 @@ class Bar(Chart):
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "magicType": {"type": ["line", "stack"]},
-                    "saveAsImage": {"name": title if title else "Chart"},
+                    "magicType": {
+                        "type": ["line", "stack"],
+                        "option": {
+                            "line":{
+                                "symbol": "square",
+                                "symbolSize": 8,
+                                "lineStyle": {"width": 3},
+                            }
+                        }
+                    },
+                    "saveAsImage": {"pixelRatio": 3},
                 }
             },
             "dataZoom": {"type": JSCode("'inside'")},
             "legend": {
                 "bottom": 20,
                 "type": "scroll",
-                "icon": "roundRect",
+                "icon": "circle",
                 "textStyle": {"fontSize": 13},
+                "itemGap": 14
             },
             "grid": {
                 "left": "5%",
@@ -193,8 +219,9 @@ class Line(Chart):
     Automatically determines n_colors based on the number of series.
 
     Args:
-        x (list): X-axis categories (labels).
+        x (list or str): X-axis categories (labels), or column name if dataframe is provided.
         y (dict): Mapping of series names to data lists.
+                  If dataframe is provided, map series names to column names.
         title (str, optional): Chart title. Defaults to None.
         palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
             Color palette specification. Can be:
@@ -210,6 +237,7 @@ class Line(Chart):
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
+        dataframe (optional): A pandas DataFrame to extract x and y from.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -224,8 +252,14 @@ class Line(Chart):
         renderer="canvas",
         theme="light",
         options=None,
+        dataframe=None,
         **kwargs
     ):
+        # Extract columns from dataframe if provided
+        if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
+            x = _extract_column(dataframe, x)
+            y = _extract_columns_dict(dataframe, y)
+        
         n_series = len(y) if isinstance(y, dict) else 1
 
         # Build series array from y dict
@@ -284,7 +318,7 @@ class Line(Chart):
                 "feature": {
                     "restore": {},
                     "magicType": {"type": ["bar", "stack"]},
-                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
+                    "saveAsImage": {"pixelRatio": 3},
                 }
             },
             "dataZoom": {"type": JSCode("'inside'")},
@@ -335,9 +369,9 @@ class Scatter(Chart):
     Automatically determines n_colors based on the number of series.
 
     Args:
-        x (list): X-axis data.
-        y (list): Y-axis data.
-        z (list, optional): Z-axis data for 3D scatter. Defaults to None.
+        x (list or str): X-axis data, or column name if dataframe is provided.
+        y (list or str): Y-axis data, or column name if dataframe is provided.
+        z (list or str, optional): Z-axis data for 3D scatter, or column name if dataframe is provided. Defaults to None.
         title (str, optional): Chart title. Defaults to None.
         palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
             Color palette specification. Can be:
@@ -353,6 +387,7 @@ class Scatter(Chart):
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
+        dataframe (optional): A pandas DataFrame to extract x, y, z from.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -368,8 +403,16 @@ class Scatter(Chart):
         renderer="canvas",
         theme="light",
         options=None,
+        dataframe=None,
         **kwargs
     ):
+        # Extract columns from dataframe if provided
+        if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
+            x = _extract_column(dataframe, x)
+            y = _extract_column(dataframe, y)
+            if z is not None:
+                z = _extract_column(dataframe, z)
+        
         is_3d = z is not None
 
         # Build data points
@@ -414,7 +457,7 @@ class Scatter(Chart):
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "saveAsImage": {"name": title if title else "Chart", "pixelRatio": 3},
+                    "saveAsImage": {"pixelRatio": 3},
                 }
             },
             "series": series,
@@ -473,6 +516,7 @@ class Radar(Chart):
     Args:
         series_data (dict): Mapping of series names to lists of values.
                             e.g. {"Player A": [80, 90, 70], "Player B": [85, 80, 95]}
+                            If dataframe is provided, map series names to column names.
         dimensions (list[str]): Names of the radar axes. e.g. ["Speed", "Power", "Agility"]
         title (str, optional): Chart title. Defaults to None.
         palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
@@ -489,6 +533,7 @@ class Radar(Chart):
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
+        dataframe (optional): A pandas DataFrame to extract series_data from.
         **kwargs: Forwarded to the base Chart class.
     """
 
@@ -503,8 +548,13 @@ class Radar(Chart):
         renderer="canvas",
         theme="light",
         options=None,
+        dataframe=None,
         **kwargs
     ):
+        # Extract columns from dataframe if provided
+        if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
+            series_data = _extract_columns_dict(dataframe, series_data)
+        
         n_series = len(series_data) if isinstance(series_data, dict) else 1
 
         # Build radar axes
