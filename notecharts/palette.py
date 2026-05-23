@@ -1,6 +1,5 @@
 import re
 import importlib
-import random
 from typing import Literal, Union, List, Tuple, Optional
 
 # ============================================================================
@@ -622,13 +621,6 @@ def Palette(
         Only applies to 'rgba' format or 'hex' format with alpha.
         Has no effect on 'rgb' or 'hsv' formats.
 
-    shuffle : bool or int, optional
-        Whether to shuffle the sampled colors. Can be:
-        
-        - None: No shuffling (default).
-        - True: Shuffle using the default random state.
-        - int: Shuffle using the given integer as a random seed for reproducibility.
-
     Returns
     -------
     list of str
@@ -643,27 +635,6 @@ def Palette(
         are invalid, if value/saturation/alpha are out of range, or if
         format is invalid.
 
-    Examples
-    --------
-    Generate 5 colors from the Viridis palette:
-    
-    >>> Palette('Viridis', 5)
-    ['#440154', '#31688e', '#35b779', '#fde724', '#fde724']
-    
-    Generate colors with fixed saturation:
-    
-    >>> Palette('Blues', 3, saturation=0.5)
-    ['#7fa0d2', '#5a7fa9', '#355080']
-    
-    Interpolate between custom colors:
-    
-    >>> Palette(['#ff0000', '#0000ff'], 3, format='hex')
-    ['#ff0000', '#7f007f', '#0000ff']
-    
-    Generate RGBA colors with 50% transparency:
-    
-    >>> Palette('Set2', 2, format='rgba', alpha=0.5)
-    ['rgba(102, 194, 165, 0.50)', 'rgba(252, 141, 98, 0.50)']
     """
     # ========================================================================
     # Parameter Validation
@@ -755,17 +726,6 @@ def Palette(
     # ========================================================================
 
     sampled_colors = _sample_colors(colors_rgb, n)
-
-    # ========================================================================
-    # Shuffle Colors
-    # ========================================================================
-
-    if shuffle is not None:
-        if isinstance(shuffle, int):
-            rng = random.Random(shuffle)
-            rng.shuffle(sampled_colors)
-        else:  # shuffle is True
-            random.shuffle(sampled_colors)
 
     # ========================================================================
     # Apply Transformations
