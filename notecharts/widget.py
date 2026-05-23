@@ -390,7 +390,7 @@ class Chart:
                     }}
                     return;
                 }}
-                loadScript('https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js', function() {{
+                loadScript('https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js', function() {{
                     loadScript('https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js', function() {{
                         var needsFflate = {is_compressed_js};
                         if (needsFflate && typeof window.fflate === 'undefined') {{
@@ -408,7 +408,7 @@ class Chart:
             function loadViaRequire() {{
                 var needsFflate = {is_compressed_js};
                 var paths = {{
-                    'echarts': 'https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min',
+                    'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min',
                     'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min'
                 }};
                 
