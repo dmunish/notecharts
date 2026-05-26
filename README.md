@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://github.com/dmunish/notecharts/blob/main/assets/notecharts-banner.png?raw=true" height=400 width="auto" />
+  <img src="https://github.com/dmunish/notecharts/blob/main/assets/notecharts-banner.png?raw=true" height=100% width=auto />
 </p>
 
 [![PyPI](https://img.shields.io/pypi/v/notecharts.svg?style=for-the-badge)](https://pypi.org/project/notecharts)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-**notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a couple enhancements.
+**notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a few notable enhancements.
 
 ## Why notecharts?
 
@@ -25,7 +25,7 @@ Apache ECharts is an incredibly powerful web plotting library. While there have 
 | **Geo/Map** | **3D Scatter** |
 | [![Map](https://github.com/dmunish/notecharts/blob/main/assets/geo.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/geo.ipynb) | [![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/scatter-3D.ipynb) |
 
-Click the charts to view how to create them.
+Click on the images above to view code for making them.
 
 ## Key Features
 
@@ -46,7 +46,7 @@ pip install notecharts
 ## Usage
 
 ### Full Control
-If you can find an example on the [ECharts Gallery](https://echarts.apache.org/examples/en/index.html), you can run it in `notecharts`.
+Complete control over every aspect of the chart, through a beautiful, declarative API. If you can find an example on the [ECharts Gallery](https://echarts.apache.org/examples/en/index.html), you can run it in `notecharts`.
 
 ```python
 from notecharts import Chart, JSCode, Palette
@@ -78,9 +78,9 @@ options = {
             "data": [40, 50, 80, 70, 80]
         }
     ],
-    "color": Palette("Plasma", 3),      # Load n colors from any palette,
-                                        # or create your own with interpolation,
-                                        # like Palette(["#003566", "#ffc300"], 3)
+    "color": Palette("Plasma", 3)   # Load n colors from any palette,
+                                    # or create your own palette through interpolation,
+                                    # like Palette(["#003566", "#ffc300"], 5)
 }
 
 Chart(options, width="60%").display()
@@ -140,7 +140,7 @@ Bar(
 ## Disclaimer
 
 - **Security:** Use of `JSCode` allows for arbitrary JavaScript execution in the browser/notebook context. Always ensure you are passing trusted code and data to your charts.
-- **Connectivity:** This library is ultra-lightweight because it fetches the ECharts and ECharts-GL minified code from `cdn.jsdelivr.net` at runtime, so an active internet connection is required to render charts for the first time. It is then cached in the browser/IDE context and subsequent renders can work offline.
+- **Connectivity:** This library is lightweight because it fetches the ECharts, ECharts-GL and fflate (for data decompression) minified code from `cdn.jsdelivr.net` at runtime, so an active internet connection is required to render charts for the first time. It is then cached in the browser/IDE context and subsequent renders can work offline.
 
 ## License & Attribution
 
