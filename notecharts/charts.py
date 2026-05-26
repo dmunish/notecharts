@@ -140,7 +140,7 @@ class Bar(Chart):
             "yAxis": {
                 "type": "value",
                 "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12, "margin": 12},
+                "axisLabel": {"fontSize": 12, "margin": 15},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -160,8 +160,7 @@ class Bar(Chart):
                         "type": ["line", "stack"],
                         "option": {
                             "line":{
-                                "symbol": "square",
-                                "symbolSize": 8,
+                                "symbolSize": 10,
                                 "lineStyle": {"width": 3},
                             }
                         }
@@ -175,7 +174,8 @@ class Bar(Chart):
                 "type": "scroll",
                 "icon": "circle",
                 "textStyle": {"fontSize": 13},
-                "itemGap": 14
+                "itemGap": 35,
+                "itemWidth": 20            
             },
             "grid": {
                 "left": "5%",
@@ -304,12 +304,12 @@ class Line(Chart):
                 "data": x,
                 "axisLine": {"show": False},
                 "axisTick": {"show": False},
-                "axisLabel": {"fontSize": 12, "margin": 12},
+                "axisLabel": {"fontSize": 12, "margin": 15},
             },
             "yAxis": {
                 "type": "value",
                 "splitLine": {"lineStyle": {"type": "dashed"}},
-                "axisLabel": {"fontSize": 12},
+                "axisLabel": {"fontSize": 12, "margin": 15},
             },
             "tooltip": {
                 "trigger": "axis",
@@ -332,8 +332,8 @@ class Line(Chart):
                 "type": "scroll",
                 "icon": "circle",
                 "textStyle": {"fontSize": 13},
-                "itemGap": 14
-
+                "itemGap": 35,
+                "itemWidth": 20
             },
             "grid": {
                 "left": "5%",
