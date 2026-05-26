@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notecharts"
-version = "0.3.0"
-description = "Light-weight wrapper bringing modern, interactive charts to Jupyter with Apache ECharts"
+version = "0.4.0"
+description = "Modern, interactive charts for Jupyter notebooks"
 readme = "README.md"
 license = "MIT"
 authors = [
     {name = "Danish Munib", email = "danishmunibcontact@gmail.com"},
 ]
-keywords = ["echarts", "jupyter", "visualization", "charts", "notebook"]
+keywords = ["echarts", "jupyter", "visualization", "charts", "notebook", "charting", "data-viz", "data-visualization", "charting-library"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: Jupyter",
