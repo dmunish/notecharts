@@ -32,9 +32,10 @@ Click the charts to view how to create them.
 - **Declarative API:** Pass a dictionary, get a chart. No complex class hierarchies to learn.
 - **`JSCode` Support:** Inject raw JavaScript functions for formatters, tooltips, and custom processing logic.
 - **Font Injection:** Automatically detect font declarations in your config, fetch the corresponding fonts (if available) from Google Fonts.
-- **Rich Color Palettes:** Access 196 professionally-designed color palettes from [Palettable](https://jiffyclub.github.io/palettable/) and customize them.
+- **Rich Color Palettes:** Access 196 professionally-designed customizable color palettes from [Palettable](https://jiffyclub.github.io/palettable/), or make your own through interpolation.
 - **Pre-built Charts:** Includes pre-built primitives like `Bar`, `Line`, `Scatter`, and `Radar` with beautiful defaults.
 - **Environment Agnostic:** Works seamlessly in VS Code, JupyterLab, and Google Colab.
+- **Compression:** Compresses the data and config objects so the notebook doesn't balloon in size.
 
 ## Installation
 
@@ -44,7 +45,7 @@ pip install notecharts
 
 ## Usage
 
-### The Declarative Way
+### Full Control
 If you can find an example on the [ECharts Gallery](https://echarts.apache.org/examples/en/index.html), you can run it in `notecharts`.
 
 ```python
@@ -52,7 +53,7 @@ from notecharts import Chart, JSCode, Palette
 
 options = {
     "title": {"text": "Bar Chart"},
-    "textStyle": {"fontFamily": "Josefin Sans"},  # Automatically loaded from Google Fonts
+    "textStyle": {"fontFamily": "Josefin Sans"},    # Automatically loaded from Google Fonts
     "xAxis": {"data": ["Mon", "Tue", "Wed", "Thurs", "Fri"]},
     "yAxis": {},
     "tooltip": {
@@ -77,14 +78,16 @@ options = {
             "data": [40, 50, 80, 70, 80]
         }
     ],
-    "color": Palette("Plasma", 3),  # Load the Plasma palette with 3 colors
+    "color": Palette("Plasma", 3),      # Load n colors from any palette,
+                                        # or create your own with interpolation,
+                                        # like Palette(["#003566", "#ffc300"], 3)
 }
 
 Chart(options, width="60%").display()
 ```
 
-### The Quick Way
-Use the pre-configured classes for common visualizations with sensible defaults and automatic palette generation.
+### Primitives
+Use the pre-configured classes for common visualizations, and optionally override any default styling of the class.
 
 ```python
 from notecharts import Line
@@ -99,37 +102,45 @@ Line(
     title="Weekly Sales",
     palette="agGrnYl",
     width="650px",
-    options= { # Override class defaults
-        "textStyle": {"fontFamily": "Josefin Sans"}, 
+    font="Elms Sans",
+    options= {
+        "legend": {"itemGap": 25} # Override class defaults
     }
 ).display()
 ```
 
-With palette options:
+#### With DataFrames
+
+All pre-built charts support direct DataFrame integration without manual column extraction:
 
 ```python
+import pandas as pd
 from notecharts import Bar
 
+df = pd.DataFrame({
+    'day': ['Mon','Tue', 'Wed', 'Thu', 'Fri'],
+    'product_a': [120, 200, 150, 220, 280],
+    'product_b': [180, 160, 200, 240, 290],
+    'product_c': [160, 120, 140, 190, 250]
+})
+
 Bar(
-    x=["Jan", "Feb", "Mar", "Apr"],
-    y={
-        "Sales": [150, 230, 224, 310],
-        "Expenses": [120, 150, 180, 210]
-    },
-    title="Revenue vs Expenses",
-    palette={
-        "palette": "BluYl",
-        "saturation": 0.5,  # Adjust saturation
-    },
-    theme="dark",
-    width="650px"
+    dataframe = df,
+    x = 'day',
+    y = {'Product A': 'product_a', 'Product B': 'product_b', 'Product C': 'product_c'},
+    width = "650px",
+    font = "Josefin Sans",
+    palette = {
+        "palette": "Plasma",
+        "saturation": 0.75          # Customize the palette
+    }
 ).display()
 ```
 
 ## Disclaimer
 
 - **Security:** Use of `JSCode` allows for arbitrary JavaScript execution in the browser/notebook context. Always ensure you are passing trusted code and data to your charts.
-- **Connectivity:** This library is ultra-lightweight because it does not ship with the ECharts binaries. It fetches them from `cdn.jsdelivr.net` at runtime, so an active internet connection is required to render charts if the libraries are not already cached.
+- **Connectivity:** This library is ultra-lightweight because it fetches the ECharts and ECharts-GL minified code from `cdn.jsdelivr.net` at runtime, so an active internet connection is required to render charts for the first time. It is then cached in the browser/IDE context and subsequent renders can work offline.
 
 ## License & Attribution
 
