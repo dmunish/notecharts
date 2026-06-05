@@ -131,22 +131,35 @@ Color = list[str]
 
 
 class Datazoom(TypedDict, total=False):
-    pass
-
-
-class DatazoomInside(TypedDict, total=False):
     angleAxisIndex: int | float
+    backgroundColor: str
+    bottom: Any
+    dataBackgroundColor: str
     end: Any
     endValue: Any
+    fillerColor: str
     filterMode: Literal['filter', 'weakFilter', 'empty', 'none']
+    handleColor: str
+    handleSize: int | float
+    labelFormatter: Any
+    labelPrecision: int | float
+    left: Any
     orient: Literal['horizontal', 'vertical']
     radiusAxisIndex: int | float
+    realtime: bool
+    right: Any
+    show: bool
+    showDataShadow: bool
+    showDetail: bool
     start: Any
     startValue: Any
     throttle: Any
-    type: Literal['inside']
+    top: Any
+    type: Literal['inside', 'slider']
     xAxisIndex: int | float
     yAxisIndex: int | float
+    z: int | float
+    zlevel: int | float
     zoomLock: int | float
 
 
@@ -5415,7 +5428,7 @@ class Yaxis(TypedDict, total=False):
 
 
 class Option(TypedDict, total=False):
-    dataZoom: Union[DatazoomInside, DatazoomSlider] | List[Union[DatazoomInside, DatazoomSlider]]
+    dataZoom: Datazoom | List[Datazoom]
     series: List[Union[SeriesBar, SeriesBoxplot, SeriesCandlestick, SeriesEffectscatter, SeriesFunnel, SeriesGauge, SeriesGraph, SeriesHeatmap, SeriesLine, SeriesLines, SeriesMap, SeriesParallel, SeriesPie, SeriesSankey, SeriesScatter, SeriesTreemap]]
     visualMap: Union[VisualmapContinuous, VisualmapPiecewise] | List[Union[VisualmapContinuous, VisualmapPiecewise]]
     angleaxis: Angleaxis
