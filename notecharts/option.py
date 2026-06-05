@@ -5414,7 +5414,7 @@ class Yaxis(TypedDict, total=False):
     type: Literal['value', 'category', 'time', 'log']
 
 
-class EChartsOption(TypedDict, total=False):
+class Option(TypedDict, total=False):
     dataZoom: Union[DatazoomInside, DatazoomSlider] | List[Union[DatazoomInside, DatazoomSlider]]
     series: List[Union[SeriesBar, SeriesBoxplot, SeriesCandlestick, SeriesEffectscatter, SeriesFunnel, SeriesGauge, SeriesGraph, SeriesHeatmap, SeriesLine, SeriesLines, SeriesMap, SeriesParallel, SeriesPie, SeriesSankey, SeriesScatter, SeriesTreemap]]
     visualMap: Union[VisualmapContinuous, VisualmapPiecewise] | List[Union[VisualmapContinuous, VisualmapPiecewise]]
