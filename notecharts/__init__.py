@@ -1,4 +1,4 @@
-from .widget import Chart, JSCode
+from .chart import Chart, JSCode
 from .templates.bar import Bar
 from .templates.line import Line
 from .templates.radar import Radar
