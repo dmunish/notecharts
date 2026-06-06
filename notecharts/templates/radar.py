@@ -1,5 +1,5 @@
 from typing import Union, List
-from ..widget import Chart
+from ..chart import Chart
 from ..palette import PaletteName, Palette
 from .utils import PaletteOptions, _extract_columns_dict, _deep_update
 
