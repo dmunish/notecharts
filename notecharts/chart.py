@@ -7,7 +7,7 @@ from pathlib import Path
 from IPython.display import display, HTML
 
 # Load the JavaScript template from the bundled file
-_JS_TEMPLATE_FILE = Path(__file__).parent / "widget.js"
+_JS_TEMPLATE_FILE = Path(__file__).parent / "chart.js"
 with open(_JS_TEMPLATE_FILE, "r", encoding="utf-8") as _f:
     _JS_TEMPLATE = _f.read()
 
