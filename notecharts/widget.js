@@ -42,15 +42,12 @@
                 for (var i = 0; i < len; i++) {
                     bytes[i] = binaryString.charCodeAt(i);
                 }
-                // Decompress using fflate
                 var decompressed = fflate.unzlibSync(bytes);
-                // Convert bytes to string
                 var decoder = new TextDecoder();
                 var optionsString = decoder.decode(decompressed);
-                // Parse as JavaScript object (supports JSCode functions)
                 finalOptions = new Function('return ' + optionsString)();
             } else {
-                // Uncompressed: rawOptions is already a dynamically evaluated JS object literal
+                // Uncompressed
                 finalOptions = rawOptions;
             }
             return finalOptions;
@@ -101,7 +98,7 @@
         
         if (typeof window.echarts !== 'undefined') {
             if (needsFflate && typeof window.fflate === 'undefined') {
-                return false; // Still need fflate
+                return false;
             }
             cb(window.echarts, window.fflate);
             return;
@@ -110,7 +107,7 @@
             if (require.defined && (require.defined('echarts') || require.defined('echarts-gl'))) {
                 if (needsFflate) {
                     if (typeof window.fflate === 'undefined') {
-                        return false; // Force fallback to loaders
+                        return false;
                     }
                     require(['echarts'], function(ec) {
                         cb(ec, window.fflate);
@@ -138,9 +135,7 @@
     }
 
     function loadViaScript() {
-        // Skip if already loaded globally
         if (typeof window.echarts !== 'undefined') {
-            // Check if fflate is needed
             var needsFflate = __IS_COMPRESSED__;
             if (needsFflate && typeof window.fflate === 'undefined') {
                 loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js', function() {
@@ -169,8 +164,8 @@
     function loadViaRequire() {
         var needsFflate = __IS_COMPRESSED__;
         var paths = {
-            'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min',
-            'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min'
+            'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min',
+            'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min'
         };
         
         require.config({ paths: paths });
@@ -186,8 +181,6 @@
         }
 
         if (needsFflate && typeof window.fflate === 'undefined') {
-            // Fetch fflate and execute it while shadowing module/exports/define
-            // to prevent UMD loader conflicts with RequireJS in VS Code webviews
             fetch('https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js')
                 .then(function(res) { return res.text(); })
                 .then(function(text) {
@@ -205,11 +198,9 @@
 
     // ── font gate → then load echarts ─────────────────────────────────
     function loadEchartsAndInit() {
-        // First check if already available
         if (modulesReady(initChart) !== false) {
             return;
         }
-        // Not available, load it
         if (typeof require !== 'undefined' && typeof require.config === 'function') {
             loadViaRequire();
         } else {
