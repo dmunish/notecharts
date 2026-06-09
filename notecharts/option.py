@@ -2,314 +2,7 @@ from __future__ import annotations
 from typing import Any, Callable, Literal
 from typing_extensions import TypedDict
 
-class AngleAxisAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: AngleAxisAxisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class AngleAxisAxisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class AngleAxisAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisAxisLineOpts(TypedDict, total=False):
-    show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: AngleAxisAxisLineLineStyleOpts
-
-class AngleAxisAxisPointerHandleOpts(TypedDict, total=False):
-    show: bool
-    icon: Any
-    size: int | float
-    margin: int | float
-    color: str
-    throttle: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-
-class AngleAxisAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    precision: str | int | float
-    formatter: str | Callable[..., Any]
-    margin: int | float
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    padding: str
-    backgroundColor: str
-    borderColor: str
-    borderWidth: str
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-
-class AngleAxisAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: AngleAxisAxisPointerLabelOpts
-    lineStyle: AngleAxisAxisPointerLineStyleOpts
-    shadowStyle: AngleAxisAxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: AngleAxisAxisPointerHandleOpts
-
-class AngleAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisAxisTickOpts(TypedDict, total=False):
-    show: bool
-    alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    length: int | float
-    lineStyle: AngleAxisAxisTickLineStyleOpts
-    customValues: Any
-
-class AngleAxisDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: AngleAxisDataItemTextStyleOpts
-
-class AngleAxisDataItemTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: AngleAxisDataItemTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class AngleAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class AngleAxisMinorSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisMinorSplitLineOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: AngleAxisMinorSplitLineLineStyleOpts
-
-class AngleAxisMinorTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisMinorTickOpts(TypedDict, total=False):
-    show: bool
-    splitNumber: int | float
-    length: int | float
-    lineStyle: AngleAxisMinorTickLineStyleOpts
-
-class AngleAxisOpts(TypedDict, total=False):
+class AngleAxis(TypedDict, total=False):
     id: str
     polarIndex: int | float
     startAngle: int | float
@@ -318,8 +11,8 @@ class AngleAxisOpts(TypedDict, total=False):
     type: str
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -331,79 +24,56 @@ class AngleAxisOpts(TypedDict, total=False):
     startValue: int | float
     silent: bool
     triggerEvent: bool
-    axisLine: AngleAxisAxisLineOpts
-    axisTick: AngleAxisAxisTickOpts
-    minorTick: AngleAxisMinorTickOpts
-    axisLabel: AngleAxisAxisLabelOpts
-    splitLine: AngleAxisSplitLineOpts
-    minorSplitLine: AngleAxisMinorSplitLineOpts
-    splitArea: AngleAxisSplitAreaOpts
-    data: list[AngleAxisDataItemOpts]
-    axisPointer: AngleAxisAxisPointerOpts
-    tooltip: AngleAxisTooltipOpts
+    axisLine: AngleAxisAxisLine
+    axisTick: AngleAxisAxisTick
+    minorTick: AngleAxisMinorTick
+    axisLabel: AngleAxisAxisLabel
+    splitLine: AngleAxisSplitLine
+    minorSplitLine: AngleAxisMinorSplitLine
+    splitArea: AngleAxisSplitArea
+    data: list[AngleAxisDataItem]
+    axisPointer: AngleAxisAxisPointer
+    tooltip: AngleAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
     zlevel: int | float
     z: int | float
 
-class AngleAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisSplitAreaOpts(TypedDict, total=False):
-    interval: int | float | Callable[..., Any]
+class AngleAxisAxisLabel(TypedDict, total=False):
     show: bool
-    areaStyle: AngleAxisSplitAreaAreaStyleOpts
-
-class AngleAxisSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class AngleAxisSplitLineOpts(TypedDict, total=False):
-    show: bool
-    showMinLine: bool
-    showMaxLine: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: AngleAxisSplitLineLineStyleOpts
-
-class AngleAxisTooltipOpts(TypedDict, total=False):
-    show: bool
-    position: str
-    formatter: str | Callable[..., Any]
-    backgroundColor: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    padding: int | float
-    textStyle: AngleAxisTooltipTextStyleOpts
-    extraCssText: str
-
-class AngleAxisTooltipTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
     fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
     lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
     width: int | float
     height: int | float
     textBorderColor: str | list[str]
@@ -416,73 +86,76 @@ class AngleAxisTooltipTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
+    rich: AngleAxisAxisLabelRich
+    richInheritPlainLabel: bool
 
-class AriaDecalDecalsOpts(TypedDict, total=False):
-    symbol: str
-    symbolSize: int | float
-    symbolKeepAspect: bool
-    color: str
-    backgroundColor: str
-    dashArrayX: int | float
-    dashArrayY: int | float
-    rotation: int | float
-    maxTileWidth: int | float
-    maxTileHeight: int | float
+class AngleAxisAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
 
-class AriaDecalOpts(TypedDict, total=False):
+class AngleAxisAxisLine(TypedDict, total=False):
     show: bool
-    decals: AriaDecalDecalsOpts
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: AngleAxisAxisLineLineStyle
 
-class AriaLabelDataOpts(TypedDict, total=False):
-    maxCount: int | float
-    allData: str
-    partialData: str
-    withName: str
-    withoutName: str
-    excludeDimensionId: Any
-    separator: AriaLabelDataSeparatorOpts
+class AngleAxisAxisLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
 
-class AriaLabelDataSeparatorOpts(TypedDict, total=False):
-    middle: str
-    end: str
+class AngleAxisAxisPointer(TypedDict, total=False):
+    show: bool
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: AngleAxisAxisPointerLabel
+    lineStyle: AngleAxisAxisPointerLineStyle
+    shadowStyle: AngleAxisAxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: AngleAxisAxisPointerHandle
 
-class AriaLabelGeneralOpts(TypedDict, total=False):
-    withTitle: str
-    withoutTitle: str
-
-class AriaLabelOpts(TypedDict, total=False):
-    enabled: bool
-    description: str
-    general: AriaLabelGeneralOpts
-    series: AriaLabelSeriesOpts
-    data: AriaLabelDataOpts
-
-class AriaLabelSeriesMultipleOpts(TypedDict, total=False):
-    prefix: str
-    withName: str
-    withoutName: str
-    separator: AriaLabelSeriesMultipleSeparatorOpts
-
-class AriaLabelSeriesMultipleSeparatorOpts(TypedDict, total=False):
-    middle: str
-    end: str
-
-class AriaLabelSeriesOpts(TypedDict, total=False):
-    maxCount: int | float
-    single: AriaLabelSeriesSingleOpts
-    multiple: AriaLabelSeriesMultipleOpts
-
-class AriaLabelSeriesSingleOpts(TypedDict, total=False):
-    prefix: str
-    withName: str
-    withoutName: str
-
-class AriaOpts(TypedDict, total=False):
-    enabled: bool
-    label: AriaLabelOpts
-    decal: AriaDecalOpts
-
-class AxisPointerHandleOpts(TypedDict, total=False):
+class AngleAxisAxisPointerHandle(TypedDict, total=False):
     show: bool
     icon: Any
     size: int | float
@@ -494,10 +167,10 @@ class AxisPointerHandleOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class AxisPointerLabelOpts(TypedDict, total=False):
+class AngleAxisAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -526,7 +199,7 @@ class AxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class AxisPointerLineStyleOpts(TypedDict, total=False):
+class AngleAxisAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -540,24 +213,7 @@ class AxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class AxisPointerOpts(TypedDict, total=False):
-    id: str
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: AxisPointerLabelOpts
-    lineStyle: AxisPointerLineStyleOpts
-    shadowStyle: AxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: AxisPointerHandleOpts
-    link: Any
-    triggerOn: Literal["mousemove", "click", "none"]
-
-class AxisPointerShadowStyleOpts(TypedDict, total=False):
+class AngleAxisAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -565,7 +221,351 @@ class AxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class BrushOpts(TypedDict, total=False):
+class AngleAxisAxisTick(TypedDict, total=False):
+    show: bool
+    alignWithLabel: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    length: int | float
+    lineStyle: AngleAxisAxisTickLineStyle
+    customValues: Any
+
+class AngleAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AngleAxisDataItem(TypedDict, total=False):
+    value: str
+    textStyle: AngleAxisDataItemTextStyle
+
+class AngleAxisDataItemTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: AngleAxisDataItemTextStyleRich
+    richInheritPlainLabel: bool
+
+class AngleAxisDataItemTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class AngleAxisMinorSplitLine(TypedDict, total=False):
+    show: bool
+    lineStyle: AngleAxisMinorSplitLineLineStyle
+
+class AngleAxisMinorSplitLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AngleAxisMinorTick(TypedDict, total=False):
+    show: bool
+    splitNumber: int | float
+    length: int | float
+    lineStyle: AngleAxisMinorTickLineStyle
+
+class AngleAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AngleAxisSplitArea(TypedDict, total=False):
+    interval: Callable[..., Any] | int | float
+    show: bool
+    areaStyle: AngleAxisSplitAreaAreaStyle
+
+class AngleAxisSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AngleAxisSplitLine(TypedDict, total=False):
+    show: bool
+    showMinLine: bool
+    showMaxLine: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: AngleAxisSplitLineLineStyle
+
+class AngleAxisSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AngleAxisTooltip(TypedDict, total=False):
+    show: bool
+    position: str
+    formatter: Callable[..., Any] | str
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    padding: int | float
+    textStyle: AngleAxisTooltipTextStyle
+    extraCssText: str
+
+class AngleAxisTooltipTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class Aria(TypedDict, total=False):
+    enabled: bool
+    label: AriaLabel
+    decal: AriaDecal
+
+class AriaDecal(TypedDict, total=False):
+    show: bool
+    decals: AriaDecalDecals
+
+class AriaDecalDecals(TypedDict, total=False):
+    symbol: str
+    symbolSize: int | float
+    symbolKeepAspect: bool
+    color: str
+    backgroundColor: str
+    dashArrayX: int | float
+    dashArrayY: int | float
+    rotation: int | float
+    maxTileWidth: int | float
+    maxTileHeight: int | float
+
+class AriaLabel(TypedDict, total=False):
+    enabled: bool
+    description: str
+    general: AriaLabelGeneral
+    series: AriaLabelSeries
+    data: AriaLabelData
+
+class AriaLabelData(TypedDict, total=False):
+    maxCount: int | float
+    allData: str
+    partialData: str
+    withName: str
+    withoutName: str
+    excludeDimensionId: Any
+    separator: AriaLabelDataSeparator
+
+class AriaLabelDataSeparator(TypedDict, total=False):
+    middle: str
+    end: str
+
+class AriaLabelGeneral(TypedDict, total=False):
+    withTitle: str
+    withoutTitle: str
+
+class AriaLabelSeries(TypedDict, total=False):
+    maxCount: int | float
+    single: AriaLabelSeriesSingle
+    multiple: AriaLabelSeriesMultiple
+
+class AriaLabelSeriesMultiple(TypedDict, total=False):
+    prefix: str
+    withName: str
+    withoutName: str
+    separator: AriaLabelSeriesMultipleSeparator
+
+class AriaLabelSeriesMultipleSeparator(TypedDict, total=False):
+    middle: str
+    end: str
+
+class AriaLabelSeriesSingle(TypedDict, total=False):
+    prefix: str
+    withName: str
+    withoutName: str
+
+class AxisPointer(TypedDict, total=False):
+    id: str
+    show: bool
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: AxisPointerLabel
+    lineStyle: AxisPointerLineStyle
+    shadowStyle: AxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: AxisPointerHandle
+    link: Any
+    triggerOn: Literal["mousemove", "click", "none"]
+
+class AxisPointerHandle(TypedDict, total=False):
+    show: bool
+    icon: Any
+    size: int | float
+    margin: int | float
+    color: str
+    throttle: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class AxisPointerLabel(TypedDict, total=False):
+    show: bool
+    precision: str | int | float
+    formatter: Callable[..., Any] | str
+    margin: int | float
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    padding: str
+    backgroundColor: str
+    borderColor: str
+    borderWidth: str
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class AxisPointerLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class AxisPointerShadowStyle(TypedDict, total=False):
+    color: str | list[str]
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class Brush(TypedDict, total=False):
     id: str
     toolbox: Any
     brushLink: str
@@ -584,7 +584,27 @@ class BrushOpts(TypedDict, total=False):
     outOfBrush: dict[str, Any]
     z: int | float
 
-class CalendarDayLabelOpts(TypedDict, total=False):
+class Calendar(TypedDict, total=False):
+    id: str
+    zlevel: int | float
+    z: int | float
+    left: str | int | float
+    top: str | int | float
+    right: str | int | float
+    bottom: str | int | float
+    width: str | int | float
+    height: str | int | float
+    range: str | int | float
+    cellSize: int | float
+    orient: Literal["horizontal", "vertical"]
+    splitLine: CalendarSplitLine
+    itemStyle: CalendarItemStyle
+    dayLabel: CalendarDayLabel
+    monthLabel: CalendarMonthLabel
+    yearLabel: CalendarYearLabel
+    silent: bool
+
+class CalendarDayLabel(TypedDict, total=False):
     show: bool
     firstDay: int | float
     margin: int | float
@@ -621,11 +641,11 @@ class CalendarDayLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: CalendarDayLabelRichOpts
+    rich: CalendarDayLabelRich
     richInheritPlainLabel: bool
     silent: bool
 
-class CalendarDayLabelRichStyleOpts(TypedDict, total=False):
+class CalendarDayLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -656,7 +676,7 @@ class CalendarDayLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class CalendarItemStyleOpts(TypedDict, total=False):
+class CalendarItemStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -671,13 +691,13 @@ class CalendarItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class CalendarMonthLabelOpts(TypedDict, total=False):
+class CalendarMonthLabel(TypedDict, total=False):
     show: bool
     align: Literal["left", "center", "right"]
     margin: int | float
     position: Literal["start", "end"]
     nameMap: Literal["EN", "ZH"]
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -708,11 +728,11 @@ class CalendarMonthLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: CalendarMonthLabelRichOpts
+    rich: CalendarMonthLabelRich
     richInheritPlainLabel: bool
     silent: bool
 
-class CalendarMonthLabelRichStyleOpts(TypedDict, total=False):
+class CalendarMonthLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -743,27 +763,11 @@ class CalendarMonthLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class CalendarOpts(TypedDict, total=False):
-    id: str
-    zlevel: int | float
-    z: int | float
-    left: str | int | float
-    top: str | int | float
-    right: str | int | float
-    bottom: str | int | float
-    width: str | int | float
-    height: str | int | float
-    range: str | int | float
-    cellSize: int | float
-    orient: Literal["horizontal", "vertical"]
-    splitLine: CalendarSplitLineOpts
-    itemStyle: CalendarItemStyleOpts
-    dayLabel: CalendarDayLabelOpts
-    monthLabel: CalendarMonthLabelOpts
-    yearLabel: CalendarYearLabelOpts
-    silent: bool
+class CalendarSplitLine(TypedDict, total=False):
+    show: bool
+    lineStyle: CalendarSplitLineLineStyle
 
-class CalendarSplitLineLineStyleOpts(TypedDict, total=False):
+class CalendarSplitLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -777,15 +781,11 @@ class CalendarSplitLineLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class CalendarSplitLineOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: CalendarSplitLineLineStyleOpts
-
-class CalendarYearLabelOpts(TypedDict, total=False):
+class CalendarYearLabel(TypedDict, total=False):
     show: bool
     margin: int | float
     position: Literal["top", "bottom", "left", "right"]
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -817,11 +817,11 @@ class CalendarYearLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: CalendarYearLabelRichOpts
+    rich: CalendarYearLabelRich
     richInheritPlainLabel: bool
     silent: bool
 
-class CalendarYearLabelRichStyleOpts(TypedDict, total=False):
+class CalendarYearLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -852,95 +852,62 @@ class CalendarYearLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class DatasetOpts(TypedDict, total=False):
+class Dataset(TypedDict, total=False):
     id: str
     source: dict[str, Any]
     dimensions: Any
-    sourceHeader: int | float | bool
+    sourceHeader: bool | int | float
     transform: Any
     fromDatasetIndex: int | float
     fromDatasetId: str
     fromTransformResult: int | float
 
-class Geo3DColorMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class Geo3DEmphasisItemStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-
-class Geo3DEmphasisLabelOpts(TypedDict, total=False):
+class Geo(TypedDict, total=False):
+    id: str
     show: bool
-    distance: int | float
-    formatter: str | Callable[..., Any]
-    textStyle: Geo3DEmphasisLabelTextStyleOpts
+    map: str
+    projection: GeoProjection
+    center: Any
+    zoom: int | float
+    scaleLimit: GeoScaleLimit
+    roam: Literal["true", "false", "scale", "move"]
+    roamTrigger: str
+    aspectScale: int | float
+    boundingCoords: Any
+    nameMap: dict[str, Any]
+    nameProperty: str
+    selectedMode: bool | str
+    label: GeoLabel
+    itemStyle: GeoItemStyle
+    emphasis: GeoEmphasis
+    select: GeoSelect
+    blur: GeoBlur
+    zlevel: int | float
+    z: int | float
+    left: str | int | float
+    top: str | int | float
+    right: str | int | float
+    bottom: str | int | float
+    width: str | int | float
+    height: str | int | float
+    layoutCenter: Any
+    layoutSize: str | int | float
+    preserveAspect: bool | str
+    preserveAspectAlign: Literal["left", "right", "center"]
+    preserveAspectVerticalAlign: Literal["top", "bottom", "middle"]
+    clip: bool
+    coordinateSystem: str
+    coordinateSystemUsage: str
+    coord: str | int | float
+    calendarIndex: int | float
+    calendarId: int | float
+    matrixIndex: int | float
+    matrixId: int | float
+    regions: list[GeoRegionsItem]
+    silent: bool
+    tooltip: GeoTooltip
 
-class Geo3DEmphasisLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class Geo3DEmphasisOpts(TypedDict, total=False):
-    label: Geo3DEmphasisLabelOpts
-    itemStyle: Geo3DEmphasisItemStyleOpts
-
-class Geo3DGroundPlaneOpts(TypedDict, total=False):
-    show: bool
-    color: str
-
-class Geo3DItemStyleOpts(TypedDict, total=False):
-    color: str | Callable[..., Any]
-    opacity: int | float
-    borderWidth: int | float
-    borderColor: str
-
-class Geo3DLabelOpts(TypedDict, total=False):
-    show: bool
-    distance: int | float
-    formatter: str | Callable[..., Any]
-    textStyle: Geo3DLabelTextStyleOpts
-
-class Geo3DLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class Geo3DLambertMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class Geo3DLightAmbientCubemapOpts(TypedDict, total=False):
-    texture: str
-    diffuseIntensity: int | float
-    specularIntensity: int | float
-
-class Geo3DLightAmbientOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-
-class Geo3DLightMainOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-    shadow: bool
-    shadowQuality: str
-    alpha: int | float
-    beta: int | float
-
-class Geo3DLightOpts(TypedDict, total=False):
-    main: Geo3DLightMainOpts
-    ambient: Geo3DLightAmbientOpts
-    ambientCubemap: Geo3DLightAmbientCubemapOpts
-
-class Geo3DOpts(TypedDict, total=False):
+class Geo3D(TypedDict, total=False):
     show: bool
     map: str
     boxWidth: int | float
@@ -948,20 +915,20 @@ class Geo3DOpts(TypedDict, total=False):
     boxDepth: int | float
     regionHeight: int | float
     environment: str
-    groundPlane: Geo3DGroundPlaneOpts
+    groundPlane: Geo3DGroundPlane
     instancing: bool
-    label: Geo3DLabelOpts
-    itemStyle: Geo3DItemStyleOpts
-    emphasis: Geo3DEmphasisOpts
-    regions: list[Geo3DRegionsItemOpts]
+    label: Geo3DLabel
+    itemStyle: Geo3DItemStyle
+    emphasis: Geo3DEmphasis
+    regions: list[Geo3DRegionsItem]
     shading: str
-    realisticMaterial: Geo3DRealisticMaterialOpts
-    lambertMaterial: Geo3DLambertMaterialOpts
-    colorMaterial: Geo3DColorMaterialOpts
-    light: Geo3DLightOpts
-    postEffect: Geo3DPostEffectOpts
-    temporalSuperSampling: Geo3DTemporalSuperSamplingOpts
-    viewControl: Geo3DViewControlOpts
+    realisticMaterial: Geo3DRealisticMaterial
+    lambertMaterial: Geo3DLambertMaterial
+    colorMaterial: Geo3DColorMaterial
+    light: Geo3DLight
+    postEffect: Geo3DPostEffect
+    temporalSuperSampling: Geo3DTemporalSuperSampling
+    viewControl: Geo3DViewControl
     zlevel: int | float
     left: str | int | float
     top: str | int | float
@@ -970,11 +937,98 @@ class Geo3DOpts(TypedDict, total=False):
     width: str | int | float
     height: str | int | float
 
-class Geo3DPostEffectBloomOpts(TypedDict, total=False):
+class Geo3DColorMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class Geo3DEmphasis(TypedDict, total=False):
+    label: Geo3DEmphasisLabel
+    itemStyle: Geo3DEmphasisItemStyle
+
+class Geo3DEmphasisItemStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+
+class Geo3DEmphasisLabel(TypedDict, total=False):
+    show: bool
+    distance: int | float
+    formatter: Callable[..., Any] | str
+    textStyle: Geo3DEmphasisLabelTextStyle
+
+class Geo3DEmphasisLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Geo3DGroundPlane(TypedDict, total=False):
+    show: bool
+    color: str
+
+class Geo3DItemStyle(TypedDict, total=False):
+    color: Callable[..., Any] | str
+    opacity: int | float
+    borderWidth: int | float
+    borderColor: str
+
+class Geo3DLabel(TypedDict, total=False):
+    show: bool
+    distance: int | float
+    formatter: Callable[..., Any] | str
+    textStyle: Geo3DLabelTextStyle
+
+class Geo3DLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Geo3DLambertMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class Geo3DLight(TypedDict, total=False):
+    main: Geo3DLightMain
+    ambient: Geo3DLightAmbient
+    ambientCubemap: Geo3DLightAmbientCubemap
+
+class Geo3DLightAmbient(TypedDict, total=False):
+    color: str
+    intensity: int | float
+
+class Geo3DLightAmbientCubemap(TypedDict, total=False):
+    texture: str
+    diffuseIntensity: int | float
+    specularIntensity: int | float
+
+class Geo3DLightMain(TypedDict, total=False):
+    color: str
+    intensity: int | float
+    shadow: bool
+    shadowQuality: str
+    alpha: int | float
+    beta: int | float
+
+class Geo3DPostEffect(TypedDict, total=False):
+    enable: bool
+    bloom: Geo3DPostEffectBloom
+    depthOfField: Geo3DPostEffectDepthOfField
+    screenSpaceAmbientOcclusion: dict[str, Any]
+    SSAO: Geo3DPostEffectSsao
+    colorCorrection: Geo3DPostEffectColorCorrection
+    FXAA: Geo3DPostEffectFxaa
+
+class Geo3DPostEffectBloom(TypedDict, total=False):
     enable: bool
     bloomIntensity: int | float
 
-class Geo3DPostEffectColorCorrectionOpts(TypedDict, total=False):
+class Geo3DPostEffectColorCorrection(TypedDict, total=False):
     enable: bool
     lookupTexture: str
     exposure: int | float
@@ -982,32 +1036,23 @@ class Geo3DPostEffectColorCorrectionOpts(TypedDict, total=False):
     contrast: int | float
     saturation: int | float
 
-class Geo3DPostEffectDepthOfFieldOpts(TypedDict, total=False):
+class Geo3DPostEffectDepthOfField(TypedDict, total=False):
     enable: bool
     focalDistance: bool
     focalRange: bool
     fstop: int | float
     blurRadius: int | float
 
-class Geo3DPostEffectFxaaOpts(TypedDict, total=False):
+class Geo3DPostEffectFxaa(TypedDict, total=False):
     enable: bool
 
-class Geo3DPostEffectOpts(TypedDict, total=False):
-    enable: bool
-    bloom: Geo3DPostEffectBloomOpts
-    depthOfField: Geo3DPostEffectDepthOfFieldOpts
-    screenSpaceAmbientOcclusion: dict[str, Any]
-    SSAO: Geo3DPostEffectSsaoOpts
-    colorCorrection: Geo3DPostEffectColorCorrectionOpts
-    FXAA: Geo3DPostEffectFxaaOpts
-
-class Geo3DPostEffectSsaoOpts(TypedDict, total=False):
+class Geo3DPostEffectSsao(TypedDict, total=False):
     enable: bool
     quality: str
     radius: int | float
     intensity: int | float
 
-class Geo3DRealisticMaterialOpts(TypedDict, total=False):
+class Geo3DRealisticMaterial(TypedDict, total=False):
     detailTexture: str
     textureTiling: int | float
     textureOffset: int | float
@@ -1017,61 +1062,61 @@ class Geo3DRealisticMaterialOpts(TypedDict, total=False):
     metalnessAdjust: int | float
     normalTexture: str
 
-class Geo3DRegionsItemEmphasisItemStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    borderWidth: int | float
-    borderColor: str
-
-class Geo3DRegionsItemEmphasisLabelOpts(TypedDict, total=False):
-    show: bool
-    distance: int | float
-    formatter: str | Callable[..., Any]
-    textStyle: Geo3DRegionsItemEmphasisLabelTextStyleOpts
-
-class Geo3DRegionsItemEmphasisLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class Geo3DRegionsItemEmphasisOpts(TypedDict, total=False):
-    itemStyle: Geo3DRegionsItemEmphasisItemStyleOpts
-    label: Geo3DRegionsItemEmphasisLabelOpts
-
-class Geo3DRegionsItemItemStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    borderWidth: int | float
-    borderColor: str
-
-class Geo3DRegionsItemLabelOpts(TypedDict, total=False):
-    show: bool
-    distance: int | float
-    formatter: str | Callable[..., Any]
-    textStyle: Geo3DRegionsItemLabelTextStyleOpts
-
-class Geo3DRegionsItemLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class Geo3DRegionsItemOpts(TypedDict, total=False):
+class Geo3DRegionsItem(TypedDict, total=False):
     name: str
     regionHeight: int | float
-    itemStyle: Geo3DRegionsItemItemStyleOpts
-    label: Geo3DRegionsItemLabelOpts
-    emphasis: Geo3DRegionsItemEmphasisOpts
+    itemStyle: Geo3DRegionsItemItemStyle
+    label: Geo3DRegionsItemLabel
+    emphasis: Geo3DRegionsItemEmphasis
 
-class Geo3DTemporalSuperSamplingOpts(TypedDict, total=False):
+class Geo3DRegionsItemEmphasis(TypedDict, total=False):
+    itemStyle: Geo3DRegionsItemEmphasisItemStyle
+    label: Geo3DRegionsItemEmphasisLabel
+
+class Geo3DRegionsItemEmphasisItemStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    borderWidth: int | float
+    borderColor: str
+
+class Geo3DRegionsItemEmphasisLabel(TypedDict, total=False):
+    show: bool
+    distance: int | float
+    formatter: Callable[..., Any] | str
+    textStyle: Geo3DRegionsItemEmphasisLabelTextStyle
+
+class Geo3DRegionsItemEmphasisLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Geo3DRegionsItemItemStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    borderWidth: int | float
+    borderColor: str
+
+class Geo3DRegionsItemLabel(TypedDict, total=False):
+    show: bool
+    distance: int | float
+    formatter: Callable[..., Any] | str
+    textStyle: Geo3DRegionsItemLabelTextStyle
+
+class Geo3DRegionsItemLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Geo3DTemporalSuperSampling(TypedDict, total=False):
     enable: bool
 
-class Geo3DViewControlOpts(TypedDict, total=False):
+class Geo3DViewControl(TypedDict, total=False):
     projection: str
     autoRotate: bool
     autoRotateDirection: str
@@ -1100,7 +1145,11 @@ class Geo3DViewControlOpts(TypedDict, total=False):
     animationDurationUpdate: int | float
     animationEasingUpdate: str
 
-class GeoBlurItemStyleOpts(TypedDict, total=False):
+class GeoBlur(TypedDict, total=False):
+    label: GeoBlurLabel
+    itemStyle: GeoBlurItemStyle
+
+class GeoBlurItemStyle(TypedDict, total=False):
     areaColor: str | list[str]
     color: str | list[str]
     borderColor: str | list[str]
@@ -1116,13 +1165,13 @@ class GeoBlurItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GeoBlurLabelOpts(TypedDict, total=False):
+class GeoBlurLabel(TypedDict, total=False):
     show: bool
     position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
     distance: int | float
     rotate: int | float
     offset: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1154,10 +1203,10 @@ class GeoBlurLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: GeoBlurLabelRichOpts
+    rich: GeoBlurLabelRich
     richInheritPlainLabel: bool
 
-class GeoBlurLabelRichStyleOpts(TypedDict, total=False):
+class GeoBlurLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1188,105 +1237,13 @@ class GeoBlurLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class GeoBlurOpts(TypedDict, total=False):
-    label: GeoBlurLabelOpts
-    itemStyle: GeoBlurItemStyleOpts
-
-class GeoEmphasisItemStyleOpts(TypedDict, total=False):
-    areaColor: str | list[str]
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class GeoEmphasisLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: GeoEmphasisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class GeoEmphasisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class GeoEmphasisOpts(TypedDict, total=False):
+class GeoEmphasis(TypedDict, total=False):
     disabled: bool
     focus: str
-    label: GeoEmphasisLabelOpts
-    itemStyle: GeoEmphasisItemStyleOpts
+    label: GeoEmphasisLabel
+    itemStyle: GeoEmphasisItemStyle
 
-class GeoItemStyleOpts(TypedDict, total=False):
+class GeoEmphasisItemStyle(TypedDict, total=False):
     areaColor: str | list[str]
     color: str | list[str]
     borderColor: str | list[str]
@@ -1302,13 +1259,13 @@ class GeoItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GeoLabelOpts(TypedDict, total=False):
+class GeoEmphasisLabel(TypedDict, total=False):
     show: bool
     position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
     distance: int | float
     rotate: int | float
     offset: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1340,10 +1297,10 @@ class GeoLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: GeoLabelRichOpts
+    rich: GeoEmphasisLabelRich
     richInheritPlainLabel: bool
 
-class GeoLabelRichStyleOpts(TypedDict, total=False):
+class GeoEmphasisLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1374,340 +1331,115 @@ class GeoLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class GeoOpts(TypedDict, total=False):
-    id: str
+class GeoItemStyle(TypedDict, total=False):
+    areaColor: str | list[str]
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class GeoLabel(TypedDict, total=False):
     show: bool
-    map: str
-    projection: GeoProjectionOpts
-    center: Any
-    zoom: int | float
-    scaleLimit: GeoScaleLimitOpts
-    roam: Literal["true", "false", "scale", "move"]
-    roamTrigger: str
-    aspectScale: int | float
-    boundingCoords: Any
-    nameMap: dict[str, Any]
-    nameProperty: str
-    selectedMode: str | bool
-    label: GeoLabelOpts
-    itemStyle: GeoItemStyleOpts
-    emphasis: GeoEmphasisOpts
-    select: GeoSelectOpts
-    blur: GeoBlurOpts
-    zlevel: int | float
-    z: int | float
-    left: str | int | float
-    top: str | int | float
-    right: str | int | float
-    bottom: str | int | float
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: GeoLabelRich
+    richInheritPlainLabel: bool
+
+class GeoLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
     width: str | int | float
     height: str | int | float
-    layoutCenter: Any
-    layoutSize: str | int | float
-    preserveAspect: str | bool
-    preserveAspectAlign: Literal["left", "right", "center"]
-    preserveAspectVerticalAlign: Literal["top", "bottom", "middle"]
-    clip: bool
-    coordinateSystem: str
-    coordinateSystemUsage: str
-    coord: str | int | float
-    calendarIndex: int | float
-    calendarId: int | float
-    matrixIndex: int | float
-    matrixId: int | float
-    regions: list[GeoRegionsItemOpts]
-    silent: bool
-    tooltip: GeoTooltipOpts
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
 
-class GeoProjectionOpts(TypedDict, total=False):
+class GeoProjection(TypedDict, total=False):
     project: Callable[..., Any]
     unproject: Callable[..., Any]
     stream: Callable[..., Any]
 
-class GeoRegionsItemBlurItemStyleOpts(TypedDict, total=False):
-    areaColor: str | list[str]
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class GeoRegionsItemBlurLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: GeoRegionsItemBlurLabelRichOpts
-    richInheritPlainLabel: bool
-
-class GeoRegionsItemBlurLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class GeoRegionsItemBlurOpts(TypedDict, total=False):
-    itemStyle: GeoRegionsItemBlurItemStyleOpts
-    label: GeoRegionsItemBlurLabelOpts
-
-class GeoRegionsItemEmphasisItemStyleOpts(TypedDict, total=False):
-    areaColor: str | list[str]
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class GeoRegionsItemEmphasisLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: GeoRegionsItemEmphasisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class GeoRegionsItemEmphasisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class GeoRegionsItemEmphasisOpts(TypedDict, total=False):
-    itemStyle: GeoRegionsItemEmphasisItemStyleOpts
-    label: GeoRegionsItemEmphasisLabelOpts
-
-class GeoRegionsItemItemStyleOpts(TypedDict, total=False):
-    areaColor: str | list[str]
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class GeoRegionsItemLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: GeoRegionsItemLabelRichOpts
-    richInheritPlainLabel: bool
-
-class GeoRegionsItemLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class GeoRegionsItemOpts(TypedDict, total=False):
+class GeoRegionsItem(TypedDict, total=False):
     name: str
     selected: bool
-    itemStyle: GeoRegionsItemItemStyleOpts
-    label: GeoRegionsItemLabelOpts
-    emphasis: GeoRegionsItemEmphasisOpts
-    select: GeoRegionsItemSelectOpts
-    blur: GeoRegionsItemBlurOpts
-    tooltip: GeoRegionsItemTooltipOpts
+    itemStyle: GeoRegionsItemItemStyle
+    label: GeoRegionsItemLabel
+    emphasis: GeoRegionsItemEmphasis
+    select: GeoRegionsItemSelect
+    blur: GeoRegionsItemBlur
+    tooltip: GeoRegionsItemTooltip
     silent: bool
 
-class GeoRegionsItemSelectItemStyleOpts(TypedDict, total=False):
+class GeoRegionsItemBlur(TypedDict, total=False):
+    itemStyle: GeoRegionsItemBlurItemStyle
+    label: GeoRegionsItemBlurLabel
+
+class GeoRegionsItemBlurItemStyle(TypedDict, total=False):
     areaColor: str | list[str]
     color: str | list[str]
     borderColor: str | list[str]
@@ -1723,13 +1455,13 @@ class GeoRegionsItemSelectItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GeoRegionsItemSelectLabelOpts(TypedDict, total=False):
+class GeoRegionsItemBlurLabel(TypedDict, total=False):
     show: bool
     position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
     distance: int | float
     rotate: int | float
     offset: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1761,10 +1493,10 @@ class GeoRegionsItemSelectLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: GeoRegionsItemSelectLabelRichOpts
+    rich: GeoRegionsItemBlurLabelRich
     richInheritPlainLabel: bool
 
-class GeoRegionsItemSelectLabelRichStyleOpts(TypedDict, total=False):
+class GeoRegionsItemBlurLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1795,23 +1527,291 @@ class GeoRegionsItemSelectLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class GeoRegionsItemSelectOpts(TypedDict, total=False):
-    itemStyle: GeoRegionsItemSelectItemStyleOpts
-    label: GeoRegionsItemSelectLabelOpts
+class GeoRegionsItemEmphasis(TypedDict, total=False):
+    itemStyle: GeoRegionsItemEmphasisItemStyle
+    label: GeoRegionsItemEmphasisLabel
 
-class GeoRegionsItemTooltipOpts(TypedDict, total=False):
+class GeoRegionsItemEmphasisItemStyle(TypedDict, total=False):
+    areaColor: str | list[str]
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class GeoRegionsItemEmphasisLabel(TypedDict, total=False):
+    show: bool
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: GeoRegionsItemEmphasisLabelRich
+    richInheritPlainLabel: bool
+
+class GeoRegionsItemEmphasisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class GeoRegionsItemItemStyle(TypedDict, total=False):
+    areaColor: str | list[str]
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class GeoRegionsItemLabel(TypedDict, total=False):
+    show: bool
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: GeoRegionsItemLabelRich
+    richInheritPlainLabel: bool
+
+class GeoRegionsItemLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class GeoRegionsItemSelect(TypedDict, total=False):
+    itemStyle: GeoRegionsItemSelectItemStyle
+    label: GeoRegionsItemSelectLabel
+
+class GeoRegionsItemSelectItemStyle(TypedDict, total=False):
+    areaColor: str | list[str]
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class GeoRegionsItemSelectLabel(TypedDict, total=False):
+    show: bool
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: GeoRegionsItemSelectLabelRich
+    richInheritPlainLabel: bool
+
+class GeoRegionsItemSelectLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class GeoRegionsItemTooltip(TypedDict, total=False):
     show: bool
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     valueFormatter: str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: GeoRegionsItemTooltipTextStyleOpts
+    textStyle: GeoRegionsItemTooltipTextStyle
     extraCssText: str
 
-class GeoRegionsItemTooltipTextStyleOpts(TypedDict, total=False):
+class GeoRegionsItemTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1831,11 +1831,16 @@ class GeoRegionsItemTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class GeoScaleLimitOpts(TypedDict, total=False):
+class GeoScaleLimit(TypedDict, total=False):
     min: int | float
     max: int | float
 
-class GeoSelectItemStyleOpts(TypedDict, total=False):
+class GeoSelect(TypedDict, total=False):
+    disabled: bool
+    label: GeoSelectLabel
+    itemStyle: GeoSelectItemStyle
+
+class GeoSelectItemStyle(TypedDict, total=False):
     areaColor: str | list[str]
     color: str | list[str]
     borderColor: str | list[str]
@@ -1851,13 +1856,13 @@ class GeoSelectItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GeoSelectLabelOpts(TypedDict, total=False):
+class GeoSelectLabel(TypedDict, total=False):
     show: bool
     position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
     distance: int | float
     rotate: int | float
     offset: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1889,10 +1894,10 @@ class GeoSelectLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: GeoSelectLabelRichOpts
+    rich: GeoSelectLabelRich
     richInheritPlainLabel: bool
 
-class GeoSelectLabelRichStyleOpts(TypedDict, total=False):
+class GeoSelectLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1923,24 +1928,19 @@ class GeoSelectLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class GeoSelectOpts(TypedDict, total=False):
-    disabled: bool
-    label: GeoSelectLabelOpts
-    itemStyle: GeoSelectItemStyleOpts
-
-class GeoTooltipOpts(TypedDict, total=False):
+class GeoTooltip(TypedDict, total=False):
     show: bool
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     valueFormatter: str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: GeoTooltipTextStyleOpts
+    textStyle: GeoTooltipTextStyle
     extraCssText: str
 
-class GeoTooltipTextStyleOpts(TypedDict, total=False):
+class GeoTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -1960,57 +1960,7 @@ class GeoTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class GlobeAtmosphereOpts(TypedDict, total=False):
-    show: bool
-    offset: int | float
-    color: str
-    glowPower: int | float
-    innerGlowPower: int | float
-
-class GlobeColorMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class GlobeLambertMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class GlobeLayersItemOpts(TypedDict, total=False):
-    show: bool
-    type: str
-    name: str
-    blendTo: str
-    intensity: int | float
-    shading: str
-    distance: int | float
-    texture: str
-
-class GlobeLightAmbientCubemapOpts(TypedDict, total=False):
-    texture: str
-    diffuseIntensity: int | float
-    specularIntensity: int | float
-
-class GlobeLightAmbientOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-
-class GlobeLightMainOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-    shadow: bool
-    shadowQuality: str
-    alpha: int | float
-    beta: int | float
-    time: Any
-
-class GlobeLightOpts(TypedDict, total=False):
-    main: GlobeLightMainOpts
-    ambient: GlobeLightAmbientOpts
-    ambientCubemap: GlobeLightAmbientCubemapOpts
-
-class GlobeOpts(TypedDict, total=False):
+class Globe(TypedDict, total=False):
     show: bool
     zlevel: int | float
     left: str | int | float
@@ -2028,21 +1978,80 @@ class GlobeOpts(TypedDict, total=False):
     displacementScale: int | float
     displacementQuality: str
     shading: str
-    realisticMaterial: GlobeRealisticMaterialOpts
-    lambertMaterial: GlobeLambertMaterialOpts
-    colorMaterial: GlobeColorMaterialOpts
-    light: GlobeLightOpts
-    atmosphere: GlobeAtmosphereOpts
-    postEffect: GlobePostEffectOpts
-    temporalSuperSampling: GlobeTemporalSuperSamplingOpts
-    viewControl: GlobeViewControlOpts
-    layers: list[GlobeLayersItemOpts]
+    realisticMaterial: GlobeRealisticMaterial
+    lambertMaterial: GlobeLambertMaterial
+    colorMaterial: GlobeColorMaterial
+    light: GlobeLight
+    atmosphere: GlobeAtmosphere
+    postEffect: GlobePostEffect
+    temporalSuperSampling: GlobeTemporalSuperSampling
+    viewControl: GlobeViewControl
+    layers: list[GlobeLayersItem]
 
-class GlobePostEffectBloomOpts(TypedDict, total=False):
+class GlobeAtmosphere(TypedDict, total=False):
+    show: bool
+    offset: int | float
+    color: str
+    glowPower: int | float
+    innerGlowPower: int | float
+
+class GlobeColorMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class GlobeLambertMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class GlobeLayersItem(TypedDict, total=False):
+    show: bool
+    type: str
+    name: str
+    blendTo: str
+    intensity: int | float
+    shading: str
+    distance: int | float
+    texture: str
+
+class GlobeLight(TypedDict, total=False):
+    main: GlobeLightMain
+    ambient: GlobeLightAmbient
+    ambientCubemap: GlobeLightAmbientCubemap
+
+class GlobeLightAmbient(TypedDict, total=False):
+    color: str
+    intensity: int | float
+
+class GlobeLightAmbientCubemap(TypedDict, total=False):
+    texture: str
+    diffuseIntensity: int | float
+    specularIntensity: int | float
+
+class GlobeLightMain(TypedDict, total=False):
+    color: str
+    intensity: int | float
+    shadow: bool
+    shadowQuality: str
+    alpha: int | float
+    beta: int | float
+    time: Any
+
+class GlobePostEffect(TypedDict, total=False):
+    enable: bool
+    bloom: GlobePostEffectBloom
+    depthOfField: GlobePostEffectDepthOfField
+    screenSpaceAmbientOcclusion: dict[str, Any]
+    SSAO: GlobePostEffectSsao
+    colorCorrection: GlobePostEffectColorCorrection
+    FXAA: GlobePostEffectFxaa
+
+class GlobePostEffectBloom(TypedDict, total=False):
     enable: bool
     bloomIntensity: int | float
 
-class GlobePostEffectColorCorrectionOpts(TypedDict, total=False):
+class GlobePostEffectColorCorrection(TypedDict, total=False):
     enable: bool
     lookupTexture: str
     exposure: int | float
@@ -2050,32 +2059,23 @@ class GlobePostEffectColorCorrectionOpts(TypedDict, total=False):
     contrast: int | float
     saturation: int | float
 
-class GlobePostEffectDepthOfFieldOpts(TypedDict, total=False):
+class GlobePostEffectDepthOfField(TypedDict, total=False):
     enable: bool
     focalDistance: bool
     focalRange: bool
     fstop: int | float
     blurRadius: int | float
 
-class GlobePostEffectFxaaOpts(TypedDict, total=False):
+class GlobePostEffectFxaa(TypedDict, total=False):
     enable: bool
 
-class GlobePostEffectOpts(TypedDict, total=False):
-    enable: bool
-    bloom: GlobePostEffectBloomOpts
-    depthOfField: GlobePostEffectDepthOfFieldOpts
-    screenSpaceAmbientOcclusion: dict[str, Any]
-    SSAO: GlobePostEffectSsaoOpts
-    colorCorrection: GlobePostEffectColorCorrectionOpts
-    FXAA: GlobePostEffectFxaaOpts
-
-class GlobePostEffectSsaoOpts(TypedDict, total=False):
+class GlobePostEffectSsao(TypedDict, total=False):
     enable: bool
     quality: str
     radius: int | float
     intensity: int | float
 
-class GlobeRealisticMaterialOpts(TypedDict, total=False):
+class GlobeRealisticMaterial(TypedDict, total=False):
     detailTexture: str
     textureTiling: int | float
     textureOffset: int | float
@@ -2085,10 +2085,10 @@ class GlobeRealisticMaterialOpts(TypedDict, total=False):
     metalnessAdjust: int | float
     normalTexture: str
 
-class GlobeTemporalSuperSamplingOpts(TypedDict, total=False):
+class GlobeTemporalSuperSampling(TypedDict, total=False):
     enable: bool
 
-class GlobeViewControlOpts(TypedDict, total=False):
+class GlobeViewControl(TypedDict, total=False):
     projection: str
     autoRotate: bool
     autoRotateDirection: str
@@ -2118,108 +2118,57 @@ class GlobeViewControlOpts(TypedDict, total=False):
     animationEasingUpdate: str
     targetCoord: Any
 
-class GraphicOpts(TypedDict, total=False):
+class Graphic(TypedDict, total=False):
     id: str
     elements: Any
 
-class Grid3DAxisLabelOpts(TypedDict, total=False):
+class Grid(TypedDict, total=False):
+    id: str
     show: bool
-    margin: int | float
-    interval: int | float | Callable[..., Any]
-    formatter: str | Callable[..., Any]
-    textStyle: Grid3DAxisLabelTextStyleOpts
-
-class Grid3DAxisLabelTextStyleOpts(TypedDict, total=False):
-    color: str | list[str] | Callable[..., Any]
+    zlevel: int | float
+    z: int | float
+    left: str | int | float
+    top: str | int | float
+    right: str | int | float
+    bottom: str | int | float
+    width: str | int | float
+    height: str | int | float
+    containLabel: bool
+    outerBoundsMode: str
+    outerBounds: GridOuterBounds
+    outerBoundsContain: bool
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
     borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    tooltip: GridTooltip
+    coordinateSystem: str
+    coordinateSystemUsage: str
+    coord: str | int | float
+    calendarIndex: int | float
+    calendarId: int | float
+    matrixIndex: int | float
+    matrixId: int | float
 
-class Grid3DAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class Grid3DAxisLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: Grid3DAxisLineLineStyleOpts
-
-class Grid3DAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    formatter: Callable[..., Any]
-    margin: int | float
-    textStyle: Grid3DAxisPointerLabelTextStyleOpts
-
-class Grid3DAxisPointerLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class Grid3DAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class Grid3DAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: Grid3DAxisPointerLineStyleOpts
-    label: Grid3DAxisPointerLabelOpts
-
-class Grid3DAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    opacity: int | float
-    width: int | float
-
-class Grid3DAxisTickOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    length: int | float
-    lineStyle: Grid3DAxisTickLineStyleOpts
-
-class Grid3DLightAmbientCubemapOpts(TypedDict, total=False):
-    texture: str
-    diffuseIntensity: int | float
-    specularIntensity: int | float
-
-class Grid3DLightAmbientOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-
-class Grid3DLightMainOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-    shadow: bool
-    shadowQuality: str
-    alpha: int | float
-    beta: int | float
-
-class Grid3DLightOpts(TypedDict, total=False):
-    main: Grid3DLightMainOpts
-    ambient: Grid3DLightAmbientOpts
-    ambientCubemap: Grid3DLightAmbientCubemapOpts
-
-class Grid3DOpts(TypedDict, total=False):
+class Grid3D(TypedDict, total=False):
     show: bool
     boxWidth: int | float
     boxHeight: int | float
     boxDepth: int | float
-    axisLine: Grid3DAxisLineOpts
-    axisLabel: Grid3DAxisLabelOpts
-    axisTick: Grid3DAxisTickOpts
-    splitLine: Grid3DSplitLineOpts
-    splitArea: Grid3DSplitAreaOpts
-    axisPointer: Grid3DAxisPointerOpts
+    axisLine: Grid3DAxisLine
+    axisLabel: Grid3DAxisLabel
+    axisTick: Grid3DAxisTick
+    splitLine: Grid3DSplitLine
+    splitArea: Grid3DSplitArea
+    axisPointer: Grid3DAxisPointer
     environment: str
-    light: Grid3DLightOpts
-    postEffect: Grid3DPostEffectOpts
-    temporalSuperSampling: Grid3DTemporalSuperSamplingOpts
-    viewControl: Grid3DViewControlOpts
+    light: Grid3DLight
+    postEffect: Grid3DPostEffect
+    temporalSuperSampling: Grid3DTemporalSuperSampling
+    viewControl: Grid3DViewControl
     zlevel: int | float
     left: str | int | float
     top: str | int | float
@@ -2228,11 +2177,102 @@ class Grid3DOpts(TypedDict, total=False):
     width: str | int | float
     height: str | int | float
 
-class Grid3DPostEffectBloomOpts(TypedDict, total=False):
+class Grid3DAxisLabel(TypedDict, total=False):
+    show: bool
+    margin: int | float
+    interval: Callable[..., Any] | int | float
+    formatter: Callable[..., Any] | str
+    textStyle: Grid3DAxisLabelTextStyle
+
+class Grid3DAxisLabelTextStyle(TypedDict, total=False):
+    color: Callable[..., Any] | str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Grid3DAxisLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: Grid3DAxisLineLineStyle
+
+class Grid3DAxisLineLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class Grid3DAxisPointer(TypedDict, total=False):
+    show: bool
+    lineStyle: Grid3DAxisPointerLineStyle
+    label: Grid3DAxisPointerLabel
+
+class Grid3DAxisPointerLabel(TypedDict, total=False):
+    show: bool
+    formatter: Callable[..., Any]
+    margin: int | float
+    textStyle: Grid3DAxisPointerLabelTextStyle
+
+class Grid3DAxisPointerLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class Grid3DAxisPointerLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class Grid3DAxisTick(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    length: int | float
+    lineStyle: Grid3DAxisTickLineStyle
+
+class Grid3DAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    opacity: int | float
+    width: int | float
+
+class Grid3DLight(TypedDict, total=False):
+    main: Grid3DLightMain
+    ambient: Grid3DLightAmbient
+    ambientCubemap: Grid3DLightAmbientCubemap
+
+class Grid3DLightAmbient(TypedDict, total=False):
+    color: str
+    intensity: int | float
+
+class Grid3DLightAmbientCubemap(TypedDict, total=False):
+    texture: str
+    diffuseIntensity: int | float
+    specularIntensity: int | float
+
+class Grid3DLightMain(TypedDict, total=False):
+    color: str
+    intensity: int | float
+    shadow: bool
+    shadowQuality: str
+    alpha: int | float
+    beta: int | float
+
+class Grid3DPostEffect(TypedDict, total=False):
+    enable: bool
+    bloom: Grid3DPostEffectBloom
+    depthOfField: Grid3DPostEffectDepthOfField
+    screenSpaceAmbientOcclusion: dict[str, Any]
+    SSAO: Grid3DPostEffectSsao
+    colorCorrection: Grid3DPostEffectColorCorrection
+    FXAA: Grid3DPostEffectFxaa
+
+class Grid3DPostEffectBloom(TypedDict, total=False):
     enable: bool
     bloomIntensity: int | float
 
-class Grid3DPostEffectColorCorrectionOpts(TypedDict, total=False):
+class Grid3DPostEffectColorCorrection(TypedDict, total=False):
     enable: bool
     lookupTexture: str
     exposure: int | float
@@ -2240,53 +2280,44 @@ class Grid3DPostEffectColorCorrectionOpts(TypedDict, total=False):
     contrast: int | float
     saturation: int | float
 
-class Grid3DPostEffectDepthOfFieldOpts(TypedDict, total=False):
+class Grid3DPostEffectDepthOfField(TypedDict, total=False):
     enable: bool
     focalDistance: bool
     focalRange: bool
     fstop: int | float
     blurRadius: int | float
 
-class Grid3DPostEffectFxaaOpts(TypedDict, total=False):
+class Grid3DPostEffectFxaa(TypedDict, total=False):
     enable: bool
 
-class Grid3DPostEffectOpts(TypedDict, total=False):
-    enable: bool
-    bloom: Grid3DPostEffectBloomOpts
-    depthOfField: Grid3DPostEffectDepthOfFieldOpts
-    screenSpaceAmbientOcclusion: dict[str, Any]
-    SSAO: Grid3DPostEffectSsaoOpts
-    colorCorrection: Grid3DPostEffectColorCorrectionOpts
-    FXAA: Grid3DPostEffectFxaaOpts
-
-class Grid3DPostEffectSsaoOpts(TypedDict, total=False):
+class Grid3DPostEffectSsao(TypedDict, total=False):
     enable: bool
     quality: str
     radius: int | float
     intensity: int | float
 
-class Grid3DSplitAreaAreaStyleOpts(TypedDict, total=False):
+class Grid3DSplitArea(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    areaStyle: Grid3DSplitAreaAreaStyle
+
+class Grid3DSplitAreaAreaStyle(TypedDict, total=False):
     color: Any
 
-class Grid3DSplitAreaOpts(TypedDict, total=False):
+class Grid3DSplitLine(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    areaStyle: Grid3DSplitAreaAreaStyleOpts
+    interval: Callable[..., Any] | int | float
+    lineStyle: Grid3DSplitLineLineStyle
 
-class Grid3DSplitLineLineStyleOpts(TypedDict, total=False):
+class Grid3DSplitLineLineStyle(TypedDict, total=False):
     color: str
     opacity: int | float
     width: int | float
 
-class Grid3DSplitLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: Grid3DSplitLineLineStyleOpts
-
-class Grid3DTemporalSuperSamplingOpts(TypedDict, total=False):
+class Grid3DTemporalSuperSampling(TypedDict, total=False):
     enable: bool
 
-class Grid3DViewControlOpts(TypedDict, total=False):
+class Grid3DViewControl(TypedDict, total=False):
     projection: str
     autoRotate: bool
     autoRotateDirection: str
@@ -2315,46 +2346,47 @@ class Grid3DViewControlOpts(TypedDict, total=False):
     animationDurationUpdate: int | float
     animationEasingUpdate: str
 
-class GridOpts(TypedDict, total=False):
-    id: str
-    show: bool
-    zlevel: int | float
-    z: int | float
+class GridOuterBounds(TypedDict, total=False):
     left: str | int | float
     top: str | int | float
     right: str | int | float
     bottom: str | int | float
     width: str | int | float
     height: str | int | float
-    containLabel: bool
-    outerBoundsMode: str
-    outerBounds: GridOuterBoundsOpts
-    outerBoundsContain: bool
+
+class GridTooltip(TypedDict, total=False):
+    show: bool
+    trigger: Literal["item", "axis", "none"]
+    axisPointer: GridTooltipAxisPointer
+    position: str
+    formatter: Callable[..., Any] | str
+    valueFormatter: str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    tooltip: GridTooltipOpts
-    coordinateSystem: str
-    coordinateSystemUsage: str
-    coord: str | int | float
-    calendarIndex: int | float
-    calendarId: int | float
-    matrixIndex: int | float
-    matrixId: int | float
+    padding: int | float
+    textStyle: GridTooltipTextStyle
+    extraCssText: str
 
-class GridOuterBoundsOpts(TypedDict, total=False):
-    left: str | int | float
-    top: str | int | float
-    right: str | int | float
-    bottom: str | int | float
-    width: str | int | float
-    height: str | int | float
+class GridTooltipAxisPointer(TypedDict, total=False):
+    type: Literal["none", "line", "shadow", "cross"]
+    axis: str
+    snap: bool
+    z: int | float
+    label: GridTooltipAxisPointerLabel
+    lineStyle: GridTooltipAxisPointerLineStyle
+    shadowStyle: GridTooltipAxisPointerShadowStyle
+    crossStyle: GridTooltipAxisPointerCrossStyle
+    animation: bool
+    animationThreshold: int | float
+    animationDuration: Callable[..., Any] | int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
+    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelayUpdate: Callable[..., Any] | int | float
 
-class GridTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
+class GridTooltipAxisPointerCrossStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -2368,10 +2400,10 @@ class GridTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GridTooltipAxisPointerLabelOpts(TypedDict, total=False):
+class GridTooltipAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -2400,7 +2432,7 @@ class GridTooltipAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class GridTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
+class GridTooltipAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -2414,25 +2446,7 @@ class GridTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GridTooltipAxisPointerOpts(TypedDict, total=False):
-    type: Literal["none", "line", "shadow", "cross"]
-    axis: str
-    snap: bool
-    z: int | float
-    label: GridTooltipAxisPointerLabelOpts
-    lineStyle: GridTooltipAxisPointerLineStyleOpts
-    shadowStyle: GridTooltipAxisPointerShadowStyleOpts
-    crossStyle: GridTooltipAxisPointerCrossStyleOpts
-    animation: bool
-    animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
-    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
-
-class GridTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
+class GridTooltipAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -2440,21 +2454,7 @@ class GridTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class GridTooltipOpts(TypedDict, total=False):
-    show: bool
-    trigger: Literal["item", "axis", "none"]
-    axisPointer: GridTooltipAxisPointerOpts
-    position: str
-    formatter: str | Callable[..., Any]
-    valueFormatter: str
-    backgroundColor: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    padding: int | float
-    textStyle: GridTooltipTextStyleOpts
-    extraCssText: str
-
-class GridTooltipTextStyleOpts(TypedDict, total=False):
+class GridTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -2474,199 +2474,7 @@ class GridTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class LegendDataItemItemStyleDecalOpts(TypedDict, total=False):
-    symbol: str
-    symbolSize: int | float
-    symbolKeepAspect: bool
-    color: str
-    backgroundColor: str
-    dashArrayX: int | float
-    dashArrayY: int | float
-    rotation: int | float
-    maxTileWidth: int | float
-    maxTileHeight: int | float
-
-class LegendDataItemItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    decal: LegendDataItemItemStyleDecalOpts
-
-class LegendDataItemLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    inactiveColor: str | list[str]
-    inactiveWidth: int | float
-
-class LegendDataItemOpts(TypedDict, total=False):
-    name: str
-    icon: str
-    itemStyle: LegendDataItemItemStyleOpts
-    lineStyle: LegendDataItemLineStyleOpts
-    inactiveColor: str | list[str]
-    inactiveBorderColor: str | list[str]
-    inactiveBorderWidth: str | int | float
-    symbolRotate: str | int | float
-    textStyle: LegendDataItemTextStyleOpts
-
-class LegendDataItemTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-
-class LegendEmphasisOpts(TypedDict, total=False):
-    selectorLabel: LegendEmphasisSelectorLabelOpts
-
-class LegendEmphasisSelectorLabelOpts(TypedDict, total=False):
-    show: bool
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: LegendEmphasisSelectorLabelRichOpts
-    richInheritPlainLabel: bool
-
-class LegendEmphasisSelectorLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class LegendItemStyleDecalOpts(TypedDict, total=False):
-    symbol: str
-    symbolSize: int | float
-    symbolKeepAspect: bool
-    color: str
-    backgroundColor: str
-    dashArrayX: int | float
-    dashArrayY: int | float
-    rotation: int | float
-    maxTileWidth: int | float
-    maxTileHeight: int | float
-
-class LegendItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    decal: LegendItemStyleDecalOpts
-
-class LegendLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    inactiveColor: str | list[str]
-    inactiveWidth: int | float
-
-class LegendOpts(TypedDict, total=False):
+class Legend(TypedDict, total=False):
     type: Literal["plain", "scroll"]
     id: str
     show: bool
@@ -2691,19 +2499,19 @@ class LegendOpts(TypedDict, total=False):
     itemGap: int | float
     itemWidth: int | float
     itemHeight: int | float
-    itemStyle: LegendItemStyleOpts
-    lineStyle: LegendLineStyleOpts
+    itemStyle: LegendItemStyle
+    lineStyle: LegendLineStyle
     symbolRotate: str | int | float
-    formatter: str | Callable[..., Any]
-    selectedMode: str | bool
+    formatter: Callable[..., Any] | str
+    selectedMode: bool | str
     inactiveColor: str | list[str]
     inactiveBorderColor: str | list[str]
     inactiveBorderWidth: str | int | float
     selected: dict[str, Any]
-    textStyle: LegendTextStyleOpts
+    textStyle: LegendTextStyle
     tooltip: dict[str, Any]
     icon: str
-    data: list[LegendDataItemOpts]
+    data: list[LegendDataItem]
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -2716,27 +2524,78 @@ class LegendOpts(TypedDict, total=False):
     pageButtonItemGap: int | float
     pageButtonGap: int | float
     pageButtonPosition: str
-    pageFormatter: str | Callable[..., Any]
-    pageIcons: LegendPageIconsOpts
+    pageFormatter: Callable[..., Any] | str
+    pageIcons: LegendPageIcons
     pageIconColor: str
     pageIconInactiveColor: str
     pageIconSize: int | float
-    pageTextStyle: LegendPageTextStyleOpts
+    pageTextStyle: LegendPageTextStyle
     animation: bool
     animationDurationUpdate: int | float
-    emphasis: LegendEmphasisOpts
+    emphasis: LegendEmphasis
     selector: bool
-    selectorLabel: LegendSelectorLabelOpts
+    selectorLabel: LegendSelectorLabel
     selectorPosition: Literal["auto", "start", "end"]
     selectorItemGap: int | float
     selectorButtonGap: int | float
     triggerEvent: bool
 
-class LegendPageIconsOpts(TypedDict, total=False):
-    horizontal: Any
-    vertical: Any
+class LegendDataItem(TypedDict, total=False):
+    name: str
+    icon: str
+    itemStyle: LegendDataItemItemStyle
+    lineStyle: LegendDataItemLineStyle
+    inactiveColor: str | list[str]
+    inactiveBorderColor: str | list[str]
+    inactiveBorderWidth: str | int | float
+    symbolRotate: str | int | float
+    textStyle: LegendDataItemTextStyle
 
-class LegendPageTextStyleOpts(TypedDict, total=False):
+class LegendDataItemItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    decal: LegendDataItemItemStyleDecal
+
+class LegendDataItemItemStyleDecal(TypedDict, total=False):
+    symbol: str
+    symbolSize: int | float
+    symbolKeepAspect: bool
+    color: str
+    backgroundColor: str
+    dashArrayX: int | float
+    dashArrayY: int | float
+    rotation: int | float
+    maxTileWidth: int | float
+    maxTileHeight: int | float
+
+class LegendDataItemLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    inactiveColor: str | list[str]
+    inactiveWidth: int | float
+
+class LegendDataItemTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -2756,7 +2615,10 @@ class LegendPageTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class LegendSelectorLabelOpts(TypedDict, total=False):
+class LegendEmphasis(TypedDict, total=False):
+    selectorLabel: LegendEmphasisSelectorLabel
+
+class LegendEmphasisSelectorLabel(TypedDict, total=False):
     show: bool
     distance: int | float
     rotate: int | float
@@ -2792,10 +2654,10 @@ class LegendSelectorLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: LegendSelectorLabelRichOpts
+    rich: LegendEmphasisSelectorLabelRich
     richInheritPlainLabel: bool
 
-class LegendSelectorLabelRichStyleOpts(TypedDict, total=False):
+class LegendEmphasisSelectorLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -2826,7 +2688,145 @@ class LegendSelectorLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class LegendTextStyleOpts(TypedDict, total=False):
+class LegendItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    decal: LegendItemStyleDecal
+
+class LegendItemStyleDecal(TypedDict, total=False):
+    symbol: str
+    symbolSize: int | float
+    symbolKeepAspect: bool
+    color: str
+    backgroundColor: str
+    dashArrayX: int | float
+    dashArrayY: int | float
+    rotation: int | float
+    maxTileWidth: int | float
+    maxTileHeight: int | float
+
+class LegendLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    inactiveColor: str | list[str]
+    inactiveWidth: int | float
+
+class LegendPageIcons(TypedDict, total=False):
+    horizontal: Any
+    vertical: Any
+
+class LegendPageTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class LegendSelectorLabel(TypedDict, total=False):
+    show: bool
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: LegendSelectorLabelRich
+    richInheritPlainLabel: bool
+
+class LegendSelectorLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class LegendTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -2856,10 +2856,10 @@ class LegendTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: LegendTextStyleRichOpts
+    rich: LegendTextStyleRich
     richInheritPlainLabel: bool
 
-class LegendTextStyleRichStyleOpts(TypedDict, total=False):
+class LegendTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -2890,39 +2890,7 @@ class LegendTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class Mapbox3DColorMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class Mapbox3DLambertMaterialOpts(TypedDict, total=False):
-    detailTexture: str
-    textureTiling: int | float
-    textureOffset: int | float
-
-class Mapbox3DLightAmbientCubemapOpts(TypedDict, total=False):
-    texture: str
-    diffuseIntensity: int | float
-    specularIntensity: int | float
-
-class Mapbox3DLightAmbientOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-
-class Mapbox3DLightMainOpts(TypedDict, total=False):
-    color: str
-    intensity: int | float
-    shadow: bool
-    shadowQuality: str
-    alpha: int | float
-    beta: int | float
-
-class Mapbox3DLightOpts(TypedDict, total=False):
-    main: Mapbox3DLightMainOpts
-    ambient: Mapbox3DLightAmbientOpts
-    ambientCubemap: Mapbox3DLightAmbientCubemapOpts
-
-class Mapbox3DOpts(TypedDict, total=False):
+class Mapbox3D(TypedDict, total=False):
     style: str | dict[str, Any]
     center: Any
     zoom: int | float
@@ -2930,18 +2898,59 @@ class Mapbox3DOpts(TypedDict, total=False):
     pitch: int | float
     altitudeScale: int | float
     shading: str
-    realisticMaterial: Mapbox3DRealisticMaterialOpts
-    lambertMaterial: Mapbox3DLambertMaterialOpts
-    colorMaterial: Mapbox3DColorMaterialOpts
-    light: Mapbox3DLightOpts
-    postEffect: Mapbox3DPostEffectOpts
-    temporalSuperSampling: Mapbox3DTemporalSuperSamplingOpts
+    realisticMaterial: Mapbox3DRealisticMaterial
+    lambertMaterial: Mapbox3DLambertMaterial
+    colorMaterial: Mapbox3DColorMaterial
+    light: Mapbox3DLight
+    postEffect: Mapbox3DPostEffect
+    temporalSuperSampling: Mapbox3DTemporalSuperSampling
 
-class Mapbox3DPostEffectBloomOpts(TypedDict, total=False):
+class Mapbox3DColorMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class Mapbox3DLambertMaterial(TypedDict, total=False):
+    detailTexture: str
+    textureTiling: int | float
+    textureOffset: int | float
+
+class Mapbox3DLight(TypedDict, total=False):
+    main: Mapbox3DLightMain
+    ambient: Mapbox3DLightAmbient
+    ambientCubemap: Mapbox3DLightAmbientCubemap
+
+class Mapbox3DLightAmbient(TypedDict, total=False):
+    color: str
+    intensity: int | float
+
+class Mapbox3DLightAmbientCubemap(TypedDict, total=False):
+    texture: str
+    diffuseIntensity: int | float
+    specularIntensity: int | float
+
+class Mapbox3DLightMain(TypedDict, total=False):
+    color: str
+    intensity: int | float
+    shadow: bool
+    shadowQuality: str
+    alpha: int | float
+    beta: int | float
+
+class Mapbox3DPostEffect(TypedDict, total=False):
+    enable: bool
+    bloom: Mapbox3DPostEffectBloom
+    depthOfField: Mapbox3DPostEffectDepthOfField
+    screenSpaceAmbientOcclusion: dict[str, Any]
+    SSAO: Mapbox3DPostEffectSsao
+    colorCorrection: Mapbox3DPostEffectColorCorrection
+    FXAA: Mapbox3DPostEffectFxaa
+
+class Mapbox3DPostEffectBloom(TypedDict, total=False):
     enable: bool
     bloomIntensity: int | float
 
-class Mapbox3DPostEffectColorCorrectionOpts(TypedDict, total=False):
+class Mapbox3DPostEffectColorCorrection(TypedDict, total=False):
     enable: bool
     lookupTexture: str
     exposure: int | float
@@ -2949,32 +2958,23 @@ class Mapbox3DPostEffectColorCorrectionOpts(TypedDict, total=False):
     contrast: int | float
     saturation: int | float
 
-class Mapbox3DPostEffectDepthOfFieldOpts(TypedDict, total=False):
+class Mapbox3DPostEffectDepthOfField(TypedDict, total=False):
     enable: bool
     focalDistance: bool
     focalRange: bool
     fstop: int | float
     blurRadius: int | float
 
-class Mapbox3DPostEffectFxaaOpts(TypedDict, total=False):
+class Mapbox3DPostEffectFxaa(TypedDict, total=False):
     enable: bool
 
-class Mapbox3DPostEffectOpts(TypedDict, total=False):
-    enable: bool
-    bloom: Mapbox3DPostEffectBloomOpts
-    depthOfField: Mapbox3DPostEffectDepthOfFieldOpts
-    screenSpaceAmbientOcclusion: dict[str, Any]
-    SSAO: Mapbox3DPostEffectSsaoOpts
-    colorCorrection: Mapbox3DPostEffectColorCorrectionOpts
-    FXAA: Mapbox3DPostEffectFxaaOpts
-
-class Mapbox3DPostEffectSsaoOpts(TypedDict, total=False):
+class Mapbox3DPostEffectSsao(TypedDict, total=False):
     enable: bool
     quality: str
     radius: int | float
     intensity: int | float
 
-class Mapbox3DRealisticMaterialOpts(TypedDict, total=False):
+class Mapbox3DRealisticMaterial(TypedDict, total=False):
     detailTexture: str
     textureTiling: int | float
     textureOffset: int | float
@@ -2984,227 +2984,10 @@ class Mapbox3DRealisticMaterialOpts(TypedDict, total=False):
     metalnessAdjust: int | float
     normalTexture: str
 
-class Mapbox3DTemporalSuperSamplingOpts(TypedDict, total=False):
+class Mapbox3DTemporalSuperSampling(TypedDict, total=False):
     enable: bool
 
-class MatrixBackgroundStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class MatrixBodyDataItemOpts(TypedDict, total=False):
-    coord: Any
-    coordClamp: bool
-    mergeCells: bool
-    value: str | int | float
-
-class MatrixBodyItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class MatrixBodyLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: MatrixBodyLabelRichOpts
-    richInheritPlainLabel: bool
-
-class MatrixBodyLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class MatrixBodyOpts(TypedDict, total=False):
-    data: list[MatrixBodyDataItemOpts]
-    label: MatrixBodyLabelOpts
-    itemStyle: MatrixBodyItemStyleOpts
-    silent: bool
-    cursor: str
-    z2: int | float
-
-class MatrixCornerDataItemOpts(TypedDict, total=False):
-    coord: Any
-    coordClamp: bool
-    mergeCells: bool
-    value: str | int | float
-
-class MatrixCornerItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class MatrixCornerLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: MatrixCornerLabelRichOpts
-    richInheritPlainLabel: bool
-
-class MatrixCornerLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class MatrixCornerOpts(TypedDict, total=False):
-    data: list[MatrixCornerDataItemOpts]
-    label: MatrixCornerLabelOpts
-    itemStyle: MatrixCornerItemStyleOpts
-    silent: bool
-    cursor: str
-    z2: int | float
-
-class MatrixOpts(TypedDict, total=False):
+class Matrix(TypedDict, total=False):
     id: str
     zlevel: int | float
     z: int | float
@@ -3214,35 +2997,16 @@ class MatrixOpts(TypedDict, total=False):
     bottom: str | int | float
     width: str | int | float
     height: str | int | float
-    x: MatrixXOpts
-    y: MatrixYOpts
-    body: MatrixBodyOpts
-    corner: MatrixCornerOpts
-    backgroundStyle: MatrixBackgroundStyleOpts
+    x: MatrixX
+    y: MatrixY
+    body: MatrixBody
+    corner: MatrixCorner
+    backgroundStyle: MatrixBackgroundStyle
     borderZ2: int | float
     tooltip: dict[str, Any]
     triggerEvent: bool
 
-class MatrixXDataItemOpts(TypedDict, total=False):
-    value: str | int | float
-    children: Any
-    size: int | float
-
-class MatrixXDividerLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class MatrixXItemStyleOpts(TypedDict, total=False):
+class MatrixBackgroundStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -3257,114 +3021,21 @@ class MatrixXItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class MatrixXLabelOpts(TypedDict, total=False):
-    show: bool
-    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
-    distance: int | float
-    rotate: int | float
-    offset: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: MatrixXLabelRichOpts
-    richInheritPlainLabel: bool
-
-class MatrixXLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class MatrixXLevelsItemOpts(TypedDict, total=False):
-    levelSize: str | int | float
-
-class MatrixXOpts(TypedDict, total=False):
-    show: bool
-    data: list[MatrixXDataItemOpts]
-    length: int | float
-    label: MatrixXLabelOpts
-    itemStyle: MatrixXItemStyleOpts
+class MatrixBody(TypedDict, total=False):
+    data: list[MatrixBodyDataItem]
+    label: MatrixBodyLabel
+    itemStyle: MatrixBodyItemStyle
     silent: bool
     cursor: str
     z2: int | float
-    levelSize: str | int | float
-    levels: list[MatrixXLevelsItemOpts]
-    dividerLineStyle: MatrixXDividerLineStyleOpts
 
-class MatrixYDataItemOpts(TypedDict, total=False):
+class MatrixBodyDataItem(TypedDict, total=False):
+    coord: Any
+    coordClamp: bool
+    mergeCells: bool
     value: str | int | float
-    children: Any
-    size: int | float
 
-class MatrixYDividerLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class MatrixYItemStyleOpts(TypedDict, total=False):
+class MatrixBodyItemStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -3379,13 +3050,13 @@ class MatrixYItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class MatrixYLabelOpts(TypedDict, total=False):
+class MatrixBodyLabel(TypedDict, total=False):
     show: bool
     position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
     distance: int | float
     rotate: int | float
     offset: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -3417,10 +3088,10 @@ class MatrixYLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: MatrixYLabelRichOpts
+    rich: MatrixBodyLabelRich
     richInheritPlainLabel: bool
 
-class MatrixYLabelRichStyleOpts(TypedDict, total=False):
+class MatrixBodyLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -3451,41 +3122,162 @@ class MatrixYLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class MatrixYLevelsItemOpts(TypedDict, total=False):
-    levelSize: str | int | float
+class MatrixCorner(TypedDict, total=False):
+    data: list[MatrixCornerDataItem]
+    label: MatrixCornerLabel
+    itemStyle: MatrixCornerItemStyle
+    silent: bool
+    cursor: str
+    z2: int | float
 
-class MatrixYOpts(TypedDict, total=False):
+class MatrixCornerDataItem(TypedDict, total=False):
+    coord: Any
+    coordClamp: bool
+    mergeCells: bool
+    value: str | int | float
+
+class MatrixCornerItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class MatrixCornerLabel(TypedDict, total=False):
     show: bool
-    data: list[MatrixYDataItemOpts]
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: MatrixCornerLabelRich
+    richInheritPlainLabel: bool
+
+class MatrixCornerLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class MatrixX(TypedDict, total=False):
+    show: bool
+    data: list[MatrixXDataItem]
     length: int | float
-    label: MatrixYLabelOpts
-    itemStyle: MatrixYItemStyleOpts
+    label: MatrixXLabel
+    itemStyle: MatrixXItemStyle
     silent: bool
     cursor: str
     z2: int | float
     levelSize: str | int | float
-    levels: list[MatrixYLevelsItemOpts]
-    dividerLineStyle: MatrixYDividerLineStyleOpts
+    levels: list[MatrixXLevelsItem]
+    dividerLineStyle: MatrixXDividerLineStyle
 
-class ParallelAxisAreaSelectStyleOpts(TypedDict, total=False):
-    width: int | float
-    borderWidth: int | float
-    borderColor: str | list[str]
+class MatrixXDataItem(TypedDict, total=False):
+    value: str | int | float
+    children: Any
+    size: int | float
+
+class MatrixXDividerLineStyle(TypedDict, total=False):
     color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
     opacity: int | float
 
-class ParallelAxisAxisLabelOpts(TypedDict, total=False):
+class MatrixXItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class MatrixXLabel(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
     rotate: int | float
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
+    offset: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
@@ -3516,10 +3308,10 @@ class ParallelAxisAxisLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: ParallelAxisAxisLabelRichOpts
+    rich: MatrixXLabelRich
     richInheritPlainLabel: bool
 
-class ParallelAxisAxisLabelRichStyleOpts(TypedDict, total=False):
+class MatrixXLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -3550,272 +3342,82 @@ class ParallelAxisAxisLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class ParallelAxisAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
+class MatrixXLevelsItem(TypedDict, total=False):
+    levelSize: str | int | float
 
-class ParallelAxisAxisLineOpts(TypedDict, total=False):
+class MatrixY(TypedDict, total=False):
     show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: ParallelAxisAxisLineLineStyleOpts
-
-class ParallelAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ParallelAxisAxisTickOpts(TypedDict, total=False):
-    show: bool
-    alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
+    data: list[MatrixYDataItem]
     length: int | float
-    lineStyle: ParallelAxisAxisTickLineStyleOpts
-    customValues: Any
-
-class ParallelAxisDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: ParallelAxisDataItemTextStyleOpts
-
-class ParallelAxisDataItemTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: ParallelAxisDataItemTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class ParallelAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class ParallelAxisMinorTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ParallelAxisMinorTickOpts(TypedDict, total=False):
-    show: bool
-    splitNumber: int | float
-    length: int | float
-    lineStyle: ParallelAxisMinorTickLineStyleOpts
-
-class ParallelAxisNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: ParallelAxisNameTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class ParallelAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class ParallelAxisNameTruncateOpts(TypedDict, total=False):
-    maxWidth: int | float
-    ellipsis: str
-
-class ParallelAxisOpts(TypedDict, total=False):
-    id: str
-    dim: int | float
-    parallelIndex: int | float
-    realtime: bool
-    areaSelectStyle: ParallelAxisAreaSelectStyleOpts
-    type: str
-    name: str
-    nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: ParallelAxisNameTextStyleOpts
-    nameGap: int | float
-    nameRotate: int | float
-    nameTruncate: ParallelAxisNameTruncateOpts
-    inverse: bool
-    boundaryGap: bool
-    containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
-    dataMin: int | float
-    dataMax: int | float
-    scale: bool
-    splitNumber: int | float
-    minInterval: int | float
-    maxInterval: int | float
-    interval: int | float
-    logBase: int | float
-    startValue: int | float
+    label: MatrixYLabel
+    itemStyle: MatrixYItemStyle
     silent: bool
-    triggerEvent: bool
-    axisLine: ParallelAxisAxisLineOpts
-    axisTick: ParallelAxisAxisTickOpts
-    minorTick: ParallelAxisMinorTickOpts
-    axisLabel: ParallelAxisAxisLabelOpts
-    data: list[ParallelAxisDataItemOpts]
-    tooltip: ParallelAxisTooltipOpts
-    animation: bool
-    animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
-    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    cursor: str
+    z2: int | float
+    levelSize: str | int | float
+    levels: list[MatrixYLevelsItem]
+    dividerLineStyle: MatrixYDividerLineStyle
 
-class ParallelAxisTooltipOpts(TypedDict, total=False):
-    show: bool
-    position: str
-    formatter: str | Callable[..., Any]
-    backgroundColor: str | list[str]
+class MatrixYDataItem(TypedDict, total=False):
+    value: str | int | float
+    children: Any
+    size: int | float
+
+class MatrixYDividerLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class MatrixYItemStyle(TypedDict, total=False):
+    color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
-    padding: int | float
-    textStyle: ParallelAxisTooltipTextStyleOpts
-    extraCssText: str
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
 
-class ParallelAxisTooltipTextStyleOpts(TypedDict, total=False):
+class MatrixYLabel(TypedDict, total=False):
+    show: bool
+    position: Literal["top", "left", "right", "bottom", "inside", "insideLeft", "insideRight", "insideTop", "insideBottom", "insideTopLeft", "insideBottomLeft", "insideTopRight", "insideBottomRight", "outside"]
+    distance: int | float
+    rotate: int | float
+    offset: Any
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
     fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
     lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
     width: int | float
     height: int | float
     textBorderColor: str | list[str]
@@ -3828,8 +3430,44 @@ class ParallelAxisTooltipTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
+    rich: MatrixYLabelRich
+    richInheritPlainLabel: bool
 
-class ParallelOpts(TypedDict, total=False):
+class MatrixYLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class MatrixYLevelsItem(TypedDict, total=False):
+    levelSize: str | int | float
+
+class Parallel(TypedDict, total=False):
     id: str
     zlevel: int | float
     z: int | float
@@ -3852,301 +3490,26 @@ class ParallelOpts(TypedDict, total=False):
     axisExpandCount: int | float
     axisExpandWidth: int | float
     axisExpandTriggerOn: Literal["click", "mousemove"]
-    parallelAxisDefault: ParallelParallelAxisDefaultOpts
+    parallelAxisDefault: ParallelParallelAxisDefault
 
-class ParallelParallelAxisDefaultAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    rotate: int | float
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: ParallelParallelAxisDefaultAxisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class ParallelParallelAxisDefaultAxisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class ParallelParallelAxisDefaultAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ParallelParallelAxisDefaultAxisLineOpts(TypedDict, total=False):
-    show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: ParallelParallelAxisDefaultAxisLineLineStyleOpts
-
-class ParallelParallelAxisDefaultAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ParallelParallelAxisDefaultAxisTickOpts(TypedDict, total=False):
-    show: bool
-    alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    length: int | float
-    lineStyle: ParallelParallelAxisDefaultAxisTickLineStyleOpts
-    customValues: Any
-
-class ParallelParallelAxisDefaultDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: ParallelParallelAxisDefaultDataItemTextStyleOpts
-
-class ParallelParallelAxisDefaultDataItemTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: ParallelParallelAxisDefaultDataItemTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class ParallelParallelAxisDefaultDataItemTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class ParallelParallelAxisDefaultMinorTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ParallelParallelAxisDefaultMinorTickOpts(TypedDict, total=False):
-    show: bool
-    splitNumber: int | float
-    length: int | float
-    lineStyle: ParallelParallelAxisDefaultMinorTickLineStyleOpts
-
-class ParallelParallelAxisDefaultNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: ParallelParallelAxisDefaultNameTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class ParallelParallelAxisDefaultNameTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class ParallelParallelAxisDefaultNameTruncateOpts(TypedDict, total=False):
-    maxWidth: int | float
-    ellipsis: str
-
-class ParallelParallelAxisDefaultOpts(TypedDict, total=False):
+class ParallelAxis(TypedDict, total=False):
+    id: str
+    dim: int | float
+    parallelIndex: int | float
+    realtime: bool
+    areaSelectStyle: ParallelAxisAreaSelectStyle
     type: str
     name: str
     nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: ParallelParallelAxisDefaultNameTextStyleOpts
+    nameTextStyle: ParallelAxisNameTextStyle
     nameGap: int | float
     nameRotate: int | float
-    nameTruncate: ParallelParallelAxisDefaultNameTruncateOpts
+    nameTruncate: ParallelAxisNameTruncate
     inverse: bool
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -4158,33 +3521,320 @@ class ParallelParallelAxisDefaultOpts(TypedDict, total=False):
     startValue: int | float
     silent: bool
     triggerEvent: bool
-    axisLine: ParallelParallelAxisDefaultAxisLineOpts
-    axisTick: ParallelParallelAxisDefaultAxisTickOpts
-    minorTick: ParallelParallelAxisDefaultMinorTickOpts
-    axisLabel: ParallelParallelAxisDefaultAxisLabelOpts
-    data: list[ParallelParallelAxisDefaultDataItemOpts]
-    tooltip: ParallelParallelAxisDefaultTooltipOpts
+    axisLine: ParallelAxisAxisLine
+    axisTick: ParallelAxisAxisTick
+    minorTick: ParallelAxisMinorTick
+    axisLabel: ParallelAxisAxisLabel
+    data: list[ParallelAxisDataItem]
+    tooltip: ParallelAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
 
-class ParallelParallelAxisDefaultTooltipOpts(TypedDict, total=False):
+class ParallelAxisAreaSelectStyle(TypedDict, total=False):
+    width: int | float
+    borderWidth: int | float
+    borderColor: str | list[str]
+    color: str | list[str]
+    opacity: int | float
+
+class ParallelAxisAxisLabel(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    rotate: int | float
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelAxisAxisLabelRich
+    richInheritPlainLabel: bool
+
+class ParallelAxisAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelAxisAxisLine(TypedDict, total=False):
+    show: bool
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: ParallelAxisAxisLineLineStyle
+
+class ParallelAxisAxisLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelAxisAxisTick(TypedDict, total=False):
+    show: bool
+    alignWithLabel: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    length: int | float
+    lineStyle: ParallelAxisAxisTickLineStyle
+    customValues: Any
+
+class ParallelAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelAxisDataItem(TypedDict, total=False):
+    value: str
+    textStyle: ParallelAxisDataItemTextStyle
+
+class ParallelAxisDataItemTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelAxisDataItemTextStyleRich
+    richInheritPlainLabel: bool
+
+class ParallelAxisDataItemTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelAxisMinorTick(TypedDict, total=False):
+    show: bool
+    splitNumber: int | float
+    length: int | float
+    lineStyle: ParallelAxisMinorTickLineStyle
+
+class ParallelAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelAxisNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelAxisNameTextStyleRich
+    richInheritPlainLabel: bool
+
+class ParallelAxisNameTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelAxisNameTruncate(TypedDict, total=False):
+    maxWidth: int | float
+    ellipsis: str
+
+class ParallelAxisTooltip(TypedDict, total=False):
     show: bool
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: ParallelParallelAxisDefaultTooltipTextStyleOpts
+    textStyle: ParallelAxisTooltipTextStyle
     extraCssText: str
 
-class ParallelParallelAxisDefaultTooltipTextStyleOpts(TypedDict, total=False):
+class ParallelAxisTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -4204,7 +3854,357 @@ class ParallelParallelAxisDefaultTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class PolarOpts(TypedDict, total=False):
+class ParallelParallelAxisDefault(TypedDict, total=False):
+    type: str
+    name: str
+    nameLocation: Literal["start", "middle", "end"]
+    nameTextStyle: ParallelParallelAxisDefaultNameTextStyle
+    nameGap: int | float
+    nameRotate: int | float
+    nameTruncate: ParallelParallelAxisDefaultNameTruncate
+    inverse: bool
+    boundaryGap: bool
+    containShape: bool
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
+    dataMin: int | float
+    dataMax: int | float
+    scale: bool
+    splitNumber: int | float
+    minInterval: int | float
+    maxInterval: int | float
+    interval: int | float
+    logBase: int | float
+    startValue: int | float
+    silent: bool
+    triggerEvent: bool
+    axisLine: ParallelParallelAxisDefaultAxisLine
+    axisTick: ParallelParallelAxisDefaultAxisTick
+    minorTick: ParallelParallelAxisDefaultMinorTick
+    axisLabel: ParallelParallelAxisDefaultAxisLabel
+    data: list[ParallelParallelAxisDefaultDataItem]
+    tooltip: ParallelParallelAxisDefaultTooltip
+    animation: bool
+    animationThreshold: int | float
+    animationDuration: Callable[..., Any] | int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
+    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelayUpdate: Callable[..., Any] | int | float
+
+class ParallelParallelAxisDefaultAxisLabel(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    rotate: int | float
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelParallelAxisDefaultAxisLabelRich
+    richInheritPlainLabel: bool
+
+class ParallelParallelAxisDefaultAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelParallelAxisDefaultAxisLine(TypedDict, total=False):
+    show: bool
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: ParallelParallelAxisDefaultAxisLineLineStyle
+
+class ParallelParallelAxisDefaultAxisLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelParallelAxisDefaultAxisTick(TypedDict, total=False):
+    show: bool
+    alignWithLabel: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    length: int | float
+    lineStyle: ParallelParallelAxisDefaultAxisTickLineStyle
+    customValues: Any
+
+class ParallelParallelAxisDefaultAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelParallelAxisDefaultDataItem(TypedDict, total=False):
+    value: str
+    textStyle: ParallelParallelAxisDefaultDataItemTextStyle
+
+class ParallelParallelAxisDefaultDataItemTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelParallelAxisDefaultDataItemTextStyleRich
+    richInheritPlainLabel: bool
+
+class ParallelParallelAxisDefaultDataItemTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelParallelAxisDefaultMinorTick(TypedDict, total=False):
+    show: bool
+    splitNumber: int | float
+    length: int | float
+    lineStyle: ParallelParallelAxisDefaultMinorTickLineStyle
+
+class ParallelParallelAxisDefaultMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ParallelParallelAxisDefaultNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: ParallelParallelAxisDefaultNameTextStyleRich
+    richInheritPlainLabel: bool
+
+class ParallelParallelAxisDefaultNameTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class ParallelParallelAxisDefaultNameTruncate(TypedDict, total=False):
+    maxWidth: int | float
+    ellipsis: str
+
+class ParallelParallelAxisDefaultTooltip(TypedDict, total=False):
+    show: bool
+    position: str
+    formatter: Callable[..., Any] | str
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    padding: int | float
+    textStyle: ParallelParallelAxisDefaultTooltipTextStyle
+    extraCssText: str
+
+class ParallelParallelAxisDefaultTooltipTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class Polar(TypedDict, total=False):
     id: str
     zlevel: int | float
     z: int | float
@@ -4217,9 +4217,41 @@ class PolarOpts(TypedDict, total=False):
     calendarId: int | float
     matrixIndex: int | float
     matrixId: int | float
-    tooltip: PolarTooltipOpts
+    tooltip: PolarTooltip
 
-class PolarTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
+class PolarTooltip(TypedDict, total=False):
+    show: bool
+    trigger: Literal["item", "axis", "none"]
+    axisPointer: PolarTooltipAxisPointer
+    position: str
+    formatter: Callable[..., Any] | str
+    valueFormatter: str
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    padding: int | float
+    textStyle: PolarTooltipTextStyle
+    extraCssText: str
+
+class PolarTooltipAxisPointer(TypedDict, total=False):
+    type: Literal["none", "line", "shadow", "cross"]
+    axis: str
+    snap: bool
+    z: int | float
+    label: PolarTooltipAxisPointerLabel
+    lineStyle: PolarTooltipAxisPointerLineStyle
+    shadowStyle: PolarTooltipAxisPointerShadowStyle
+    crossStyle: PolarTooltipAxisPointerCrossStyle
+    animation: bool
+    animationThreshold: int | float
+    animationDuration: Callable[..., Any] | int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
+    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelayUpdate: Callable[..., Any] | int | float
+
+class PolarTooltipAxisPointerCrossStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -4233,10 +4265,10 @@ class PolarTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class PolarTooltipAxisPointerLabelOpts(TypedDict, total=False):
+class PolarTooltipAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -4265,7 +4297,7 @@ class PolarTooltipAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class PolarTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
+class PolarTooltipAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -4279,25 +4311,7 @@ class PolarTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class PolarTooltipAxisPointerOpts(TypedDict, total=False):
-    type: Literal["none", "line", "shadow", "cross"]
-    axis: str
-    snap: bool
-    z: int | float
-    label: PolarTooltipAxisPointerLabelOpts
-    lineStyle: PolarTooltipAxisPointerLineStyleOpts
-    shadowStyle: PolarTooltipAxisPointerShadowStyleOpts
-    crossStyle: PolarTooltipAxisPointerCrossStyleOpts
-    animation: bool
-    animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
-    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
-
-class PolarTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
+class PolarTooltipAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -4305,21 +4319,7 @@ class PolarTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class PolarTooltipOpts(TypedDict, total=False):
-    show: bool
-    trigger: Literal["item", "axis", "none"]
-    axisPointer: PolarTooltipAxisPointerOpts
-    position: str
-    formatter: str | Callable[..., Any]
-    valueFormatter: str
-    backgroundColor: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    padding: int | float
-    textStyle: PolarTooltipTextStyleOpts
-    extraCssText: str
-
-class PolarTooltipTextStyleOpts(TypedDict, total=False):
+class PolarTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -4339,194 +4339,7 @@ class PolarTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class RadarAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    rotate: int | float
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: RadarAxisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class RadarAxisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class RadarAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadarAxisLineOpts(TypedDict, total=False):
-    show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: RadarAxisLineLineStyleOpts
-
-class RadarAxisNameOpts(TypedDict, total=False):
-    show: bool
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: RadarAxisNameRichOpts
-    richInheritPlainLabel: bool
-
-class RadarAxisNameRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class RadarAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadarAxisTickOpts(TypedDict, total=False):
-    show: bool
-    length: int | float
-    lineStyle: RadarAxisTickLineStyleOpts
-    customValues: Any
-
-class RadarIndicatorItemOpts(TypedDict, total=False):
-    name: str
-    max: int | float
-    min: int | float
-    color: str
-
-class RadarOpts(TypedDict, total=False):
+class Radar(TypedDict, total=False):
     id: str
     zlevel: int | float
     z: int | float
@@ -4541,21 +4354,212 @@ class RadarOpts(TypedDict, total=False):
     matrixId: int | float
     clockwise: bool
     startAngle: int | float
-    axisName: RadarAxisNameOpts
+    axisName: RadarAxisName
     axisNameGap: int | float
     splitNumber: int | float
     shape: Literal["polygon", "circle"]
     scale: bool
     silent: bool
     triggerEvent: bool
-    axisLine: RadarAxisLineOpts
-    axisTick: RadarAxisTickOpts
-    axisLabel: RadarAxisLabelOpts
-    splitLine: RadarSplitLineOpts
-    splitArea: RadarSplitAreaOpts
-    indicator: list[RadarIndicatorItemOpts]
+    axisLine: RadarAxisLine
+    axisTick: RadarAxisTick
+    axisLabel: RadarAxisLabel
+    splitLine: RadarSplitLine
+    splitArea: RadarSplitArea
+    indicator: list[RadarIndicatorItem]
 
-class RadarSplitAreaAreaStyleOpts(TypedDict, total=False):
+class RadarAxisLabel(TypedDict, total=False):
+    show: bool
+    rotate: int | float
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: RadarAxisLabelRich
+    richInheritPlainLabel: bool
+
+class RadarAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class RadarAxisLine(TypedDict, total=False):
+    show: bool
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: RadarAxisLineLineStyle
+
+class RadarAxisLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class RadarAxisName(TypedDict, total=False):
+    show: bool
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: RadarAxisNameRich
+    richInheritPlainLabel: bool
+
+class RadarAxisNameRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class RadarAxisTick(TypedDict, total=False):
+    show: bool
+    length: int | float
+    lineStyle: RadarAxisTickLineStyle
+    customValues: Any
+
+class RadarAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class RadarIndicatorItem(TypedDict, total=False):
+    name: str
+    max: int | float
+    min: int | float
+    color: str
+
+class RadarSplitArea(TypedDict, total=False):
+    show: bool
+    areaStyle: RadarSplitAreaAreaStyle
+
+class RadarSplitAreaAreaStyle(TypedDict, total=False):
     color: Any
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -4563,173 +4567,14 @@ class RadarSplitAreaAreaStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class RadarSplitAreaOpts(TypedDict, total=False):
-    show: bool
-    areaStyle: RadarSplitAreaAreaStyleOpts
-
-class RadarSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadarSplitLineOpts(TypedDict, total=False):
+class RadarSplitLine(TypedDict, total=False):
     show: bool
     showMinLine: bool
     showMaxLine: bool
-    lineStyle: RadarSplitLineLineStyleOpts
+    lineStyle: RadarSplitLineLineStyle
 
-class RadiusAxisAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    rotate: int | float
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: RadiusAxisAxisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class RadiusAxisAxisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class RadiusAxisAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisAxisLineOpts(TypedDict, total=False):
-    show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: RadiusAxisAxisLineLineStyleOpts
-
-class RadiusAxisAxisPointerHandleOpts(TypedDict, total=False):
-    show: bool
-    icon: Any
-    size: int | float
-    margin: int | float
+class RadarSplitLineLineStyle(TypedDict, total=False):
     color: str
-    throttle: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-
-class RadiusAxisAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    precision: str | int | float
-    formatter: str | Callable[..., Any]
-    margin: int | float
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    padding: str
-    backgroundColor: str
-    borderColor: str
-    borderWidth: str
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-
-class RadiusAxisAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
     dashOffset: int | float
@@ -4742,244 +4587,21 @@ class RadiusAxisAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class RadiusAxisAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: RadiusAxisAxisPointerLabelOpts
-    lineStyle: RadiusAxisAxisPointerLineStyleOpts
-    shadowStyle: RadiusAxisAxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: RadiusAxisAxisPointerHandleOpts
-
-class RadiusAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisAxisTickOpts(TypedDict, total=False):
-    show: bool
-    alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    length: int | float
-    lineStyle: RadiusAxisAxisTickLineStyleOpts
-    customValues: Any
-
-class RadiusAxisDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: RadiusAxisDataItemTextStyleOpts
-
-class RadiusAxisDataItemTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: RadiusAxisDataItemTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class RadiusAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class RadiusAxisMinorSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisMinorSplitLineOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: RadiusAxisMinorSplitLineLineStyleOpts
-
-class RadiusAxisMinorTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisMinorTickOpts(TypedDict, total=False):
-    show: bool
-    splitNumber: int | float
-    length: int | float
-    lineStyle: RadiusAxisMinorTickLineStyleOpts
-
-class RadiusAxisNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: RadiusAxisNameTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class RadiusAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class RadiusAxisNameTruncateOpts(TypedDict, total=False):
-    maxWidth: int | float
-    ellipsis: str
-
-class RadiusAxisOpts(TypedDict, total=False):
+class RadiusAxis(TypedDict, total=False):
     id: str
     polarIndex: int | float
     type: str
     name: str
     nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: RadiusAxisNameTextStyleOpts
+    nameTextStyle: RadiusAxisNameTextStyle
     nameGap: int | float
     nameRotate: int | float
-    nameTruncate: RadiusAxisNameTruncateOpts
+    nameTruncate: RadiusAxisNameTruncate
     inverse: bool
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -4991,104 +4613,39 @@ class RadiusAxisOpts(TypedDict, total=False):
     startValue: int | float
     silent: bool
     triggerEvent: bool
-    axisLine: RadiusAxisAxisLineOpts
-    axisTick: RadiusAxisAxisTickOpts
-    minorTick: RadiusAxisMinorTickOpts
-    axisLabel: RadiusAxisAxisLabelOpts
-    splitLine: RadiusAxisSplitLineOpts
-    minorSplitLine: RadiusAxisMinorSplitLineOpts
-    splitArea: RadiusAxisSplitAreaOpts
-    data: list[RadiusAxisDataItemOpts]
-    axisPointer: RadiusAxisAxisPointerOpts
-    tooltip: RadiusAxisTooltipOpts
+    axisLine: RadiusAxisAxisLine
+    axisTick: RadiusAxisAxisTick
+    minorTick: RadiusAxisMinorTick
+    axisLabel: RadiusAxisAxisLabel
+    splitLine: RadiusAxisSplitLine
+    minorSplitLine: RadiusAxisMinorSplitLine
+    splitArea: RadiusAxisSplitArea
+    data: list[RadiusAxisDataItem]
+    axisPointer: RadiusAxisAxisPointer
+    tooltip: RadiusAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
     zlevel: int | float
     z: int | float
 
-class RadiusAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisSplitAreaOpts(TypedDict, total=False):
-    interval: int | float | Callable[..., Any]
+class RadiusAxisAxisLabel(TypedDict, total=False):
     show: bool
-    areaStyle: RadiusAxisSplitAreaAreaStyleOpts
-
-class RadiusAxisSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class RadiusAxisSplitLineOpts(TypedDict, total=False):
-    show: bool
-    showMinLine: bool
-    showMaxLine: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: RadiusAxisSplitLineLineStyleOpts
-
-class RadiusAxisTooltipOpts(TypedDict, total=False):
-    show: bool
-    position: str
-    formatter: str | Callable[..., Any]
-    backgroundColor: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    padding: int | float
-    textStyle: RadiusAxisTooltipTextStyleOpts
-    extraCssText: str
-
-class RadiusAxisTooltipTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-
-class SingleAxisAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
+    interval: Callable[..., Any] | int | float
     inside: bool
     rotate: int | float
     margin: int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     showMinLabel: bool
     showMaxLabel: bool
     hideOverlap: bool
     customValues: Any
-    color: str | list[str] | Callable[..., Any]
+    color: Callable[..., Any] | str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
@@ -5119,10 +4676,10 @@ class SingleAxisAxisLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: SingleAxisAxisLabelRichOpts
+    rich: RadiusAxisAxisLabelRich
     richInheritPlainLabel: bool
 
-class SingleAxisAxisLabelRichStyleOpts(TypedDict, total=False):
+class RadiusAxisAxisLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -5153,7 +4710,14 @@ class SingleAxisAxisLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class SingleAxisAxisLineLineStyleOpts(TypedDict, total=False):
+class RadiusAxisAxisLine(TypedDict, total=False):
+    show: bool
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: RadiusAxisAxisLineLineStyle
+
+class RadiusAxisAxisLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -5167,14 +4731,21 @@ class SingleAxisAxisLineLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisAxisLineOpts(TypedDict, total=False):
+class RadiusAxisAxisPointer(TypedDict, total=False):
     show: bool
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: SingleAxisAxisLineLineStyleOpts
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: RadiusAxisAxisPointerLabel
+    lineStyle: RadiusAxisAxisPointerLineStyle
+    shadowStyle: RadiusAxisAxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: RadiusAxisAxisPointerHandle
 
-class SingleAxisAxisPointerHandleOpts(TypedDict, total=False):
+class RadiusAxisAxisPointerHandle(TypedDict, total=False):
     show: bool
     icon: Any
     size: int | float
@@ -5186,10 +4757,10 @@ class SingleAxisAxisPointerHandleOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class SingleAxisAxisPointerLabelOpts(TypedDict, total=False):
+class RadiusAxisAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -5218,7 +4789,7 @@ class SingleAxisAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class SingleAxisAxisPointerLineStyleOpts(TypedDict, total=False):
+class RadiusAxisAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -5232,21 +4803,7 @@ class SingleAxisAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: SingleAxisAxisPointerLabelOpts
-    lineStyle: SingleAxisAxisPointerLineStyleOpts
-    shadowStyle: SingleAxisAxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: SingleAxisAxisPointerHandleOpts
-
-class SingleAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
+class RadiusAxisAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -5254,34 +4811,34 @@ class SingleAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class SingleAxisAxisTickOpts(TypedDict, total=False):
+class RadiusAxisAxisTick(TypedDict, total=False):
     show: bool
     alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
+    interval: Callable[..., Any] | int | float
     inside: bool
     length: int | float
-    lineStyle: SingleAxisAxisTickLineStyleOpts
+    lineStyle: RadiusAxisAxisTickLineStyle
     customValues: Any
 
-class SingleAxisDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: SingleAxisDataItemTextStyleOpts
+class RadiusAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
 
-class SingleAxisDataItemTextStyleOpts(TypedDict, total=False):
+class RadiusAxisDataItem(TypedDict, total=False):
+    value: str
+    textStyle: RadiusAxisDataItemTextStyle
+
+class RadiusAxisDataItemTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -5313,10 +4870,10 @@ class SingleAxisDataItemTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: SingleAxisDataItemTextStyleRichOpts
+    rich: RadiusAxisDataItemTextStyleRich
     richInheritPlainLabel: bool
 
-class SingleAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
+class RadiusAxisDataItemTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -5347,25 +4904,11 @@ class SingleAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class SingleAxisMinorSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class SingleAxisMinorSplitLineOpts(TypedDict, total=False):
+class RadiusAxisMinorSplitLine(TypedDict, total=False):
     show: bool
-    lineStyle: SingleAxisMinorSplitLineLineStyleOpts
+    lineStyle: RadiusAxisMinorSplitLineLineStyle
 
-class SingleAxisMinorTickLineStyleOpts(TypedDict, total=False):
+class RadiusAxisMinorSplitLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -5379,13 +4922,27 @@ class SingleAxisMinorTickLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisMinorTickOpts(TypedDict, total=False):
+class RadiusAxisMinorTick(TypedDict, total=False):
     show: bool
     splitNumber: int | float
     length: int | float
-    lineStyle: SingleAxisMinorTickLineStyleOpts
+    lineStyle: RadiusAxisMinorTickLineStyle
 
-class SingleAxisNameTextStyleOpts(TypedDict, total=False):
+class RadiusAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class RadiusAxisNameTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -5417,10 +4974,10 @@ class SingleAxisNameTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: SingleAxisNameTextStyleRichOpts
+    rich: RadiusAxisNameTextStyleRich
     richInheritPlainLabel: bool
 
-class SingleAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
+class RadiusAxisNameTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -5451,11 +5008,76 @@ class SingleAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class SingleAxisNameTruncateOpts(TypedDict, total=False):
+class RadiusAxisNameTruncate(TypedDict, total=False):
     maxWidth: int | float
     ellipsis: str
 
-class SingleAxisOpts(TypedDict, total=False):
+class RadiusAxisSplitArea(TypedDict, total=False):
+    interval: Callable[..., Any] | int | float
+    show: bool
+    areaStyle: RadiusAxisSplitAreaAreaStyle
+
+class RadiusAxisSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class RadiusAxisSplitLine(TypedDict, total=False):
+    show: bool
+    showMinLine: bool
+    showMaxLine: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: RadiusAxisSplitLineLineStyle
+
+class RadiusAxisSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class RadiusAxisTooltip(TypedDict, total=False):
+    show: bool
+    position: str
+    formatter: Callable[..., Any] | str
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    padding: int | float
+    textStyle: RadiusAxisTooltipTextStyle
+    extraCssText: str
+
+class RadiusAxisTooltipTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class SingleAxis(TypedDict, total=False):
     id: str
     zlevel: int | float
     z: int | float
@@ -5469,15 +5091,15 @@ class SingleAxisOpts(TypedDict, total=False):
     type: str
     name: str
     nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: SingleAxisNameTextStyleOpts
+    nameTextStyle: SingleAxisNameTextStyle
     nameGap: int | float
     nameRotate: int | float
-    nameTruncate: SingleAxisNameTruncateOpts
+    nameTruncate: SingleAxisNameTruncate
     inverse: bool
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -5489,60 +5111,109 @@ class SingleAxisOpts(TypedDict, total=False):
     startValue: int | float
     silent: bool
     triggerEvent: bool
-    axisLine: SingleAxisAxisLineOpts
-    axisTick: SingleAxisAxisTickOpts
-    minorTick: SingleAxisMinorTickOpts
-    axisLabel: SingleAxisAxisLabelOpts
-    splitLine: SingleAxisSplitLineOpts
-    minorSplitLine: SingleAxisMinorSplitLineOpts
-    splitArea: SingleAxisSplitAreaOpts
-    data: list[SingleAxisDataItemOpts]
-    axisPointer: SingleAxisAxisPointerOpts
-    tooltip: SingleAxisTooltipOpts
+    axisLine: SingleAxisAxisLine
+    axisTick: SingleAxisAxisTick
+    minorTick: SingleAxisMinorTick
+    axisLabel: SingleAxisAxisLabel
+    splitLine: SingleAxisSplitLine
+    minorSplitLine: SingleAxisMinorSplitLine
+    splitArea: SingleAxisSplitArea
+    data: list[SingleAxisDataItem]
+    axisPointer: SingleAxisAxisPointer
+    tooltip: SingleAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
 
-class SingleAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-    shadowBlur: int | float
+class SingleAxisAxisLabel(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    rotate: int | float
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
     shadowColor: str | list[str]
+    shadowBlur: int | float
     shadowOffsetX: int | float
     shadowOffsetY: int | float
-    opacity: int | float
-
-class SingleAxisSplitAreaOpts(TypedDict, total=False):
-    interval: int | float | Callable[..., Any]
-    show: bool
-    areaStyle: SingleAxisSplitAreaAreaStyleOpts
-
-class SingleAxisSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
     width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: SingleAxisAxisLabelRich
+    richInheritPlainLabel: bool
+
+class SingleAxisAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
     shadowColor: str | list[str]
+    shadowBlur: int | float
     shadowOffsetX: int | float
     shadowOffsetY: int | float
-    opacity: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
 
-class SingleAxisSplitLineOpts(TypedDict, total=False):
+class SingleAxisAxisLine(TypedDict, total=False):
     show: bool
-    showMinLine: bool
-    showMaxLine: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: SingleAxisSplitLineLineStyleOpts
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: SingleAxisAxisLineLineStyle
 
-class SingleAxisTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
+class SingleAxisAxisLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -5556,10 +5227,36 @@ class SingleAxisTooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisTooltipAxisPointerLabelOpts(TypedDict, total=False):
+class SingleAxisAxisPointer(TypedDict, total=False):
+    show: bool
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: SingleAxisAxisPointerLabel
+    lineStyle: SingleAxisAxisPointerLineStyle
+    shadowStyle: SingleAxisAxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: SingleAxisAxisPointerHandle
+
+class SingleAxisAxisPointerHandle(TypedDict, total=False):
+    show: bool
+    icon: Any
+    size: int | float
+    margin: int | float
+    color: str
+    throttle: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class SingleAxisAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -5588,7 +5285,7 @@ class SingleAxisTooltipAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class SingleAxisTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
+class SingleAxisAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -5602,25 +5299,7 @@ class SingleAxisTooltipAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisTooltipAxisPointerOpts(TypedDict, total=False):
-    type: Literal["none", "line", "shadow", "cross"]
-    axis: str
-    snap: bool
-    z: int | float
-    label: SingleAxisTooltipAxisPointerLabelOpts
-    lineStyle: SingleAxisTooltipAxisPointerLineStyleOpts
-    shadowStyle: SingleAxisTooltipAxisPointerShadowStyleOpts
-    crossStyle: SingleAxisTooltipAxisPointerCrossStyleOpts
-    animation: bool
-    animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
-    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
-
-class SingleAxisTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
+class SingleAxisAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -5628,80 +5307,386 @@ class SingleAxisTooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class SingleAxisTooltipOpts(TypedDict, total=False):
+class SingleAxisAxisTick(TypedDict, total=False):
+    show: bool
+    alignWithLabel: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    length: int | float
+    lineStyle: SingleAxisAxisTickLineStyle
+    customValues: Any
+
+class SingleAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisDataItem(TypedDict, total=False):
+    value: str
+    textStyle: SingleAxisDataItemTextStyle
+
+class SingleAxisDataItemTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: SingleAxisDataItemTextStyleRich
+    richInheritPlainLabel: bool
+
+class SingleAxisDataItemTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class SingleAxisMinorSplitLine(TypedDict, total=False):
+    show: bool
+    lineStyle: SingleAxisMinorSplitLineLineStyle
+
+class SingleAxisMinorSplitLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisMinorTick(TypedDict, total=False):
+    show: bool
+    splitNumber: int | float
+    length: int | float
+    lineStyle: SingleAxisMinorTickLineStyle
+
+class SingleAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: SingleAxisNameTextStyleRich
+    richInheritPlainLabel: bool
+
+class SingleAxisNameTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class SingleAxisNameTruncate(TypedDict, total=False):
+    maxWidth: int | float
+    ellipsis: str
+
+class SingleAxisSplitArea(TypedDict, total=False):
+    interval: Callable[..., Any] | int | float
+    show: bool
+    areaStyle: SingleAxisSplitAreaAreaStyle
+
+class SingleAxisSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisSplitLine(TypedDict, total=False):
+    show: bool
+    showMinLine: bool
+    showMaxLine: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: SingleAxisSplitLineLineStyle
+
+class SingleAxisSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisTooltip(TypedDict, total=False):
     show: bool
     trigger: Literal["item", "axis", "none"]
-    axisPointer: SingleAxisTooltipAxisPointerOpts
+    axisPointer: SingleAxisTooltipAxisPointer
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     valueFormatter: str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: SingleAxisTooltipTextStyleOpts
+    textStyle: SingleAxisTooltipTextStyle
     extraCssText: str
 
-class SingleAxisTooltipTextStyleOpts(TypedDict, total=False):
+class SingleAxisTooltipAxisPointer(TypedDict, total=False):
+    type: Literal["none", "line", "shadow", "cross"]
+    axis: str
+    snap: bool
+    z: int | float
+    label: SingleAxisTooltipAxisPointerLabel
+    lineStyle: SingleAxisTooltipAxisPointerLineStyle
+    shadowStyle: SingleAxisTooltipAxisPointerShadowStyle
+    crossStyle: SingleAxisTooltipAxisPointerCrossStyle
+    animation: bool
+    animationThreshold: int | float
+    animationDuration: Callable[..., Any] | int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
+    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelayUpdate: Callable[..., Any] | int | float
+
+class SingleAxisTooltipAxisPointerCrossStyle(TypedDict, total=False):
     color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
     width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-
-class StateAnimationOpts(TypedDict, total=False):
-    duration: int | float
-    easing: str
-
-class TextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-
-class ThumbnailItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
     shadowBlur: int | float
     shadowColor: str | list[str]
     shadowOffsetX: int | float
     shadowOffsetY: int | float
     opacity: int | float
 
-class ThumbnailOpts(TypedDict, total=False):
+class SingleAxisTooltipAxisPointerLabel(TypedDict, total=False):
+    show: bool
+    precision: str | int | float
+    formatter: Callable[..., Any] | str
+    margin: int | float
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    padding: str
+    backgroundColor: str
+    borderColor: str
+    borderWidth: str
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class SingleAxisTooltipAxisPointerLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisTooltipAxisPointerShadowStyle(TypedDict, total=False):
+    color: str | list[str]
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class SingleAxisTooltipTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class StateAnimation(TypedDict, total=False):
+    duration: int | float
+    easing: str
+
+class TextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class Thumbnail(TypedDict, total=False):
     id: str
     show: bool
     zlevel: int | float
@@ -5719,12 +5704,12 @@ class ThumbnailOpts(TypedDict, total=False):
     calendarId: int | float
     matrixIndex: int | float
     matrixId: int | float
-    itemStyle: ThumbnailItemStyleOpts
-    windowStyle: ThumbnailWindowStyleOpts
+    itemStyle: ThumbnailItemStyle
+    windowStyle: ThumbnailWindowStyle
     seriesIndex: int | float
     seriesId: str | int | float
 
-class ThumbnailWindowStyleOpts(TypedDict, total=False):
+class ThumbnailItemStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -5739,41 +5724,7 @@ class ThumbnailWindowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class TimelineCheckpointStyleOpts(TypedDict, total=False):
-    symbol: str
-    symbolSize: int | float
-    symbolRotate: int | float
-    symbolKeepAspect: bool
-    symbolOffset: Any
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    animation: bool
-    animationDuration: int | float
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-
-class TimelineControlStyleOpts(TypedDict, total=False):
-    show: bool
-    showPlayBtn: bool
-    showPrevBtn: bool
-    showNextBtn: bool
-    itemSize: int | float
-    itemGap: int | float
-    position: Literal["left", "right", "top", "bottom"]
-    playIcon: str
-    stopIcon: str
-    prevIcon: str
-    nextIcon: str
+class ThumbnailWindowStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -5788,199 +5739,7 @@ class TimelineControlStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class TimelineEmphasisItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class TimelineEmphasisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: str | int | float
-    rotate: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: TimelineEmphasisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class TimelineEmphasisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class TimelineEmphasisOpts(TypedDict, total=False):
-    label: TimelineEmphasisLabelOpts
-    itemStyle: TimelineEmphasisItemStyleOpts
-    checkpointStyle: dict[str, Any]
-    controlStyle: dict[str, Any]
-
-class TimelineItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class TimelineLabelOpts(TypedDict, total=False):
-    position: Literal["auto", "left", "right", "top", "bottom"]
-    show: bool
-    interval: str | int | float
-    rotate: Any
-    formatter: str | Callable[..., Any]
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: TimelineLabelRichOpts
-    richInheritPlainLabel: bool
-
-class TimelineLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class TimelineLineStyleOpts(TypedDict, total=False):
-    show: bool
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class TimelineOpts(TypedDict, total=False):
+class Timeline(TypedDict, total=False):
     show: bool
     type: str
     axisType: str
@@ -6013,16 +5772,50 @@ class TimelineOpts(TypedDict, total=False):
     symbolRotate: int | float
     symbolKeepAspect: bool
     symbolOffset: Any
-    lineStyle: TimelineLineStyleOpts
-    label: TimelineLabelOpts
-    itemStyle: TimelineItemStyleOpts
-    checkpointStyle: TimelineCheckpointStyleOpts
-    controlStyle: TimelineControlStyleOpts
-    progress: TimelineProgressOpts
-    emphasis: TimelineEmphasisOpts
+    lineStyle: TimelineLineStyle
+    label: TimelineLabel
+    itemStyle: TimelineItemStyle
+    checkpointStyle: TimelineCheckpointStyle
+    controlStyle: TimelineControlStyle
+    progress: TimelineProgress
+    emphasis: TimelineEmphasis
     data: Any
 
-class TimelineProgressItemStyleOpts(TypedDict, total=False):
+class TimelineCheckpointStyle(TypedDict, total=False):
+    symbol: str
+    symbolSize: int | float
+    symbolRotate: int | float
+    symbolKeepAspect: bool
+    symbolOffset: Any
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    animation: bool
+    animationDuration: int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+
+class TimelineControlStyle(TypedDict, total=False):
+    show: bool
+    showPlayBtn: bool
+    showPrevBtn: bool
+    showNextBtn: bool
+    itemSize: int | float
+    itemGap: int | float
+    position: Literal["left", "right", "top", "bottom"]
+    playIcon: str
+    stopIcon: str
+    prevIcon: str
+    nextIcon: str
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -6037,11 +5830,32 @@ class TimelineProgressItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class TimelineProgressLabelOpts(TypedDict, total=False):
+class TimelineEmphasis(TypedDict, total=False):
+    label: TimelineEmphasisLabel
+    itemStyle: TimelineEmphasisItemStyle
+    checkpointStyle: dict[str, Any]
+    controlStyle: dict[str, Any]
+
+class TimelineEmphasisItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class TimelineEmphasisLabel(TypedDict, total=False):
     show: bool
     interval: str | int | float
     rotate: Any
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6073,10 +5887,10 @@ class TimelineProgressLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: TimelineProgressLabelRichOpts
+    rich: TimelineEmphasisLabelRich
     richInheritPlainLabel: bool
 
-class TimelineProgressLabelRichStyleOpts(TypedDict, total=False):
+class TimelineEmphasisLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6107,7 +5921,94 @@ class TimelineProgressLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class TimelineProgressLineStyleOpts(TypedDict, total=False):
+class TimelineItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class TimelineLabel(TypedDict, total=False):
+    position: Literal["auto", "left", "right", "top", "bottom"]
+    show: bool
+    interval: str | int | float
+    rotate: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: TimelineLabelRich
+    richInheritPlainLabel: bool
+
+class TimelineLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class TimelineLineStyle(TypedDict, total=False):
+    show: bool
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -6121,22 +6022,121 @@ class TimelineProgressLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class TimelineProgressOpts(TypedDict, total=False):
-    lineStyle: TimelineProgressLineStyleOpts
-    itemStyle: TimelineProgressItemStyleOpts
-    label: TimelineProgressLabelOpts
+class TimelineProgress(TypedDict, total=False):
+    lineStyle: TimelineProgressLineStyle
+    itemStyle: TimelineProgressItemStyle
+    label: TimelineProgressLabel
 
-class TitleOpts(TypedDict, total=False):
+class TimelineProgressItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class TimelineProgressLabel(TypedDict, total=False):
+    show: bool
+    interval: str | int | float
+    rotate: Any
+    formatter: Callable[..., Any] | str
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: TimelineProgressLabelRich
+    richInheritPlainLabel: bool
+
+class TimelineProgressLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class TimelineProgressLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class Title(TypedDict, total=False):
     id: str
     show: bool
     text: str
     link: str
     target: str
-    textStyle: TitleTextStyleOpts
+    textStyle: TitleTextStyle
     subtext: str
     sublink: str
     subtarget: str
-    subtextStyle: TitleSubtextStyleOpts
+    subtextStyle: TitleSubtextStyle
     textAlign: Literal["auto", "left", "center", "right"]
     textVerticalAlign: Literal["auto", "top", "middle", "bottom"]
     triggerEvent: bool
@@ -6164,7 +6164,7 @@ class TitleOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class TitleSubtextStyleOpts(TypedDict, total=False):
+class TitleSubtextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6185,10 +6185,10 @@ class TitleSubtextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: TitleSubtextStyleRichOpts
+    rich: TitleSubtextStyleRich
     richInheritPlainLabel: bool
 
-class TitleSubtextStyleRichStyleOpts(TypedDict, total=False):
+class TitleSubtextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6219,7 +6219,7 @@ class TitleSubtextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class TitleTextStyleOpts(TypedDict, total=False):
+class TitleTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6238,10 +6238,10 @@ class TitleTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: TitleTextStyleRichOpts
+    rich: TitleTextStyleRich
     richInheritPlainLabel: bool
 
-class TitleTextStyleRichStyleOpts(TypedDict, total=False):
+class TitleTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -6272,380 +6272,16 @@ class TitleTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class ToolboxEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxEmphasisIconStyleOpts
-
-class ToolboxFeatureBrushIconOpts(TypedDict, total=False):
-    rect: str
-    polygon: str
-    lineX: str
-    lineY: str
-    keep: str
-    clear: str
-
-class ToolboxFeatureBrushOpts(TypedDict, total=False):
-    type: Any
-    icon: ToolboxFeatureBrushIconOpts
-    title: ToolboxFeatureBrushTitleOpts
-
-class ToolboxFeatureBrushTitleOpts(TypedDict, total=False):
-    rect: str
-    polygon: str
-    lineX: str
-    lineY: str
-    keep: str
-    clear: str
-
-class ToolboxFeatureDataViewEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxFeatureDataViewEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxFeatureDataViewEmphasisIconStyleOpts
-
-class ToolboxFeatureDataViewIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureDataViewOpts(TypedDict, total=False):
-    show: bool
-    title: str
-    icon: str
-    iconStyle: ToolboxFeatureDataViewIconStyleOpts
-    emphasis: ToolboxFeatureDataViewEmphasisOpts
-    readOnly: bool
-    optionToContent: Callable[..., Any]
-    contentToOption: Callable[..., Any]
-    lang: Any
-    backgroundColor: str
-    textareaColor: str
-    textareaBorderColor: str
-    textColor: str
-    buttonColor: str
-    buttonTextColor: str
-
-class ToolboxFeatureDataZoomBrushStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureDataZoomEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxFeatureDataZoomEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxFeatureDataZoomEmphasisIconStyleOpts
-
-class ToolboxFeatureDataZoomIconOpts(TypedDict, total=False):
-    zoom: str
-    back: str
-
-class ToolboxFeatureDataZoomIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureDataZoomOpts(TypedDict, total=False):
-    show: bool
-    title: ToolboxFeatureDataZoomTitleOpts
-    icon: ToolboxFeatureDataZoomIconOpts
-    iconStyle: ToolboxFeatureDataZoomIconStyleOpts
-    emphasis: ToolboxFeatureDataZoomEmphasisOpts
-    filterMode: str
-    xAxisIndex: int | float | bool
-    yAxisIndex: int | float | bool
-    brushStyle: ToolboxFeatureDataZoomBrushStyleOpts
-
-class ToolboxFeatureDataZoomTitleOpts(TypedDict, total=False):
-    zoom: str
-    back: str
-
-class ToolboxFeatureMagicTypeEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxFeatureMagicTypeEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxFeatureMagicTypeEmphasisIconStyleOpts
-
-class ToolboxFeatureMagicTypeIconOpts(TypedDict, total=False):
-    line: str
-    bar: str
-    stack: str
-
-class ToolboxFeatureMagicTypeIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureMagicTypeOptionOpts(TypedDict, total=False):
-    line: dict[str, Any]
-    bar: dict[str, Any]
-    stack: dict[str, Any]
-
-class ToolboxFeatureMagicTypeOpts(TypedDict, total=False):
-    show: bool
-    type: Any
-    title: ToolboxFeatureMagicTypeTitleOpts
-    icon: ToolboxFeatureMagicTypeIconOpts
-    iconStyle: ToolboxFeatureMagicTypeIconStyleOpts
-    emphasis: ToolboxFeatureMagicTypeEmphasisOpts
-    option: ToolboxFeatureMagicTypeOptionOpts
-    seriesIndex: ToolboxFeatureMagicTypeSeriesIndexOpts
-
-class ToolboxFeatureMagicTypeSeriesIndexOpts(TypedDict, total=False):
-    line: Any
-    bar: Any
-
-class ToolboxFeatureMagicTypeTitleOpts(TypedDict, total=False):
-    line: str
-    bar: str
-    stack: str
-    tiled: str
-
-class ToolboxFeatureOpts(TypedDict, total=False):
-    saveAsImage: ToolboxFeatureSaveAsImageOpts
-    restore: ToolboxFeatureRestoreOpts
-    dataView: ToolboxFeatureDataViewOpts
-    dataZoom: ToolboxFeatureDataZoomOpts
-    magicType: ToolboxFeatureMagicTypeOpts
-    brush: ToolboxFeatureBrushOpts
-
-class ToolboxFeatureRestoreEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxFeatureRestoreEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxFeatureRestoreEmphasisIconStyleOpts
-
-class ToolboxFeatureRestoreIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureRestoreOpts(TypedDict, total=False):
-    show: bool
-    title: str
-    icon: str
-    iconStyle: ToolboxFeatureRestoreIconStyleOpts
-    emphasis: ToolboxFeatureRestoreEmphasisOpts
-
-class ToolboxFeatureSaveAsImageEmphasisIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-    textPosition: str
-    textFill: str
-    textAlign: Literal["left", "center", "right"]
-    textBackgroundColor: str
-    textBorderRadius: int | float
-    textPadding: int | float
-
-class ToolboxFeatureSaveAsImageEmphasisOpts(TypedDict, total=False):
-    iconStyle: ToolboxFeatureSaveAsImageEmphasisIconStyleOpts
-
-class ToolboxFeatureSaveAsImageIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxFeatureSaveAsImageOpts(TypedDict, total=False):
-    type: Literal["png", "jpg"]
-    name: str
-    backgroundColor: str | list[str]
-    connectedBackgroundColor: str | list[str]
-    excludeComponents: Any
-    show: bool
-    title: str
-    icon: str
-    iconStyle: ToolboxFeatureSaveAsImageIconStyleOpts
-    emphasis: ToolboxFeatureSaveAsImageEmphasisOpts
-    pixelRatio: int | float
-
-class ToolboxIconStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class ToolboxOpts(TypedDict, total=False):
+class Toolbox(TypedDict, total=False):
     id: str
     show: bool
     orient: Literal["vertical", "horizontal"]
     itemSize: int | float
     itemGap: int | float
     showTitle: bool
-    feature: ToolboxFeatureOpts
-    iconStyle: ToolboxIconStyleOpts
-    emphasis: ToolboxEmphasisOpts
+    feature: ToolboxFeature
+    iconStyle: ToolboxIconStyle
+    emphasis: ToolboxEmphasis
     zlevel: int | float
     z: int | float
     left: str | int | float
@@ -6663,96 +6299,374 @@ class ToolboxOpts(TypedDict, total=False):
     matrixId: int | float
     tooltip: dict[str, Any]
 
-class TooltipAxisPointerCrossStyleOpts(TypedDict, total=False):
+class ToolboxEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxEmphasisIconStyle
+
+class ToolboxEmphasisIconStyle(TypedDict, total=False):
     color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
     shadowBlur: int | float
     shadowColor: str | list[str]
     shadowOffsetX: int | float
     shadowOffsetY: int | float
     opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
 
-class TooltipAxisPointerLabelOpts(TypedDict, total=False):
+class ToolboxFeature(TypedDict, total=False):
+    saveAsImage: ToolboxFeatureSaveAsImage
+    restore: ToolboxFeatureRestore
+    dataView: ToolboxFeatureDataView
+    dataZoom: ToolboxFeatureDataZoom
+    magicType: ToolboxFeatureMagicType
+    brush: ToolboxFeatureBrush
+
+class ToolboxFeatureBrush(TypedDict, total=False):
+    type: Any
+    icon: ToolboxFeatureBrushIcon
+    title: ToolboxFeatureBrushTitle
+
+class ToolboxFeatureBrushIcon(TypedDict, total=False):
+    rect: str
+    polygon: str
+    lineX: str
+    lineY: str
+    keep: str
+    clear: str
+
+class ToolboxFeatureBrushTitle(TypedDict, total=False):
+    rect: str
+    polygon: str
+    lineX: str
+    lineY: str
+    keep: str
+    clear: str
+
+class ToolboxFeatureDataView(TypedDict, total=False):
     show: bool
-    precision: str | int | float
-    formatter: str | Callable[..., Any]
-    margin: int | float
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    padding: str
+    title: str
+    icon: str
+    iconStyle: ToolboxFeatureDataViewIconStyle
+    emphasis: ToolboxFeatureDataViewEmphasis
+    readOnly: bool
+    optionToContent: Callable[..., Any]
+    contentToOption: Callable[..., Any]
+    lang: Any
     backgroundColor: str
-    borderColor: str
-    borderWidth: str
+    textareaColor: str
+    textareaBorderColor: str
+    textColor: str
+    buttonColor: str
+    buttonTextColor: str
+
+class ToolboxFeatureDataViewEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxFeatureDataViewEmphasisIconStyle
+
+class ToolboxFeatureDataViewEmphasisIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
     shadowBlur: int | float
     shadowColor: str | list[str]
     shadowOffsetX: int | float
     shadowOffsetY: int | float
+    opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
 
-class TooltipAxisPointerLineStyleOpts(TypedDict, total=False):
+class ToolboxFeatureDataViewIconStyle(TypedDict, total=False):
     color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
     shadowBlur: int | float
     shadowColor: str | list[str]
     shadowOffsetX: int | float
     shadowOffsetY: int | float
     opacity: int | float
 
-class TooltipAxisPointerOpts(TypedDict, total=False):
-    type: Literal["none", "line", "shadow", "cross"]
-    axis: str
-    snap: bool
-    z: int | float
-    label: TooltipAxisPointerLabelOpts
-    lineStyle: TooltipAxisPointerLineStyleOpts
-    shadowStyle: TooltipAxisPointerShadowStyleOpts
-    crossStyle: TooltipAxisPointerCrossStyleOpts
-    animation: bool
-    animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
-    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
-    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+class ToolboxFeatureDataZoom(TypedDict, total=False):
+    show: bool
+    title: ToolboxFeatureDataZoomTitle
+    icon: ToolboxFeatureDataZoomIcon
+    iconStyle: ToolboxFeatureDataZoomIconStyle
+    emphasis: ToolboxFeatureDataZoomEmphasis
+    filterMode: str
+    xAxisIndex: bool | int | float
+    yAxisIndex: bool | int | float
+    brushStyle: ToolboxFeatureDataZoomBrushStyle
 
-class TooltipAxisPointerShadowStyleOpts(TypedDict, total=False):
+class ToolboxFeatureDataZoomBrushStyle(TypedDict, total=False):
     color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
     shadowBlur: int | float
     shadowColor: str | list[str]
     shadowOffsetX: int | float
     shadowOffsetY: int | float
     opacity: int | float
 
-class TooltipOpts(TypedDict, total=False):
+class ToolboxFeatureDataZoomEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxFeatureDataZoomEmphasisIconStyle
+
+class ToolboxFeatureDataZoomEmphasisIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
+
+class ToolboxFeatureDataZoomIcon(TypedDict, total=False):
+    zoom: str
+    back: str
+
+class ToolboxFeatureDataZoomIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ToolboxFeatureDataZoomTitle(TypedDict, total=False):
+    zoom: str
+    back: str
+
+class ToolboxFeatureMagicType(TypedDict, total=False):
+    show: bool
+    type: Any
+    title: ToolboxFeatureMagicTypeTitle
+    icon: ToolboxFeatureMagicTypeIcon
+    iconStyle: ToolboxFeatureMagicTypeIconStyle
+    emphasis: ToolboxFeatureMagicTypeEmphasis
+    option: ToolboxFeatureMagicTypeOption
+    seriesIndex: ToolboxFeatureMagicTypeSeriesIndex
+
+class ToolboxFeatureMagicTypeEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxFeatureMagicTypeEmphasisIconStyle
+
+class ToolboxFeatureMagicTypeEmphasisIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
+
+class ToolboxFeatureMagicTypeIcon(TypedDict, total=False):
+    line: str
+    bar: str
+    stack: str
+
+class ToolboxFeatureMagicTypeIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ToolboxFeatureMagicTypeOption(TypedDict, total=False):
+    line: dict[str, Any]
+    bar: dict[str, Any]
+    stack: dict[str, Any]
+
+class ToolboxFeatureMagicTypeSeriesIndex(TypedDict, total=False):
+    line: Any
+    bar: Any
+
+class ToolboxFeatureMagicTypeTitle(TypedDict, total=False):
+    line: str
+    bar: str
+    stack: str
+    tiled: str
+
+class ToolboxFeatureRestore(TypedDict, total=False):
+    show: bool
+    title: str
+    icon: str
+    iconStyle: ToolboxFeatureRestoreIconStyle
+    emphasis: ToolboxFeatureRestoreEmphasis
+
+class ToolboxFeatureRestoreEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxFeatureRestoreEmphasisIconStyle
+
+class ToolboxFeatureRestoreEmphasisIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
+
+class ToolboxFeatureRestoreIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ToolboxFeatureSaveAsImage(TypedDict, total=False):
+    type: Literal["png", "jpg"]
+    name: str
+    backgroundColor: str | list[str]
+    connectedBackgroundColor: str | list[str]
+    excludeComponents: Any
+    show: bool
+    title: str
+    icon: str
+    iconStyle: ToolboxFeatureSaveAsImageIconStyle
+    emphasis: ToolboxFeatureSaveAsImageEmphasis
+    pixelRatio: int | float
+
+class ToolboxFeatureSaveAsImageEmphasis(TypedDict, total=False):
+    iconStyle: ToolboxFeatureSaveAsImageEmphasisIconStyle
+
+class ToolboxFeatureSaveAsImageEmphasisIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+    textPosition: str
+    textFill: str
+    textAlign: Literal["left", "center", "right"]
+    textBackgroundColor: str
+    textBorderRadius: int | float
+    textPadding: int | float
+
+class ToolboxFeatureSaveAsImageIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class ToolboxIconStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class Tooltip(TypedDict, total=False):
     show: bool
     trigger: Literal["item", "axis", "none"]
-    axisPointer: TooltipAxisPointerOpts
+    axisPointer: TooltipAxisPointer
     showContent: bool
     alwaysShowContent: bool
     triggerOn: Literal["mousemove", "click"]
@@ -6762,240 +6676,40 @@ class TooltipOpts(TypedDict, total=False):
     renderMode: Literal["html", "richText"]
     confine: bool
     appendToBody: bool
-    appendTo: str | Callable[..., Any]
+    appendTo: Callable[..., Any] | str
     className: str
     transitionDuration: int | float
     displayTransition: bool
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     valueFormatter: str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: TooltipTextStyleOpts
+    textStyle: TooltipTextStyle
     extraCssText: str
     order: Literal["seriesAsc", "seriesDesc", "valueAsc", "valueDesc"]
 
-class TooltipTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
+class TooltipAxisPointer(TypedDict, total=False):
+    type: Literal["none", "line", "shadow", "cross"]
+    axis: str
+    snap: bool
+    z: int | float
+    label: TooltipAxisPointerLabel
+    lineStyle: TooltipAxisPointerLineStyle
+    shadowStyle: TooltipAxisPointerShadowStyle
+    crossStyle: TooltipAxisPointerCrossStyle
+    animation: bool
+    animationThreshold: int | float
+    animationDuration: Callable[..., Any] | int | float
+    animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
+    animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
+    animationDelayUpdate: Callable[..., Any] | int | float
 
-class XAxis3DAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    margin: int | float
-    interval: int | float | Callable[..., Any]
-    formatter: str | Callable[..., Any]
-    textStyle: XAxis3DAxisLabelTextStyleOpts
-
-class XAxis3DAxisLabelTextStyleOpts(TypedDict, total=False):
-    color: str | list[str] | Callable[..., Any]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class XAxis3DAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class XAxis3DAxisLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: XAxis3DAxisLineLineStyleOpts
-
-class XAxis3DAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    formatter: Callable[..., Any]
-    margin: int | float
-    textStyle: XAxis3DAxisPointerLabelTextStyleOpts
-
-class XAxis3DAxisPointerLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class XAxis3DAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class XAxis3DAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: XAxis3DAxisPointerLineStyleOpts
-    label: XAxis3DAxisPointerLabelOpts
-
-class XAxis3DAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    opacity: int | float
-    width: int | float
-
-class XAxis3DAxisTickOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    length: int | float
-    lineStyle: XAxis3DAxisTickLineStyleOpts
-
-class XAxis3DDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: XAxis3DDataItemTextStyleOpts
-
-class XAxis3DDataItemTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class XAxis3DNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class XAxis3DOpts(TypedDict, total=False):
-    show: bool
-    name: str
-    grid3DIndex: int | float
-    nameTextStyle: XAxis3DNameTextStyleOpts
-    nameGap: int | float
-    type: str
-    min: str | int | float
-    max: str | int | float
-    scale: bool
-    splitNumber: int | float
-    minInterval: int | float
-    interval: int | float
-    logBase: int | float
-    data: list[XAxis3DDataItemOpts]
-    axisLine: XAxis3DAxisLineOpts
-    axisLabel: XAxis3DAxisLabelOpts
-    axisTick: XAxis3DAxisTickOpts
-    splitLine: XAxis3DSplitLineOpts
-    splitArea: XAxis3DSplitAreaOpts
-    axisPointer: XAxis3DAxisPointerOpts
-
-class XAxis3DSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-
-class XAxis3DSplitAreaOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    areaStyle: XAxis3DSplitAreaAreaStyleOpts
-
-class XAxis3DSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class XAxis3DSplitLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: XAxis3DSplitLineLineStyleOpts
-
-class XAxisAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    rotate: int | float
-    margin: int | float
-    formatter: str | Callable[..., Any]
-    showMinLabel: bool
-    showMaxLabel: bool
-    alignMinLabel: str
-    alignMaxLabel: str
-    hideOverlap: bool
-    customValues: Any
-    color: str | list[str] | Callable[..., Any]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: XAxisAxisLabelRichOpts
-    richInheritPlainLabel: bool
-
-class XAxisAxisLabelRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class XAxisAxisLineLineStyleOpts(TypedDict, total=False):
+class TooltipAxisPointerCrossStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -7009,31 +6723,10 @@ class XAxisAxisLineLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class XAxisAxisLineOpts(TypedDict, total=False):
-    show: bool
-    onZero: Literal["auto", "true", "false"]
-    onZeroAxisIndex: int | float
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: XAxisAxisLineLineStyleOpts
-
-class XAxisAxisPointerHandleOpts(TypedDict, total=False):
-    show: bool
-    icon: Any
-    size: int | float
-    margin: int | float
-    color: str
-    throttle: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-
-class XAxisAxisPointerLabelOpts(TypedDict, total=False):
+class TooltipAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -7062,7 +6755,7 @@ class XAxisAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class XAxisAxisPointerLineStyleOpts(TypedDict, total=False):
+class TooltipAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -7076,21 +6769,7 @@ class XAxisAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class XAxisAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: XAxisAxisPointerLabelOpts
-    lineStyle: XAxisAxisPointerLineStyleOpts
-    shadowStyle: XAxisAxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: XAxisAxisPointerHandleOpts
-
-class XAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
+class TooltipAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -7098,86 +6777,13 @@ class XAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class XAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisAxisTickOpts(TypedDict, total=False):
-    show: bool
-    alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
-    inside: bool
-    length: int | float
-    lineStyle: XAxisAxisTickLineStyleOpts
-    customValues: Any
-
-class XAxisBreakAreaItemStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderCap: Literal["butt", "round", "square"]
-    borderJoin: Literal["bevel", "round", "miter"]
-    borderMiterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisBreakAreaOpts(TypedDict, total=False):
-    show: bool
-    itemStyle: XAxisBreakAreaItemStyleOpts
-    zigzagAmplitude: int | float
-    zigzagMinSpan: int | float
-    zigzagMaxSpan: int | float
-    zigzagZ: int | float
-    expandOnClick: bool
-
-class XAxisBreakLabelLayoutOpts(TypedDict, total=False):
-    moveOverlap: str | bool
-
-class XAxisBreaksItemOpts(TypedDict, total=False):
-    start: str | int | float
-    end: str | int | float
-    gap: str | int | float
-    isExpanded: bool
-
-class XAxisDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: XAxisDataItemTextStyleOpts
-
-class XAxisDataItemTextStyleOpts(TypedDict, total=False):
+class TooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
     fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
     lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
     width: int | float
     height: int | float
     textBorderColor: str | list[str]
@@ -7190,149 +6796,8 @@ class XAxisDataItemTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: XAxisDataItemTextStyleRichOpts
-    richInheritPlainLabel: bool
 
-class XAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class XAxisMinorSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisMinorSplitLineOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: XAxisMinorSplitLineLineStyleOpts
-
-class XAxisMinorTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisMinorTickOpts(TypedDict, total=False):
-    show: bool
-    splitNumber: int | float
-    length: int | float
-    lineStyle: XAxisMinorTickLineStyleOpts
-
-class XAxisNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-    rich: XAxisNameTextStyleRichOpts
-    richInheritPlainLabel: bool
-
-class XAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    align: Literal["left", "center", "right"]
-    verticalAlign: Literal["top", "middle", "bottom"]
-    lineHeight: int | float
-    backgroundColor: str | dict[str, Any]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    borderType: Literal["solid", "dashed", "dotted"]
-    borderDashOffset: int | float
-    borderRadius: int | float
-    padding: int | float
-    shadowColor: str | list[str]
-    shadowBlur: int | float
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    width: str | int | float
-    height: str | int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-
-class XAxisNameTruncateOpts(TypedDict, total=False):
-    maxWidth: int | float
-    ellipsis: str
-
-class XAxisOpts(TypedDict, total=False):
+class XAxis(TypedDict, total=False):
     id: str
     show: bool
     gridIndex: int | float
@@ -7342,16 +6807,16 @@ class XAxisOpts(TypedDict, total=False):
     type: str
     name: str
     nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: XAxisNameTextStyleOpts
+    nameTextStyle: XAxisNameTextStyle
     nameGap: int | float
     nameRotate: int | float
-    nameTruncate: XAxisNameTruncateOpts
+    nameTruncate: XAxisNameTruncate
     nameMoveOverlap: bool
     inverse: bool
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -7366,180 +6831,35 @@ class XAxisOpts(TypedDict, total=False):
     jitter: int | float
     jitterOverlap: bool
     jitterMargin: int | float
-    breaks: list[XAxisBreaksItemOpts]
-    breakArea: XAxisBreakAreaOpts
-    breakLabelLayout: XAxisBreakLabelLayoutOpts
-    axisLine: XAxisAxisLineOpts
-    axisTick: XAxisAxisTickOpts
-    minorTick: XAxisMinorTickOpts
-    axisLabel: XAxisAxisLabelOpts
-    splitLine: XAxisSplitLineOpts
-    minorSplitLine: XAxisMinorSplitLineOpts
-    splitArea: XAxisSplitAreaOpts
-    data: list[XAxisDataItemOpts]
-    axisPointer: XAxisAxisPointerOpts
-    tooltip: XAxisTooltipOpts
+    breaks: list[XAxisBreaksItem]
+    breakArea: XAxisBreakArea
+    breakLabelLayout: XAxisBreakLabelLayout
+    axisLine: XAxisAxisLine
+    axisTick: XAxisAxisTick
+    minorTick: XAxisMinorTick
+    axisLabel: XAxisAxisLabel
+    splitLine: XAxisSplitLine
+    minorSplitLine: XAxisMinorSplitLine
+    splitArea: XAxisSplitArea
+    data: list[XAxisDataItem]
+    axisPointer: XAxisAxisPointer
+    tooltip: XAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
     zlevel: int | float
     z: int | float
 
-class XAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisSplitAreaOpts(TypedDict, total=False):
-    interval: int | float | Callable[..., Any]
-    show: bool
-    areaStyle: XAxisSplitAreaAreaStyleOpts
-
-class XAxisSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class XAxisSplitLineOpts(TypedDict, total=False):
-    show: bool
-    showMinLine: bool
-    showMaxLine: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: XAxisSplitLineLineStyleOpts
-
-class XAxisTooltipOpts(TypedDict, total=False):
-    show: bool
-    position: str
-    formatter: str | Callable[..., Any]
-    backgroundColor: str | list[str]
-    borderColor: str | list[str]
-    borderWidth: int | float
-    padding: int | float
-    textStyle: XAxisTooltipTextStyleOpts
-    extraCssText: str
-
-class XAxisTooltipTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    fontStyle: Literal["normal", "italic", "oblique"]
-    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
-    fontFamily: str
-    fontSize: int | float
-    lineHeight: int | float
-    width: int | float
-    height: int | float
-    textBorderColor: str | list[str]
-    textBorderWidth: int | float
-    textBorderType: Literal["solid", "dashed", "dotted"]
-    textBorderDashOffset: int | float
-    textShadowColor: str | list[str]
-    textShadowBlur: int | float
-    textShadowOffsetX: int | float
-    textShadowOffsetY: int | float
-    overflow: Literal["truncate", "break", "breakAll"]
-    ellipsis: str
-
-class YAxis3DAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    margin: int | float
-    interval: int | float | Callable[..., Any]
-    formatter: str | Callable[..., Any]
-    textStyle: YAxis3DAxisLabelTextStyleOpts
-
-class YAxis3DAxisLabelTextStyleOpts(TypedDict, total=False):
-    color: str | list[str] | Callable[..., Any]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class YAxis3DAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class YAxis3DAxisLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: YAxis3DAxisLineLineStyleOpts
-
-class YAxis3DAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    formatter: Callable[..., Any]
-    margin: int | float
-    textStyle: YAxis3DAxisPointerLabelTextStyleOpts
-
-class YAxis3DAxisPointerLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class YAxis3DAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class YAxis3DAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: YAxis3DAxisPointerLineStyleOpts
-    label: YAxis3DAxisPointerLabelOpts
-
-class YAxis3DAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    opacity: int | float
-    width: int | float
-
-class YAxis3DAxisTickOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    length: int | float
-    lineStyle: YAxis3DAxisTickLineStyleOpts
-
-class YAxis3DDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: YAxis3DDataItemTextStyleOpts
-
-class YAxis3DDataItemTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class YAxis3DNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class YAxis3DOpts(TypedDict, total=False):
+class XAxis3D(TypedDict, total=False):
     show: bool
     name: str
     grid3DIndex: int | float
-    nameTextStyle: YAxis3DNameTextStyleOpts
+    nameTextStyle: XAxis3DNameTextStyle
     nameGap: int | float
     type: str
     min: str | int | float
@@ -7549,46 +6869,126 @@ class YAxis3DOpts(TypedDict, total=False):
     minInterval: int | float
     interval: int | float
     logBase: int | float
-    data: list[YAxis3DDataItemOpts]
-    axisLine: YAxis3DAxisLineOpts
-    axisLabel: YAxis3DAxisLabelOpts
-    axisTick: YAxis3DAxisTickOpts
-    splitLine: YAxis3DSplitLineOpts
-    splitArea: YAxis3DSplitAreaOpts
-    axisPointer: YAxis3DAxisPointerOpts
+    data: list[XAxis3DDataItem]
+    axisLine: XAxis3DAxisLine
+    axisLabel: XAxis3DAxisLabel
+    axisTick: XAxis3DAxisTick
+    splitLine: XAxis3DSplitLine
+    splitArea: XAxis3DSplitArea
+    axisPointer: XAxis3DAxisPointer
 
-class YAxis3DSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-
-class YAxis3DSplitAreaOpts(TypedDict, total=False):
+class XAxis3DAxisLabel(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    areaStyle: YAxis3DSplitAreaAreaStyleOpts
+    margin: int | float
+    interval: Callable[..., Any] | int | float
+    formatter: Callable[..., Any] | str
+    textStyle: XAxis3DAxisLabelTextStyle
 
-class YAxis3DSplitLineLineStyleOpts(TypedDict, total=False):
+class XAxis3DAxisLabelTextStyle(TypedDict, total=False):
+    color: Callable[..., Any] | str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class XAxis3DAxisLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: XAxis3DAxisLineLineStyle
+
+class XAxis3DAxisLineLineStyle(TypedDict, total=False):
     color: str
     opacity: int | float
     width: int | float
 
-class YAxis3DSplitLineOpts(TypedDict, total=False):
+class XAxis3DAxisPointer(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: YAxis3DSplitLineLineStyleOpts
+    lineStyle: XAxis3DAxisPointerLineStyle
+    label: XAxis3DAxisPointerLabel
 
-class YAxisAxisLabelOpts(TypedDict, total=False):
+class XAxis3DAxisPointerLabel(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
+    formatter: Callable[..., Any]
+    margin: int | float
+    textStyle: XAxis3DAxisPointerLabelTextStyle
+
+class XAxis3DAxisPointerLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class XAxis3DAxisPointerLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class XAxis3DAxisTick(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    length: int | float
+    lineStyle: XAxis3DAxisTickLineStyle
+
+class XAxis3DAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    opacity: int | float
+    width: int | float
+
+class XAxis3DDataItem(TypedDict, total=False):
+    value: str
+    textStyle: XAxis3DDataItemTextStyle
+
+class XAxis3DDataItemTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class XAxis3DNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class XAxis3DSplitArea(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    areaStyle: XAxis3DSplitAreaAreaStyle
+
+class XAxis3DSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+
+class XAxis3DSplitLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: XAxis3DSplitLineLineStyle
+
+class XAxis3DSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class XAxisAxisLabel(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
     inside: bool
     rotate: int | float
     margin: int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     showMinLabel: bool
     showMaxLabel: bool
-    verticalAlignMinLabel: str
-    verticalAlignMaxLabel: str
+    alignMinLabel: str
+    alignMaxLabel: str
     hideOverlap: bool
     customValues: Any
-    color: str | list[str] | Callable[..., Any]
+    color: Callable[..., Any] | str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
     fontFamily: str
@@ -7619,10 +7019,10 @@ class YAxisAxisLabelOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: YAxisAxisLabelRichOpts
+    rich: XAxisAxisLabelRich
     richInheritPlainLabel: bool
 
-class YAxisAxisLabelRichStyleOpts(TypedDict, total=False):
+class XAxisAxisLabelRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -7653,7 +7053,16 @@ class YAxisAxisLabelRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class YAxisAxisLineLineStyleOpts(TypedDict, total=False):
+class XAxisAxisLine(TypedDict, total=False):
+    show: bool
+    onZero: Literal["auto", "true", "false"]
+    onZeroAxisIndex: int | float
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: XAxisAxisLineLineStyle
+
+class XAxisAxisLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -7667,16 +7076,21 @@ class YAxisAxisLineLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisAxisLineOpts(TypedDict, total=False):
+class XAxisAxisPointer(TypedDict, total=False):
     show: bool
-    onZero: Literal["auto", "true", "false"]
-    onZeroAxisIndex: int | float
-    symbol: str
-    symbolSize: Any
-    symbolOffset: int | float
-    lineStyle: YAxisAxisLineLineStyleOpts
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: XAxisAxisPointerLabel
+    lineStyle: XAxisAxisPointerLineStyle
+    shadowStyle: XAxisAxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: XAxisAxisPointerHandle
 
-class YAxisAxisPointerHandleOpts(TypedDict, total=False):
+class XAxisAxisPointerHandle(TypedDict, total=False):
     show: bool
     icon: Any
     size: int | float
@@ -7688,10 +7102,10 @@ class YAxisAxisPointerHandleOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class YAxisAxisPointerLabelOpts(TypedDict, total=False):
+class XAxisAxisPointerLabel(TypedDict, total=False):
     show: bool
     precision: str | int | float
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     margin: int | float
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
@@ -7720,7 +7134,7 @@ class YAxisAxisPointerLabelOpts(TypedDict, total=False):
     shadowOffsetX: int | float
     shadowOffsetY: int | float
 
-class YAxisAxisPointerLineStyleOpts(TypedDict, total=False):
+class XAxisAxisPointerLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -7734,21 +7148,7 @@ class YAxisAxisPointerLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    type: Literal["line", "shadow", "none"]
-    snap: bool
-    z: int | float
-    label: YAxisAxisPointerLabelOpts
-    lineStyle: YAxisAxisPointerLineStyleOpts
-    shadowStyle: YAxisAxisPointerShadowStyleOpts
-    triggerEmphasis: bool
-    triggerTooltip: bool
-    value: int | float
-    status: Literal["show", "hide"]
-    handle: YAxisAxisPointerHandleOpts
-
-class YAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
+class XAxisAxisPointerShadowStyle(TypedDict, total=False):
     color: str | list[str]
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -7756,30 +7156,39 @@ class YAxisAxisPointerShadowStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class YAxisAxisTickOpts(TypedDict, total=False):
+class XAxisAxisTick(TypedDict, total=False):
     show: bool
     alignWithLabel: bool
-    interval: int | float | Callable[..., Any]
+    interval: Callable[..., Any] | int | float
     inside: bool
     length: int | float
-    lineStyle: YAxisAxisTickLineStyleOpts
+    lineStyle: XAxisAxisTickLineStyle
     customValues: Any
 
-class YAxisBreakAreaItemStyleOpts(TypedDict, total=False):
+class XAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class XAxisBreakArea(TypedDict, total=False):
+    show: bool
+    itemStyle: XAxisBreakAreaItemStyle
+    zigzagAmplitude: int | float
+    zigzagMinSpan: int | float
+    zigzagMaxSpan: int | float
+    zigzagZ: int | float
+    expandOnClick: bool
+
+class XAxisBreakAreaItemStyle(TypedDict, total=False):
     color: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
@@ -7794,29 +7203,20 @@ class YAxisBreakAreaItemStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisBreakAreaOpts(TypedDict, total=False):
-    show: bool
-    itemStyle: YAxisBreakAreaItemStyleOpts
-    zigzagAmplitude: int | float
-    zigzagMinSpan: int | float
-    zigzagMaxSpan: int | float
-    zigzagZ: int | float
-    expandOnClick: bool
+class XAxisBreakLabelLayout(TypedDict, total=False):
+    moveOverlap: bool | str
 
-class YAxisBreakLabelLayoutOpts(TypedDict, total=False):
-    moveOverlap: str | bool
-
-class YAxisBreaksItemOpts(TypedDict, total=False):
+class XAxisBreaksItem(TypedDict, total=False):
     start: str | int | float
     end: str | int | float
     gap: str | int | float
     isExpanded: bool
 
-class YAxisDataItemOpts(TypedDict, total=False):
+class XAxisDataItem(TypedDict, total=False):
     value: str
-    textStyle: YAxisDataItemTextStyleOpts
+    textStyle: XAxisDataItemTextStyle
 
-class YAxisDataItemTextStyleOpts(TypedDict, total=False):
+class XAxisDataItemTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -7848,10 +7248,10 @@ class YAxisDataItemTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: YAxisDataItemTextStyleRichOpts
+    rich: XAxisDataItemTextStyleRich
     richInheritPlainLabel: bool
 
-class YAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
+class XAxisDataItemTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -7882,25 +7282,11 @@ class YAxisDataItemTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class YAxisMinorSplitLineLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    width: int | float
-    type: Literal["solid", "dashed", "dotted"]
-    dashOffset: int | float
-    cap: Literal["butt", "round", "square"]
-    join: Literal["bevel", "round", "miter"]
-    miterLimit: int | float
-    shadowBlur: int | float
-    shadowColor: str | list[str]
-    shadowOffsetX: int | float
-    shadowOffsetY: int | float
-    opacity: int | float
-
-class YAxisMinorSplitLineOpts(TypedDict, total=False):
+class XAxisMinorSplitLine(TypedDict, total=False):
     show: bool
-    lineStyle: YAxisMinorSplitLineLineStyleOpts
+    lineStyle: XAxisMinorSplitLineLineStyle
 
-class YAxisMinorTickLineStyleOpts(TypedDict, total=False):
+class XAxisMinorSplitLineLineStyle(TypedDict, total=False):
     color: str | list[str]
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -7914,13 +7300,27 @@ class YAxisMinorTickLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisMinorTickOpts(TypedDict, total=False):
+class XAxisMinorTick(TypedDict, total=False):
     show: bool
     splitNumber: int | float
     length: int | float
-    lineStyle: YAxisMinorTickLineStyleOpts
+    lineStyle: XAxisMinorTickLineStyle
 
-class YAxisNameTextStyleOpts(TypedDict, total=False):
+class XAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class XAxisNameTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -7952,10 +7352,10 @@ class YAxisNameTextStyleOpts(TypedDict, total=False):
     textShadowOffsetY: int | float
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
-    rich: YAxisNameTextStyleRichOpts
+    rich: XAxisNameTextStyleRich
     richInheritPlainLabel: bool
 
-class YAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
+class XAxisNameTextStyleRichStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -7986,11 +7386,76 @@ class YAxisNameTextStyleRichStyleOpts(TypedDict, total=False):
     textShadowOffsetX: int | float
     textShadowOffsetY: int | float
 
-class YAxisNameTruncateOpts(TypedDict, total=False):
+class XAxisNameTruncate(TypedDict, total=False):
     maxWidth: int | float
     ellipsis: str
 
-class YAxisOpts(TypedDict, total=False):
+class XAxisSplitArea(TypedDict, total=False):
+    interval: Callable[..., Any] | int | float
+    show: bool
+    areaStyle: XAxisSplitAreaAreaStyle
+
+class XAxisSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class XAxisSplitLine(TypedDict, total=False):
+    show: bool
+    showMinLine: bool
+    showMaxLine: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: XAxisSplitLineLineStyle
+
+class XAxisSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class XAxisTooltip(TypedDict, total=False):
+    show: bool
+    position: str
+    formatter: Callable[..., Any] | str
+    backgroundColor: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    padding: int | float
+    textStyle: XAxisTooltipTextStyle
+    extraCssText: str
+
+class XAxisTooltipTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+
+class YAxis(TypedDict, total=False):
     id: str
     show: bool
     gridIndex: int | float
@@ -8000,16 +7465,16 @@ class YAxisOpts(TypedDict, total=False):
     type: str
     name: str
     nameLocation: Literal["start", "middle", "end"]
-    nameTextStyle: YAxisNameTextStyleOpts
+    nameTextStyle: YAxisNameTextStyle
     nameGap: int | float
     nameRotate: int | float
-    nameTruncate: YAxisNameTruncateOpts
+    nameTruncate: YAxisNameTruncate
     nameMoveOverlap: bool
     inverse: bool
     boundaryGap: bool
     containShape: bool
-    min: str | int | float | Callable[..., Any]
-    max: str | int | float | Callable[..., Any]
+    min: Callable[..., Any] | str | int | float
+    max: Callable[..., Any] | str | int | float
     dataMin: int | float
     dataMax: int | float
     scale: bool
@@ -8024,31 +7489,571 @@ class YAxisOpts(TypedDict, total=False):
     jitter: int | float
     jitterOverlap: bool
     jitterMargin: int | float
-    breaks: list[YAxisBreaksItemOpts]
-    breakArea: YAxisBreakAreaOpts
-    breakLabelLayout: YAxisBreakLabelLayoutOpts
-    axisLine: YAxisAxisLineOpts
-    axisTick: YAxisAxisTickOpts
-    minorTick: YAxisMinorTickOpts
-    axisLabel: YAxisAxisLabelOpts
-    splitLine: YAxisSplitLineOpts
-    minorSplitLine: YAxisMinorSplitLineOpts
-    splitArea: YAxisSplitAreaOpts
-    data: list[YAxisDataItemOpts]
-    axisPointer: YAxisAxisPointerOpts
-    tooltip: YAxisTooltipOpts
+    breaks: list[YAxisBreaksItem]
+    breakArea: YAxisBreakArea
+    breakLabelLayout: YAxisBreakLabelLayout
+    axisLine: YAxisAxisLine
+    axisTick: YAxisAxisTick
+    minorTick: YAxisMinorTick
+    axisLabel: YAxisAxisLabel
+    splitLine: YAxisSplitLine
+    minorSplitLine: YAxisMinorSplitLine
+    splitArea: YAxisSplitArea
+    data: list[YAxisDataItem]
+    axisPointer: YAxisAxisPointer
+    tooltip: YAxisTooltip
     animation: bool
     animationThreshold: int | float
-    animationDuration: int | float | Callable[..., Any]
+    animationDuration: Callable[..., Any] | int | float
     animationEasing: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelay: int | float | Callable[..., Any]
-    animationDurationUpdate: int | float | Callable[..., Any]
+    animationDelay: Callable[..., Any] | int | float
+    animationDurationUpdate: Callable[..., Any] | int | float
     animationEasingUpdate: Literal["linear", "quadraticIn", "quadraticOut", "quadraticInOut", "cubicIn", "cubicOut", "cubicInOut", "quarticIn", "quarticOut", "quarticInOut", "quinticIn", "quinticOut", "quinticInOut", "sinusoidalIn", "sinusoidalOut", "sinusoidalInOut", "exponentialIn", "exponentialOut", "exponentialInOut", "circularIn", "circularOut", "circularInOut", "elasticIn", "elasticOut", "elasticInOut", "backIn", "backOut", "backInOut", "bounceIn", "bounceOut", "bounceInOut"]
-    animationDelayUpdate: int | float | Callable[..., Any]
+    animationDelayUpdate: Callable[..., Any] | int | float
     zlevel: int | float
     z: int | float
 
-class YAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
+class YAxis3D(TypedDict, total=False):
+    show: bool
+    name: str
+    grid3DIndex: int | float
+    nameTextStyle: YAxis3DNameTextStyle
+    nameGap: int | float
+    type: str
+    min: str | int | float
+    max: str | int | float
+    scale: bool
+    splitNumber: int | float
+    minInterval: int | float
+    interval: int | float
+    logBase: int | float
+    data: list[YAxis3DDataItem]
+    axisLine: YAxis3DAxisLine
+    axisLabel: YAxis3DAxisLabel
+    axisTick: YAxis3DAxisTick
+    splitLine: YAxis3DSplitLine
+    splitArea: YAxis3DSplitArea
+    axisPointer: YAxis3DAxisPointer
+
+class YAxis3DAxisLabel(TypedDict, total=False):
+    show: bool
+    margin: int | float
+    interval: Callable[..., Any] | int | float
+    formatter: Callable[..., Any] | str
+    textStyle: YAxis3DAxisLabelTextStyle
+
+class YAxis3DAxisLabelTextStyle(TypedDict, total=False):
+    color: Callable[..., Any] | str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class YAxis3DAxisLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: YAxis3DAxisLineLineStyle
+
+class YAxis3DAxisLineLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class YAxis3DAxisPointer(TypedDict, total=False):
+    show: bool
+    lineStyle: YAxis3DAxisPointerLineStyle
+    label: YAxis3DAxisPointerLabel
+
+class YAxis3DAxisPointerLabel(TypedDict, total=False):
+    show: bool
+    formatter: Callable[..., Any]
+    margin: int | float
+    textStyle: YAxis3DAxisPointerLabelTextStyle
+
+class YAxis3DAxisPointerLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class YAxis3DAxisPointerLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class YAxis3DAxisTick(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    length: int | float
+    lineStyle: YAxis3DAxisTickLineStyle
+
+class YAxis3DAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    opacity: int | float
+    width: int | float
+
+class YAxis3DDataItem(TypedDict, total=False):
+    value: str
+    textStyle: YAxis3DDataItemTextStyle
+
+class YAxis3DDataItemTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class YAxis3DNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class YAxis3DSplitArea(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    areaStyle: YAxis3DSplitAreaAreaStyle
+
+class YAxis3DSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+
+class YAxis3DSplitLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: YAxis3DSplitLineLineStyle
+
+class YAxis3DSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class YAxisAxisLabel(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    rotate: int | float
+    margin: int | float
+    formatter: Callable[..., Any] | str
+    showMinLabel: bool
+    showMaxLabel: bool
+    verticalAlignMinLabel: str
+    verticalAlignMaxLabel: str
+    hideOverlap: bool
+    customValues: Any
+    color: Callable[..., Any] | str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: YAxisAxisLabelRich
+    richInheritPlainLabel: bool
+
+class YAxisAxisLabelRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class YAxisAxisLine(TypedDict, total=False):
+    show: bool
+    onZero: Literal["auto", "true", "false"]
+    onZeroAxisIndex: int | float
+    symbol: str
+    symbolSize: Any
+    symbolOffset: int | float
+    lineStyle: YAxisAxisLineLineStyle
+
+class YAxisAxisLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisAxisPointer(TypedDict, total=False):
+    show: bool
+    type: Literal["line", "shadow", "none"]
+    snap: bool
+    z: int | float
+    label: YAxisAxisPointerLabel
+    lineStyle: YAxisAxisPointerLineStyle
+    shadowStyle: YAxisAxisPointerShadowStyle
+    triggerEmphasis: bool
+    triggerTooltip: bool
+    value: int | float
+    status: Literal["show", "hide"]
+    handle: YAxisAxisPointerHandle
+
+class YAxisAxisPointerHandle(TypedDict, total=False):
+    show: bool
+    icon: Any
+    size: int | float
+    margin: int | float
+    color: str
+    throttle: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class YAxisAxisPointerLabel(TypedDict, total=False):
+    show: bool
+    precision: str | int | float
+    formatter: Callable[..., Any] | str
+    margin: int | float
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    lineHeight: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    padding: str
+    backgroundColor: str
+    borderColor: str
+    borderWidth: str
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+
+class YAxisAxisPointerLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisAxisPointerShadowStyle(TypedDict, total=False):
+    color: str | list[str]
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisAxisTick(TypedDict, total=False):
+    show: bool
+    alignWithLabel: bool
+    interval: Callable[..., Any] | int | float
+    inside: bool
+    length: int | float
+    lineStyle: YAxisAxisTickLineStyle
+    customValues: Any
+
+class YAxisAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisBreakArea(TypedDict, total=False):
+    show: bool
+    itemStyle: YAxisBreakAreaItemStyle
+    zigzagAmplitude: int | float
+    zigzagMinSpan: int | float
+    zigzagMaxSpan: int | float
+    zigzagZ: int | float
+    expandOnClick: bool
+
+class YAxisBreakAreaItemStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderCap: Literal["butt", "round", "square"]
+    borderJoin: Literal["bevel", "round", "miter"]
+    borderMiterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisBreakLabelLayout(TypedDict, total=False):
+    moveOverlap: bool | str
+
+class YAxisBreaksItem(TypedDict, total=False):
+    start: str | int | float
+    end: str | int | float
+    gap: str | int | float
+    isExpanded: bool
+
+class YAxisDataItem(TypedDict, total=False):
+    value: str
+    textStyle: YAxisDataItemTextStyle
+
+class YAxisDataItemTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: YAxisDataItemTextStyleRich
+    richInheritPlainLabel: bool
+
+class YAxisDataItemTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class YAxisMinorSplitLine(TypedDict, total=False):
+    show: bool
+    lineStyle: YAxisMinorSplitLineLineStyle
+
+class YAxisMinorSplitLineLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisMinorTick(TypedDict, total=False):
+    show: bool
+    splitNumber: int | float
+    length: int | float
+    lineStyle: YAxisMinorTickLineStyle
+
+class YAxisMinorTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    width: int | float
+    type: Literal["solid", "dashed", "dotted"]
+    dashOffset: int | float
+    cap: Literal["butt", "round", "square"]
+    join: Literal["bevel", "round", "miter"]
+    miterLimit: int | float
+    shadowBlur: int | float
+    shadowColor: str | list[str]
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    opacity: int | float
+
+class YAxisNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: int | float
+    height: int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+    overflow: Literal["truncate", "break", "breakAll"]
+    ellipsis: str
+    rich: YAxisNameTextStyleRich
+    richInheritPlainLabel: bool
+
+class YAxisNameTextStyleRichStyle(TypedDict, total=False):
+    color: str | list[str]
+    fontStyle: Literal["normal", "italic", "oblique"]
+    fontWeight: Literal["normal", "bold", "bolder", "lighter"]
+    fontFamily: str
+    fontSize: int | float
+    align: Literal["left", "center", "right"]
+    verticalAlign: Literal["top", "middle", "bottom"]
+    lineHeight: int | float
+    backgroundColor: str | dict[str, Any]
+    borderColor: str | list[str]
+    borderWidth: int | float
+    borderType: Literal["solid", "dashed", "dotted"]
+    borderDashOffset: int | float
+    borderRadius: int | float
+    padding: int | float
+    shadowColor: str | list[str]
+    shadowBlur: int | float
+    shadowOffsetX: int | float
+    shadowOffsetY: int | float
+    width: str | int | float
+    height: str | int | float
+    textBorderColor: str | list[str]
+    textBorderWidth: int | float
+    textBorderType: Literal["solid", "dashed", "dotted"]
+    textBorderDashOffset: int | float
+    textShadowColor: str | list[str]
+    textShadowBlur: int | float
+    textShadowOffsetX: int | float
+    textShadowOffsetY: int | float
+
+class YAxisNameTruncate(TypedDict, total=False):
+    maxWidth: int | float
+    ellipsis: str
+
+class YAxisSplitArea(TypedDict, total=False):
+    interval: Callable[..., Any] | int | float
+    show: bool
+    areaStyle: YAxisSplitAreaAreaStyle
+
+class YAxisSplitAreaAreaStyle(TypedDict, total=False):
     color: Any
     shadowBlur: int | float
     shadowColor: str | list[str]
@@ -8056,12 +8061,14 @@ class YAxisSplitAreaAreaStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisSplitAreaOpts(TypedDict, total=False):
-    interval: int | float | Callable[..., Any]
+class YAxisSplitLine(TypedDict, total=False):
     show: bool
-    areaStyle: YAxisSplitAreaAreaStyleOpts
+    showMinLine: bool
+    showMaxLine: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: YAxisSplitLineLineStyle
 
-class YAxisSplitLineLineStyleOpts(TypedDict, total=False):
+class YAxisSplitLineLineStyle(TypedDict, total=False):
     color: str
     width: int | float
     type: Literal["solid", "dashed", "dotted"]
@@ -8075,25 +8082,18 @@ class YAxisSplitLineLineStyleOpts(TypedDict, total=False):
     shadowOffsetY: int | float
     opacity: int | float
 
-class YAxisSplitLineOpts(TypedDict, total=False):
-    show: bool
-    showMinLine: bool
-    showMaxLine: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: YAxisSplitLineLineStyleOpts
-
-class YAxisTooltipOpts(TypedDict, total=False):
+class YAxisTooltip(TypedDict, total=False):
     show: bool
     position: str
-    formatter: str | Callable[..., Any]
+    formatter: Callable[..., Any] | str
     backgroundColor: str | list[str]
     borderColor: str | list[str]
     borderWidth: int | float
     padding: int | float
-    textStyle: YAxisTooltipTextStyleOpts
+    textStyle: YAxisTooltipTextStyle
     extraCssText: str
 
-class YAxisTooltipTextStyleOpts(TypedDict, total=False):
+class YAxisTooltipTextStyle(TypedDict, total=False):
     color: str | list[str]
     fontStyle: Literal["normal", "italic", "oblique"]
     fontWeight: Literal["normal", "bold", "bolder", "lighter"]
@@ -8113,91 +8113,11 @@ class YAxisTooltipTextStyleOpts(TypedDict, total=False):
     overflow: Literal["truncate", "break", "breakAll"]
     ellipsis: str
 
-class ZAxis3DAxisLabelOpts(TypedDict, total=False):
-    show: bool
-    margin: int | float
-    interval: int | float | Callable[..., Any]
-    formatter: str | Callable[..., Any]
-    textStyle: ZAxis3DAxisLabelTextStyleOpts
-
-class ZAxis3DAxisLabelTextStyleOpts(TypedDict, total=False):
-    color: str | list[str] | Callable[..., Any]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class ZAxis3DAxisLineLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class ZAxis3DAxisLineOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: ZAxis3DAxisLineLineStyleOpts
-
-class ZAxis3DAxisPointerLabelOpts(TypedDict, total=False):
-    show: bool
-    formatter: Callable[..., Any]
-    margin: int | float
-    textStyle: ZAxis3DAxisPointerLabelTextStyleOpts
-
-class ZAxis3DAxisPointerLabelTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class ZAxis3DAxisPointerLineStyleOpts(TypedDict, total=False):
-    color: str
-    opacity: int | float
-    width: int | float
-
-class ZAxis3DAxisPointerOpts(TypedDict, total=False):
-    show: bool
-    lineStyle: ZAxis3DAxisPointerLineStyleOpts
-    label: ZAxis3DAxisPointerLabelOpts
-
-class ZAxis3DAxisTickLineStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    opacity: int | float
-    width: int | float
-
-class ZAxis3DAxisTickOpts(TypedDict, total=False):
-    show: bool
-    interval: int | float | Callable[..., Any]
-    length: int | float
-    lineStyle: ZAxis3DAxisTickLineStyleOpts
-
-class ZAxis3DDataItemOpts(TypedDict, total=False):
-    value: str
-    textStyle: ZAxis3DDataItemTextStyleOpts
-
-class ZAxis3DDataItemTextStyleOpts(TypedDict, total=False):
-    color: str
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class ZAxis3DNameTextStyleOpts(TypedDict, total=False):
-    color: str | list[str]
-    borderWidth: int | float
-    borderColor: str
-    fontFamily: str
-    fontSize: int | float
-    fontWeight: str
-
-class ZAxis3DOpts(TypedDict, total=False):
+class ZAxis3D(TypedDict, total=False):
     show: bool
     name: str
     grid3DIndex: int | float
-    nameTextStyle: ZAxis3DNameTextStyleOpts
+    nameTextStyle: ZAxis3DNameTextStyle
     nameGap: int | float
     type: str
     min: str | int | float
@@ -8207,80 +8127,160 @@ class ZAxis3DOpts(TypedDict, total=False):
     minInterval: int | float
     interval: int | float
     logBase: int | float
-    data: list[ZAxis3DDataItemOpts]
-    axisLine: ZAxis3DAxisLineOpts
-    axisLabel: ZAxis3DAxisLabelOpts
-    axisTick: ZAxis3DAxisTickOpts
-    splitLine: ZAxis3DSplitLineOpts
-    splitArea: ZAxis3DSplitAreaOpts
-    axisPointer: ZAxis3DAxisPointerOpts
+    data: list[ZAxis3DDataItem]
+    axisLine: ZAxis3DAxisLine
+    axisLabel: ZAxis3DAxisLabel
+    axisTick: ZAxis3DAxisTick
+    splitLine: ZAxis3DSplitLine
+    splitArea: ZAxis3DSplitArea
+    axisPointer: ZAxis3DAxisPointer
 
-class ZAxis3DSplitAreaAreaStyleOpts(TypedDict, total=False):
-    color: Any
-
-class ZAxis3DSplitAreaOpts(TypedDict, total=False):
+class ZAxis3DAxisLabel(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    areaStyle: ZAxis3DSplitAreaAreaStyleOpts
+    margin: int | float
+    interval: Callable[..., Any] | int | float
+    formatter: Callable[..., Any] | str
+    textStyle: ZAxis3DAxisLabelTextStyle
 
-class ZAxis3DSplitLineLineStyleOpts(TypedDict, total=False):
+class ZAxis3DAxisLabelTextStyle(TypedDict, total=False):
+    color: Callable[..., Any] | str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class ZAxis3DAxisLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: ZAxis3DAxisLineLineStyle
+
+class ZAxis3DAxisLineLineStyle(TypedDict, total=False):
     color: str
     opacity: int | float
     width: int | float
 
-class ZAxis3DSplitLineOpts(TypedDict, total=False):
+class ZAxis3DAxisPointer(TypedDict, total=False):
     show: bool
-    interval: int | float | Callable[..., Any]
-    lineStyle: ZAxis3DSplitLineLineStyleOpts
+    lineStyle: ZAxis3DAxisPointerLineStyle
+    label: ZAxis3DAxisPointerLabel
 
-AngleAxisAxisLabelRichOpts = dict[str, AngleAxisAxisLabelRichStyleOpts]
-AngleAxisDataItemTextStyleRichOpts = dict[str, AngleAxisDataItemTextStyleRichStyleOpts]
-CalendarDayLabelRichOpts = dict[str, CalendarDayLabelRichStyleOpts]
-CalendarMonthLabelRichOpts = dict[str, CalendarMonthLabelRichStyleOpts]
-CalendarYearLabelRichOpts = dict[str, CalendarYearLabelRichStyleOpts]
-GeoBlurLabelRichOpts = dict[str, GeoBlurLabelRichStyleOpts]
-GeoEmphasisLabelRichOpts = dict[str, GeoEmphasisLabelRichStyleOpts]
-GeoLabelRichOpts = dict[str, GeoLabelRichStyleOpts]
-GeoRegionsItemBlurLabelRichOpts = dict[str, GeoRegionsItemBlurLabelRichStyleOpts]
-GeoRegionsItemEmphasisLabelRichOpts = dict[str, GeoRegionsItemEmphasisLabelRichStyleOpts]
-GeoRegionsItemLabelRichOpts = dict[str, GeoRegionsItemLabelRichStyleOpts]
-GeoRegionsItemSelectLabelRichOpts = dict[str, GeoRegionsItemSelectLabelRichStyleOpts]
-GeoSelectLabelRichOpts = dict[str, GeoSelectLabelRichStyleOpts]
-LegendEmphasisSelectorLabelRichOpts = dict[str, LegendEmphasisSelectorLabelRichStyleOpts]
-LegendSelectorLabelRichOpts = dict[str, LegendSelectorLabelRichStyleOpts]
-LegendTextStyleRichOpts = dict[str, LegendTextStyleRichStyleOpts]
-MatrixBodyLabelRichOpts = dict[str, MatrixBodyLabelRichStyleOpts]
-MatrixCornerLabelRichOpts = dict[str, MatrixCornerLabelRichStyleOpts]
-MatrixXLabelRichOpts = dict[str, MatrixXLabelRichStyleOpts]
-MatrixYLabelRichOpts = dict[str, MatrixYLabelRichStyleOpts]
-ParallelAxisAxisLabelRichOpts = dict[str, ParallelAxisAxisLabelRichStyleOpts]
-ParallelAxisDataItemTextStyleRichOpts = dict[str, ParallelAxisDataItemTextStyleRichStyleOpts]
-ParallelAxisNameTextStyleRichOpts = dict[str, ParallelAxisNameTextStyleRichStyleOpts]
-ParallelParallelAxisDefaultAxisLabelRichOpts = dict[str, ParallelParallelAxisDefaultAxisLabelRichStyleOpts]
-ParallelParallelAxisDefaultDataItemTextStyleRichOpts = dict[str, ParallelParallelAxisDefaultDataItemTextStyleRichStyleOpts]
-ParallelParallelAxisDefaultNameTextStyleRichOpts = dict[str, ParallelParallelAxisDefaultNameTextStyleRichStyleOpts]
-RadarAxisLabelRichOpts = dict[str, RadarAxisLabelRichStyleOpts]
-RadarAxisNameRichOpts = dict[str, RadarAxisNameRichStyleOpts]
-RadiusAxisAxisLabelRichOpts = dict[str, RadiusAxisAxisLabelRichStyleOpts]
-RadiusAxisDataItemTextStyleRichOpts = dict[str, RadiusAxisDataItemTextStyleRichStyleOpts]
-RadiusAxisNameTextStyleRichOpts = dict[str, RadiusAxisNameTextStyleRichStyleOpts]
-SingleAxisAxisLabelRichOpts = dict[str, SingleAxisAxisLabelRichStyleOpts]
-SingleAxisDataItemTextStyleRichOpts = dict[str, SingleAxisDataItemTextStyleRichStyleOpts]
-SingleAxisNameTextStyleRichOpts = dict[str, SingleAxisNameTextStyleRichStyleOpts]
-TimelineEmphasisLabelRichOpts = dict[str, TimelineEmphasisLabelRichStyleOpts]
-TimelineLabelRichOpts = dict[str, TimelineLabelRichStyleOpts]
-TimelineProgressLabelRichOpts = dict[str, TimelineProgressLabelRichStyleOpts]
-TitleSubtextStyleRichOpts = dict[str, TitleSubtextStyleRichStyleOpts]
-TitleTextStyleRichOpts = dict[str, TitleTextStyleRichStyleOpts]
-XAxisAxisLabelRichOpts = dict[str, XAxisAxisLabelRichStyleOpts]
-XAxisDataItemTextStyleRichOpts = dict[str, XAxisDataItemTextStyleRichStyleOpts]
-XAxisNameTextStyleRichOpts = dict[str, XAxisNameTextStyleRichStyleOpts]
-YAxisAxisLabelRichOpts = dict[str, YAxisAxisLabelRichStyleOpts]
-YAxisDataItemTextStyleRichOpts = dict[str, YAxisDataItemTextStyleRichStyleOpts]
-YAxisNameTextStyleRichOpts = dict[str, YAxisNameTextStyleRichStyleOpts]
+class ZAxis3DAxisPointerLabel(TypedDict, total=False):
+    show: bool
+    formatter: Callable[..., Any]
+    margin: int | float
+    textStyle: ZAxis3DAxisPointerLabelTextStyle
+
+class ZAxis3DAxisPointerLabelTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class ZAxis3DAxisPointerLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+class ZAxis3DAxisTick(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    length: int | float
+    lineStyle: ZAxis3DAxisTickLineStyle
+
+class ZAxis3DAxisTickLineStyle(TypedDict, total=False):
+    color: str | list[str]
+    opacity: int | float
+    width: int | float
+
+class ZAxis3DDataItem(TypedDict, total=False):
+    value: str
+    textStyle: ZAxis3DDataItemTextStyle
+
+class ZAxis3DDataItemTextStyle(TypedDict, total=False):
+    color: str
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class ZAxis3DNameTextStyle(TypedDict, total=False):
+    color: str | list[str]
+    borderWidth: int | float
+    borderColor: str
+    fontFamily: str
+    fontSize: int | float
+    fontWeight: str
+
+class ZAxis3DSplitArea(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    areaStyle: ZAxis3DSplitAreaAreaStyle
+
+class ZAxis3DSplitAreaAreaStyle(TypedDict, total=False):
+    color: Any
+
+class ZAxis3DSplitLine(TypedDict, total=False):
+    show: bool
+    interval: Callable[..., Any] | int | float
+    lineStyle: ZAxis3DSplitLineLineStyle
+
+class ZAxis3DSplitLineLineStyle(TypedDict, total=False):
+    color: str
+    opacity: int | float
+    width: int | float
+
+AngleAxisAxisLabelRich = dict[str, AngleAxisAxisLabelRichStyle]
+AngleAxisDataItemTextStyleRich = dict[str, AngleAxisDataItemTextStyleRichStyle]
+CalendarDayLabelRich = dict[str, CalendarDayLabelRichStyle]
+CalendarMonthLabelRich = dict[str, CalendarMonthLabelRichStyle]
+CalendarYearLabelRich = dict[str, CalendarYearLabelRichStyle]
+GeoBlurLabelRich = dict[str, GeoBlurLabelRichStyle]
+GeoEmphasisLabelRich = dict[str, GeoEmphasisLabelRichStyle]
+GeoLabelRich = dict[str, GeoLabelRichStyle]
+GeoRegionsItemBlurLabelRich = dict[str, GeoRegionsItemBlurLabelRichStyle]
+GeoRegionsItemEmphasisLabelRich = dict[str, GeoRegionsItemEmphasisLabelRichStyle]
+GeoRegionsItemLabelRich = dict[str, GeoRegionsItemLabelRichStyle]
+GeoRegionsItemSelectLabelRich = dict[str, GeoRegionsItemSelectLabelRichStyle]
+GeoSelectLabelRich = dict[str, GeoSelectLabelRichStyle]
+LegendEmphasisSelectorLabelRich = dict[str, LegendEmphasisSelectorLabelRichStyle]
+LegendSelectorLabelRich = dict[str, LegendSelectorLabelRichStyle]
+LegendTextStyleRich = dict[str, LegendTextStyleRichStyle]
+MatrixBodyLabelRich = dict[str, MatrixBodyLabelRichStyle]
+MatrixCornerLabelRich = dict[str, MatrixCornerLabelRichStyle]
+MatrixXLabelRich = dict[str, MatrixXLabelRichStyle]
+MatrixYLabelRich = dict[str, MatrixYLabelRichStyle]
+ParallelAxisAxisLabelRich = dict[str, ParallelAxisAxisLabelRichStyle]
+ParallelAxisDataItemTextStyleRich = dict[str, ParallelAxisDataItemTextStyleRichStyle]
+ParallelAxisNameTextStyleRich = dict[str, ParallelAxisNameTextStyleRichStyle]
+ParallelParallelAxisDefaultAxisLabelRich = dict[str, ParallelParallelAxisDefaultAxisLabelRichStyle]
+ParallelParallelAxisDefaultDataItemTextStyleRich = dict[str, ParallelParallelAxisDefaultDataItemTextStyleRichStyle]
+ParallelParallelAxisDefaultNameTextStyleRich = dict[str, ParallelParallelAxisDefaultNameTextStyleRichStyle]
+RadarAxisLabelRich = dict[str, RadarAxisLabelRichStyle]
+RadarAxisNameRich = dict[str, RadarAxisNameRichStyle]
+RadiusAxisAxisLabelRich = dict[str, RadiusAxisAxisLabelRichStyle]
+RadiusAxisDataItemTextStyleRich = dict[str, RadiusAxisDataItemTextStyleRichStyle]
+RadiusAxisNameTextStyleRich = dict[str, RadiusAxisNameTextStyleRichStyle]
+SingleAxisAxisLabelRich = dict[str, SingleAxisAxisLabelRichStyle]
+SingleAxisDataItemTextStyleRich = dict[str, SingleAxisDataItemTextStyleRichStyle]
+SingleAxisNameTextStyleRich = dict[str, SingleAxisNameTextStyleRichStyle]
+TimelineEmphasisLabelRich = dict[str, TimelineEmphasisLabelRichStyle]
+TimelineLabelRich = dict[str, TimelineLabelRichStyle]
+TimelineProgressLabelRich = dict[str, TimelineProgressLabelRichStyle]
+TitleSubtextStyleRich = dict[str, TitleSubtextStyleRichStyle]
+TitleTextStyleRich = dict[str, TitleTextStyleRichStyle]
+XAxisAxisLabelRich = dict[str, XAxisAxisLabelRichStyle]
+XAxisDataItemTextStyleRich = dict[str, XAxisDataItemTextStyleRichStyle]
+XAxisNameTextStyleRich = dict[str, XAxisNameTextStyleRichStyle]
+YAxisAxisLabelRich = dict[str, YAxisAxisLabelRichStyle]
+YAxisDataItemTextStyleRich = dict[str, YAxisDataItemTextStyleRichStyle]
+YAxisNameTextStyleRich = dict[str, YAxisNameTextStyleRichStyle]
 
 class Option(TypedDict, total=False):
-    angleAxis: AngleAxisOpts
+    angleAxis: AngleAxis
     animation: dict[str, Any]
     animationDelay: dict[str, Any]
     animationDelayUpdate: dict[str, Any]
@@ -8289,47 +8289,47 @@ class Option(TypedDict, total=False):
     animationEasing: dict[str, Any]
     animationEasingUpdate: dict[str, Any]
     animationThreshold: dict[str, Any]
-    aria: AriaOpts
-    axisPointer: AxisPointerOpts
+    aria: Aria
+    axisPointer: AxisPointer
     backgroundColor: dict[str, Any]
     blendMode: dict[str, Any]
-    brush: BrushOpts
-    calendar: CalendarOpts
+    brush: Brush
+    calendar: Calendar
     color: dict[str, Any]
     darkMode: dict[str, Any]
     dataZoom: dict[str, Any]
-    dataset: DatasetOpts
-    geo3D: Geo3DOpts
-    geo: GeoOpts
-    globe: GlobeOpts
-    graphic: GraphicOpts
-    grid3D: Grid3DOpts
-    grid: GridOpts
+    dataset: Dataset
+    geo3D: Geo3D
+    geo: Geo
+    globe: Globe
+    graphic: Graphic
+    grid3D: Grid3D
+    grid: Grid
     hoverLayerThreshold: dict[str, Any]
-    legend: LegendOpts
-    mapbox3D: Mapbox3DOpts
-    matrix: MatrixOpts
+    legend: Legend
+    mapbox3D: Mapbox3D
+    matrix: Matrix
     media: dict[str, Any]
     options: dict[str, Any]
-    parallel: ParallelOpts
-    parallelAxis: ParallelAxisOpts
-    polar: PolarOpts
-    radar: RadarOpts
-    radiusAxis: RadiusAxisOpts
+    parallel: Parallel
+    parallelAxis: ParallelAxis
+    polar: Polar
+    radar: Radar
+    radiusAxis: RadiusAxis
     richInheritPlainLabel: dict[str, Any]
     series: dict[str, Any]
-    singleAxis: SingleAxisOpts
-    stateAnimation: StateAnimationOpts
-    textStyle: TextStyleOpts
-    thumbnail: ThumbnailOpts
-    timeline: TimelineOpts
-    title: TitleOpts
-    toolbox: ToolboxOpts
-    tooltip: TooltipOpts
+    singleAxis: SingleAxis
+    stateAnimation: StateAnimation
+    textStyle: TextStyle
+    thumbnail: Thumbnail
+    timeline: Timeline
+    title: Title
+    toolbox: Toolbox
+    tooltip: Tooltip
     useUTC: dict[str, Any]
     visualMap: dict[str, Any]
-    xAxis3D: XAxis3DOpts
-    xAxis: XAxisOpts
-    yAxis3D: YAxis3DOpts
-    yAxis: YAxisOpts
-    zAxis3D: ZAxis3DOpts
+    xAxis3D: XAxis3D
+    xAxis: XAxis
+    yAxis3D: YAxis3D
+    yAxis: YAxis
+    zAxis3D: ZAxis3D
