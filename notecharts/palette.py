@@ -568,8 +568,8 @@ def Palette(
     palette: Union[PaletteName, str, List[str]],
     n: int,
     format: ColorFormat = "hex",
-    value: Optional[float] = None,
-    saturation: Optional[float] = None,
+    value: Optional[Union[float, str]] = None,
+    saturation: Optional[Union[float, str]] = None,
     alpha: float = 1.0,
     shuffle: Optional[Union[bool, int]] = None,
 ) -> List[str]:
@@ -606,15 +606,17 @@ def Palette(
         - 'rgba': RGBA format rgba(r, g, b, a) with r,g,b in 0-255, a in 0-1
         - 'hsv': HSV format hsv(h, s, v) with h in 0-360, s,v in 0-100
 
-    value : float, optional
+    value : float or str, optional
         Fix the brightness (value) component in HSV space to a constant.
-        Must be in [0, 1]. If None, uses the original palette brightness.
-        This is useful for creating uniform brightness across colors.
+        If a number, must be in [0, 1]. If a string like '+0.5' or '-0.3',
+        offsets from the original brightness (clamped to [0, 1]). If None,
+        uses the original palette brightness.
 
-    saturation : float, optional
+    saturation : float or str, optional
         Fix the saturation component in HSV space to a constant.
-        Must be in [0, 1]. If None, uses the original palette saturation.
-        This is useful for creating uniform saturation across colors.
+        If a number, must be in [0, 1]. If a string like '+0.5' or '-0.3',
+        offsets from the original saturation (clamped to [0, 1]). If None,
+        uses the original palette saturation.
 
     alpha : float, optional
         Alpha transparency value in [0, 1]. Defaults to 1.0 (opaque).
@@ -632,8 +634,8 @@ def Palette(
         If palette is not a string or list, or if n is not an integer.
     ValueError
         If n is not positive, if palette name is unknown, if color strings
-        are invalid, if value/saturation/alpha are out of range, or if
-        format is invalid.
+        are invalid, if value/saturation/alpha are out of range, if string
+        offsets for value/saturation are invalid, or if format is invalid.
 
     """
     # ========================================================================
@@ -655,17 +657,51 @@ def Palette(
 
     # Validate value
     if value is not None:
-        if not isinstance(value, (int, float)):
-            raise TypeError(f"Parameter 'value' must be a float in [0, 1], got {type(value).__name__}.")
-        if not (0 <= value <= 1):
-            raise ValueError(f"Parameter 'value' must be in [0, 1], got {value}.")
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped.startswith(('+', '-')):
+                raise ValueError(
+                    f"Parameter 'value' as string must start with '+' or '-', got {value!r}."
+                )
+            try:
+                float(stripped)
+            except ValueError:
+                raise ValueError(
+                    f"Parameter 'value' as string must be a valid numeric offset like '+0.5', "
+                    f"got {value!r}."
+                )
+        elif isinstance(value, (int, float)):
+            if not (0 <= value <= 1):
+                raise ValueError(f"Parameter 'value' must be in [0, 1], got {value}.")
+        else:
+            raise TypeError(
+                f"Parameter 'value' must be a number, string offset, or None, "
+                f"got {type(value).__name__}."
+            )
 
     # Validate saturation
     if saturation is not None:
-        if not isinstance(saturation, (int, float)):
-            raise TypeError(f"Parameter 'saturation' must be a float in [0, 1], got {type(saturation).__name__}.")
-        if not (0 <= saturation <= 1):
-            raise ValueError(f"Parameter 'saturation' must be in [0, 1], got {saturation}.")
+        if isinstance(saturation, str):
+            stripped = saturation.strip()
+            if not stripped.startswith(('+', '-')):
+                raise ValueError(
+                    f"Parameter 'saturation' as string must start with '+' or '-', got {saturation!r}."
+                )
+            try:
+                float(stripped)
+            except ValueError:
+                raise ValueError(
+                    f"Parameter 'saturation' as string must be a valid numeric offset like '+0.5', "
+                    f"got {saturation!r}."
+                )
+        elif isinstance(saturation, (int, float)):
+            if not (0 <= saturation <= 1):
+                raise ValueError(f"Parameter 'saturation' must be in [0, 1], got {saturation}.")
+        else:
+            raise TypeError(
+                f"Parameter 'saturation' must be a number, string offset, or None, "
+                f"got {type(saturation).__name__}."
+            )
 
     # Validate alpha
     if not isinstance(alpha, (int, float)):
@@ -738,9 +774,15 @@ def Palette(
 
             # Apply fixed value/saturation
             if saturation is not None:
-                s = saturation
+                if isinstance(saturation, str):
+                    s = max(0.0, min(1.0, s + float(saturation.strip())))
+                else:
+                    s = saturation
             if value is not None:
-                v = value
+                if isinstance(value, str):
+                    v = max(0.0, min(1.0, v + float(value.strip())))
+                else:
+                    v = value
 
             rgb = _hsv_to_rgb((h, s, v))
             transformed.append(rgb)
