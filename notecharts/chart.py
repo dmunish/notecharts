@@ -5,6 +5,7 @@ import base64
 import zlib
 from pathlib import Path
 from IPython.display import display, HTML
+from option import Option
 
 # Load the JavaScript template from the bundled file
 _JS_TEMPLATE_FILE = Path(__file__).parent / "chart.js"
@@ -70,7 +71,7 @@ class Chart:
 
     def __init__(
         self,
-        options: dict,
+        options: Option,
         width: str = "99%",
         height: str = "500px",
         renderer: str = "canvas",
