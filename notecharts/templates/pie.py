@@ -85,8 +85,8 @@ class Pie(Chart):
 
         # Build structural offset layers securely from notecharts Palettes
         if palette_name is not None:
-            c1_kwargs = {"value": "+0.3", **palette_kwargs} if palette_kwargs else {"value": "+0.3"}
-            c2_kwargs = {"value": "-0.3", "saturation": "-0.1", **palette_kwargs} if palette_kwargs else {"value": "-0.2", "saturation": "-0.1"}
+            c1_kwargs = {"value": "+0.3", **palette_kwargs} if palette_kwargs else {"value": "+0.7"}
+            c2_kwargs = {"value": "-0.3", "saturation": "-0.1", **palette_kwargs} if palette_kwargs else {"value": "-0.1", "saturation": "-0.1"}
             glow_kwargs = {"value": "-0.2", "alpha": 0.8, **palette_kwargs} if palette_kwargs else {"value": "-0.2", "alpha": 0.8}
             
             color_1 = Palette(palette_name, n_slices, **c1_kwargs)
