@@ -1,7 +1,8 @@
 from typing import Union, List, Dict, Any
 from ..chart import Chart
 from ..palette import PaletteName, Palette
-from .utils import PaletteOptions, _extract_column, _extract_columns_dict, _deep_update
+from .utils import PaletteOptions, _extract_column, _deep_update
+from ..option import Option
 
 class Pie(Chart):
     """Pre-built modern Pie Chart with neon glows and solid legend indicators.
@@ -45,7 +46,7 @@ class Pie(Chart):
         height: str = "500px",
         renderer: str = "canvas",
         theme: str = "light",
-        options: dict = None,
+        options: Option = None,
         dataframe: Any = None,
         font: str = None,
         **kwargs
