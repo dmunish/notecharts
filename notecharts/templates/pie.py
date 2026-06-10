@@ -84,9 +84,9 @@ class Pie(Chart):
 
         # Build structural offset layers securely from notecharts Palettes
         if palette_name is not None:
-            c1_kwargs = _deep_update({"value": "+0.3"}, palette_kwargs.copy()) if options else {"value": "+0.3"}
-            c2_kwargs = _deep_update({"value": "-0.3", "saturation": "-0.1"}, palette_kwargs.copy()) if options else {"value": "-0.3", "saturation": "-0.1"}
-            glow_kwargs = _deep_update({"value": "-0.2", "alpha": 0.8}, palette_kwargs.copy()) if options else {"value": "-0.2", "alpha": 0.8}
+            c1_kwargs = {"value": "+0.3", **palette_kwargs} if palette_kwargs else {"value": "+0.3"}
+            c2_kwargs = {"value": "-0.3", "saturation": "-0.1", **palette_kwargs} if palette_kwargs else {"value": "-0.2", "saturation": "-0.1"}
+            glow_kwargs = {"value": "-0.2", "alpha": 0.8, **palette_kwargs} if palette_kwargs else {"value": "-0.2", "alpha": 0.8}
             
             color_1 = Palette(palette_name, n_slices, **c1_kwargs)
             color_2 = Palette(palette_name, n_slices, **c2_kwargs)
@@ -97,13 +97,11 @@ class Pie(Chart):
         legend_data = []
 
         for i, item in enumerate(raw_pairs):
-            pie_data.append({
+            pie_opts = {
                 "name": item["name"],
                 "value": item["value"],
                 "itemStyle": {
-                    "borderRadius": 8,
-                    "shadowBlur": 25,
-                    "shadowColor": glow_col[i % len(glow_col)],
+                    "borderRadius": 10,
                     "color": {
                         "type": "linear",
                         "x": 0,
@@ -115,8 +113,19 @@ class Pie(Chart):
                             {"offset": 1, "color": color_2[i % len(color_2)]}
                         ]
                     }
+                },
+                "labelLine": {
+                    "lineStyle": {
+                        "width": 2,
+                        "color": color_1[i % len(color_1)]
+                    }
                 }
-            })
+            }
+            
+            if theme == "dark":
+                pie_opts["itemStyle"].update({"shadowBlur": 25, "shadowColor": glow_col[i % len(glow_col)]})
+
+            pie_data.append(pie_opts)
             
             legend_data.append({
                 "name": item["name"],
@@ -161,7 +170,6 @@ class Pie(Chart):
                     "name": title if title else "Data Proportion",
                     "type": "pie",
                     "radius": "60%",
-                    # "center": ["50%", "45%"],
                     "data": pie_data,
                     "animationDuration": 1000,
                     "animationEasing": "cubicOut",
@@ -177,6 +185,9 @@ class Pie(Chart):
                 "top": 24,
                 "textStyle": {"fontSize": 22, "fontWeight": 600},
             }
+
+        if title is None:
+            base_options["series"][0]["center"] = ["50%", "45%"]
 
         if font is not None:
             base_options["textStyle"] = {"fontFamily": font}
