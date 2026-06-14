@@ -64,7 +64,7 @@ def _resolve_palette(palette, n):
 
 
 def _apply_styling(opts, title=None, colors=None, font=None, options=None):
-    """Apply common styling (title, colors, font) and deep-merge user options."""
+    """Apply common styling, deep-merge user options, and forward series-level keys."""
     if title is not None:
         opts["title"] = {
             "text": title,
@@ -77,4 +77,13 @@ def _apply_styling(opts, title=None, colors=None, font=None, options=None):
     if font is not None:
         opts["textStyle"] = {"fontFamily": font}
     if options:
+        known_top = set(opts.keys()) - {"series"}
         _deep_update(opts, options)
+        # Forward series-level options (labelLine, label, emphasis, etc.) into each series
+        for s in opts.get("series", []):
+            for k, v in options.items():
+                if k not in known_top:
+                    if isinstance(v, dict) and isinstance(s.get(k), dict):
+                        s[k].update(v)
+                    else:
+                        s[k] = v
