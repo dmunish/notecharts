@@ -65,32 +65,25 @@ class Pie(Chart):
 
         n_slices = len(raw_pairs)
 
-        # 2. Extract Palette rules mirroring package requirements
-        palette_name = "Plasma"  # Match default package standard choice
-        palette_kwargs = {}
-        
-        if palette is not None:
+        # 2. Resolve palette — generate 3 color variants for gradients and glows
+        if palette is None:
+            color_1 = color_2 = glow_col = None
+        else:
             if isinstance(palette, dict):
-                palette_kwargs = palette.copy()
-                palette_name = palette_kwargs.pop("palette")
-            elif isinstance(palette, str):
-                palette_name = palette
-            elif isinstance(palette, list):
-                palette_name = None
-                color_1 = palette
-                # Generate variations manually if string hex arrays are bound directly
-                color_2 = palette
-                glow_col = palette
-
-        # Build structural offset layers securely from notecharts Palettes
-        if palette_name is not None:
-            c1_kwargs = {"value": "+0.3", **palette_kwargs} if palette_kwargs else {"value": "+0.7"}
-            c2_kwargs = {"value": "-0.3", "saturation": "-0.1", **palette_kwargs} if palette_kwargs else {"value": "-0.1", "saturation": "-0.1"}
-            glow_kwargs = {"value": "-0.2", "alpha": 0.8, **palette_kwargs} if palette_kwargs else {"value": "-0.2", "alpha": 0.8}
+                pk = palette.copy()
+                pal = pk.pop("palette")
+            else:
+                pal = palette
+                pk = {}
             
-            color_1 = Palette(palette_name, n_slices, **c1_kwargs)
-            color_2 = Palette(palette_name, n_slices, **c2_kwargs)
-            glow_col = Palette(palette_name, n_slices, **glow_kwargs)
+            if theme == "dark":
+                color_1 = Palette(pal, n_slices, value="+0.3", **pk)
+                color_2 = Palette(pal, n_slices, value="-0.3", saturation="-0.1", **pk)
+                glow_col = Palette(pal, n_slices, value="-0.2", alpha=0.8, **pk)
+            else:
+                color_1 = Palette(pal, n_slices, value="+0.7", **pk)
+                color_2 = Palette(pal, n_slices, saturation="-0.1", **pk)
+                glow_col = Palette(pal, n_slices, value="-0.2", alpha=0.8, **pk)
 
         # 3. Assemble structural arrays
         pie_data = []
@@ -100,42 +93,37 @@ class Pie(Chart):
             pie_opts = {
                 "name": item["name"],
                 "value": item["value"],
-                "itemStyle": {
-                    "borderRadius": 10,
-                    "color": {
-                        "type": "linear",
-                        "x": 0,
-                        "y": 0,
-                        "x2": 1,
-                        "y2": 1,
-                        "colorStops": [
-                            {"offset": 0, "color": color_1[i % len(color_1)]},
-                            {"offset": 1, "color": color_2[i % len(color_2)]}
-                        ]
-                    }
-                },
-                "labelLine": {
-                    "lineStyle": {
-                        "width": 2,
-                        "color": color_1[i % len(color_1)]
-                    }
-                }
+                "itemStyle": {"borderRadius": 10},
             }
-            
-            if theme == "dark":
-                pie_opts["itemStyle"].update({"shadowBlur": 25, "shadowColor": glow_col[i % len(glow_col)]})
+
+            if color_1 is not None:
+                pie_opts["itemStyle"]["color"] = {
+                    "type": "linear",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 1,
+                    "y2": 1,
+                    "colorStops": [
+                        {"offset": 0, "color": color_1[i % len(color_1)]},
+                        {"offset": 1, "color": color_2[i % len(color_2)]},
+                    ],
+                }
+                pie_opts["labelLine"] = {
+                    "lineStyle": {"width": 2, "color": color_1[i % len(color_1)]}
+                }
+
+                if theme == "dark":
+                    pie_opts["itemStyle"].update({"shadowBlur": 25, "shadowColor": glow_col[i % len(glow_col)]})
 
             pie_data.append(pie_opts)
-            
-            legend_data.append({
-                "name": item["name"],
-                "itemStyle": {
-                    "color": color_1[i % len(color_1)]
-                }
-            })
+
+            if color_1 is not None:
+                legend_data.append({"name": item["name"], "itemStyle": {"color": color_1[i % len(color_1)]}})
+            else:
+                legend_data.append({"name": item["name"]})
 
         # 4. Standard Base configuration settings
-        base_options = {
+        base_options: Option = {
             "tooltip": {
                 "trigger": "item",
                 "formatter": "{b} : {c} ({d}%)",
@@ -159,8 +147,9 @@ class Pie(Chart):
             },
             "toolbox": {
                 "feature": {
+                    "restore": {},
                     "saveAsImage": {
-                        "name": title if title else "PieChart",
+                        "name": title if title else "Chart",
                         "pixelRatio": 3
                     }
                 }
