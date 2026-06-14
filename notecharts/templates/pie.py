@@ -12,17 +12,19 @@ class Pie(Chart):
     consistent multi-layered radial linear gradients and glows.
 
     Args:
-        data (dict or str): Mapping of names to data values, e.g. {"A": 10000, "B": 6700}.
-                           If dataframe is provided, pass the column name for values.
-        names (list or str, optional): If dataframe is provided, pass the column name containing labels.
-                                       Otherwise, defaults to None (keys extracted from data dict).
+        data (dict or DataFrame, optional): A dict of name-value pairs, or a DataFrame
+            with columns for names and values. Defaults to None.
+        name (list or str, optional): List of category names, or column name in the
+            DataFrame containing labels. Defaults to None.
+        value (list or str, optional): List of data values, or column name in the
+            DataFrame containing values. Defaults to None.
         title (str, optional): Chart title. Defaults to None.
         palette (str, PaletteName, PaletteOptions dict, or list of colors, optional):
             Color palette specification. Can be:
             
             - A palette name string (e.g., "Plasma", "Cube1") to generate colors automatically.
             - A PaletteOptions dict with 'palette' key plus optional parameters (format, value,
-              saturation, alpha, shuffle) for advanced color generation.
+              saturation, alpha, reverse) for advanced color generation.
             - A list of color strings for direct color specification.
             
             Defaults to None (uses default colors).
@@ -31,15 +33,15 @@ class Pie(Chart):
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
         options (dict, optional): ECharts options to merge/override.
-        dataframe (optional): A pandas DataFrame to extract names and values from.
         font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
-        data: Union[Dict[str, Any], str, List[Any]],
-        names: Union[List[str], str, None] = None,
+        data: Union[Dict[str, Any], Any] = None,
+        name: Union[List[str], str, None] = None,
+        value: Union[List[Any], str, None] = None,
         title: str = None,
         palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width: str = "99%",
@@ -47,22 +49,19 @@ class Pie(Chart):
         renderer: str = "canvas",
         theme: str = "light",
         options: Option = None,
-        dataframe: Any = None,
         font: str = None,
         **kwargs
     ):
-        # 1. Parse Dataframe sources if passed matching package helper paradigms
-        if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
-            values_list = _extract_column(dataframe, data)
-            names_list = _extract_column(dataframe, names) if names else [f"Item {i}" for i in range(len(values_list))]
-            raw_pairs = [{"name": str(n), "value": v} for n, v in zip(names_list, values_list)]
+        # 1. Parse input: dict, DataFrame, or separate name+value lists
+        if isinstance(data, dict):
+            raw_pairs = [{"name": str(k), "value": v} for k, v in data.items()]
+        elif hasattr(data, 'columns') and hasattr(data, '__getitem__'):
+            values = _extract_column(data, value)
+            labels = _extract_column(data, name) if name else [f"Item {i}" for i in range(len(values))]
+            raw_pairs = [{"name": str(n), "value": v} for n, v in zip(labels, values)]
         else:
-            if isinstance(data, dict):
-                raw_pairs = [{"name": str(k), "value": v} for k, v in data.items()]
-            else:
-                # Fallback to separate zip lists if dict structure wasn't used natively
-                labels = names if names else [f"Item {i}" for i in range(len(data))]
-                raw_pairs = [{"name": str(n), "value": v} for n, v in zip(labels, data)]
+            labels = name if name else [f"Item {i}" for i in range(len(value))]
+            raw_pairs = [{"name": str(n), "value": v} for n, v in zip(labels, value)]
 
         n_slices = len(raw_pairs)
 
