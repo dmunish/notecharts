@@ -1,7 +1,7 @@
 from typing import Union, List
 from ..chart import Chart
-from ..palette import PaletteName, Palette
-from .utils import PaletteOptions, _extract_columns_dict, _deep_update
+from ..palette import PaletteName
+from .utils import PaletteOptions, _resolve_palette, _apply_styling, _extract_columns_dict
 
 class Radar(Chart):
     """Pre-built modern Radar Chart.
@@ -75,20 +75,7 @@ class Radar(Chart):
                 "animationEasing": "cubicOut",
             })
 
-        # Generate colors from palette parameter
-        colors = None
-        if palette is not None:
-            if isinstance(palette, dict):
-                # dict mode: extract palette name and pass other params to Palette()
-                palette_dict = palette.copy()
-                palette_name = palette_dict.pop("palette")
-                colors = Palette(palette_name, n_series, **palette_dict)
-            elif isinstance(palette, str):
-                # str mode: palette name string
-                colors = Palette(palette, n_series)
-            elif isinstance(palette, list):
-                # list mode: direct color specification
-                colors = palette
+        colors = _resolve_palette(palette, n_series)
 
         base_options = {
             "radar": radar_config,
@@ -109,22 +96,7 @@ class Radar(Chart):
             },
         }
 
-        if title is not None:
-            base_options["title"] = {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
-            }
-
-        if colors is not None:
-            base_options["color"] = colors
-
-        if font is not None:
-            base_options["textStyle"] = {"fontFamily": font}
-
-        if options:
-            _deep_update(base_options, options)
+        _apply_styling(base_options, title=title, colors=colors, font=font, options=options)
 
         super().__init__(
             options=base_options,

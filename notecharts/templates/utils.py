@@ -1,6 +1,6 @@
 from typing import Union, Optional, List, Literal
 from typing import TypedDict
-from ..palette import PaletteName
+from ..palette import PaletteName, Palette
 
 
 class PaletteOptions(TypedDict, total=False):
@@ -14,12 +14,14 @@ class PaletteOptions(TypedDict, total=False):
         value: Adjust the value (brightness) of colors. Optional.
         saturation: Adjust saturation of colors. Optional.
         alpha: Opacity value (0-1). Defaults to 1.0.
+        reverse: Whether to reverse color order. Defaults to False.
     """
     palette: Union[PaletteName, str, List[str]]
     format: Literal["hex", "hsv", "rgb", "rgba"]
     value: Optional[float]
     saturation: Optional[float]
     alpha: float
+    reverse: bool
 
 
 def _deep_update(d, u):
@@ -44,3 +46,35 @@ def _extract_column(df, col_name):
 def _extract_columns_dict(df, col_dict):
     """Extract multiple columns from dataframe as dict of lists."""
     return {name: df[col].tolist() for name, col in col_dict.items()}
+
+
+def _resolve_palette(palette, n):
+    """Convert palette param to color list. Supports str, dict, list. Returns None if None."""
+    if palette is None:
+        return None
+    if isinstance(palette, dict):
+        p = palette.copy()
+        name = p.pop("palette")
+        return Palette(name, n, **p)
+    if isinstance(palette, str):
+        return Palette(palette, n)
+    if isinstance(palette, list):
+        return palette
+    return None
+
+
+def _apply_styling(opts, title=None, colors=None, font=None, options=None):
+    """Apply common styling (title, colors, font) and deep-merge user options."""
+    if title is not None:
+        opts["title"] = {
+            "text": title,
+            "left": "center",
+            "top": 24,
+            "textStyle": {"fontSize": 22, "fontWeight": 600},
+        }
+    if colors is not None:
+        opts["color"] = colors
+    if font is not None:
+        opts["textStyle"] = {"fontFamily": font}
+    if options:
+        _deep_update(opts, options)

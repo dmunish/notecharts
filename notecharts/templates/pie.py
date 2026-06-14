@@ -1,7 +1,7 @@
 from typing import Union, List, Dict, Any
 from ..chart import Chart
 from ..palette import PaletteName, Palette
-from .utils import PaletteOptions, _extract_column, _deep_update
+from .utils import PaletteOptions, _extract_column, _apply_styling
 from ..option import Option
 
 class Pie(Chart):
@@ -179,23 +179,10 @@ class Pie(Chart):
         }
 
         # 5. Dynamic text parameters
-        if title is not None:
-            base_options["title"] = {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
-            }
+        _apply_styling(base_options, title=title, font=font, options=options)
 
         if title is None:
             base_options["series"][0]["center"] = ["50%", "45%"]
-
-        if font is not None:
-            base_options["textStyle"] = {"fontFamily": font}
-
-        # Recursive deep dictionary overrides for structural changes
-        if options:
-            _deep_update(base_options, options)
 
         super().__init__(
             options=base_options,
