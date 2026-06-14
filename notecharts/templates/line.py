@@ -1,7 +1,7 @@
 from typing import Union, List
 from ..chart import Chart
 from ..palette import PaletteName, Palette
-from .utils import PaletteOptions, _extract_column, _extract_columns_dict, _deep_update
+from .utils import PaletteOptions, _extract_column, _extract_columns_dict, _apply_styling
 
 class Line(Chart):
     """Pre-built modern Line Chart.
@@ -48,43 +48,64 @@ class Line(Chart):
         font=None,
         **kwargs
     ):
+        n_series = len(y) if isinstance(y, dict) else 1
+
+        # Generate colors from palette parameter
+        colors = None
+        grad_top = None
+        grad_bottom = None
+        if palette is not None:
+            if isinstance(palette, dict):
+                palette_dict = palette.copy()
+                palette_name = palette_dict.pop("palette")
+                colors = Palette(palette_name, n_series, **palette_dict)
+                grad_top = Palette(palette_name, n_series, alpha=max(palette_dict.get("alpha", 1) - 0.7, 0))
+                grad_bottom = Palette(palette_name, n_series, alpha=0.0)
+
+            elif isinstance(palette, str):
+                colors = Palette(palette, n_series)
+                grad_top = Palette(palette, n_series, alpha=0.7)
+                grad_bottom = Palette(palette, n_series, alpha=0.0)
+
+            elif isinstance(palette, list):
+                colors = Palette(palette, n_series).reverse()
+                grad_top = Palette(palette, n_series, alpha=0.7).reverse()
+                grad_bottom = Palette(palette, n_series, alpha=0.0).reverse()
+
         # Extract columns from dataframe if provided
         if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
             x = _extract_column(dataframe, x)
             y = _extract_columns_dict(dataframe, y)
         
-        n_series = len(y) if isinstance(y, dict) else 1
 
         # Build series array from y dict
         series = []
-        for series_name, data in (y.items() if isinstance(y, dict) else [(None, y)]):
+        for i, (series_name, data) in enumerate(y.items() if isinstance(y, dict) else [(None, y)]):
             ser = {
                 "type": "line",
                 "name": str(series_name) if series_name else "value",
                 "data": data,
-                "smooth": False,
+                "smooth": True,
                 "symbol": "circle",
                 "symbolSize": 8,
                 "lineStyle": {"width": 3},
                 "animationDuration": 1000,
                 "animationEasing": "cubicOut",
             }
-            series.append(ser)
 
-        # Generate colors from palette parameter
-        colors = None
-        if palette is not None:
-            if isinstance(palette, dict):
-                # dict mode: extract palette name and pass other params to Palette()
-                palette_dict = palette.copy()
-                palette_name = palette_dict.pop("palette")
-                colors = Palette(palette_name, n_series, **palette_dict)
-            elif isinstance(palette, str):
-                # str mode: palette name string
-                colors = Palette(palette, n_series)
-            elif isinstance(palette, list):
-                # list mode: direct color specification
-                colors = palette
+            if grad_top is not None:
+                ser["areaStyle"] = {
+                    "color": {
+                        "type": "linear",
+                        "x": 0, "y": 0, "x2": 0, "y2": 1,
+                        "colorStops": [
+                            {"offset": 0, "color": grad_top[i]},
+                            {"offset": 1, "color": grad_bottom[i]}
+                        ]
+                    }
+                }
+
+            series.append(ser)
 
         base_options = {
             "xAxis": {
@@ -133,22 +154,7 @@ class Line(Chart):
             "series": series,
         }
 
-        if title is not None:
-            base_options["title"] = {
-                "text": title,
-                "left": "center",
-                "top": 24,
-                "textStyle": {"fontSize": 22, "fontWeight": 600},
-            }
-
-        if colors is not None:
-            base_options["color"] = colors
-
-        if font is not None:
-            base_options["textStyle"] = {"fontFamily": font}
-
-        if options:
-            _deep_update(base_options, options)
+        _apply_styling(base_options, title=title, colors=colors, font=font, options=options)
 
         super().__init__(
             options=base_options,
