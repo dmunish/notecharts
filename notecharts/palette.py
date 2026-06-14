@@ -240,6 +240,9 @@ PaletteName = Literal[
     "jim_special", "perceptual_rainbow", "purple", "red"
 ]
 
+# Case-insensitive lookup: lowercase name -> canonical name
+_PALETTE_NAMES_LOOKUP = {name.lower(): name for name in PALETTES_MAPPING}
+
 ColorFormat = Literal["hex", "hsv", "rgb", "rgba"]
 
 # ============================================================================
@@ -571,7 +574,7 @@ def Palette(
     value: Optional[Union[float, str]] = None,
     saturation: Optional[Union[float, str]] = None,
     alpha: float = 1.0,
-    shuffle: Optional[Union[bool, int]] = None,
+    reverse: bool = False,
 ) -> List[str]:
     """
     Generate a list of colors from a palette or custom color specification.
@@ -585,9 +588,10 @@ def Palette(
     ----------
     palette : str or list of str
         The color palette specification. Can be:
-        
-        - A palette name (e.g., 'Viridis', 'Set2'). See the complete list of
-          available palettes in the module documentation.
+
+        - A palette name (e.g., 'Viridis', 'Set2'). Matching is
+          case-insensitive, so 'viridis', 'VIRIDIS', and 'Viridis' all work.
+          See the complete list of available palettes in the module documentation.
         - A single color string in format: '#RRGGBB', '#RRGGBBAA', 'rgb(r,g,b)',
           'rgba(r,g,b,a)', or 'hsv(h,s,v)'. In this case, all n colors will be
           identical.
@@ -622,6 +626,10 @@ def Palette(
         Alpha transparency value in [0, 1]. Defaults to 1.0 (opaque).
         Only applies to 'rgba' format or 'hex' format with alpha.
         Has no effect on 'rgb' or 'hsv' formats.
+
+    reverse : bool, optional
+        Whether to reverse the order of the sampled colors. Defaults to False.
+        Applied before value/saturation transformations.
 
     Returns
     -------
@@ -709,21 +717,19 @@ def Palette(
     if not (0 <= alpha <= 1):
         raise ValueError(f"Parameter 'alpha' must be in [0, 1], got {alpha}.")
 
-    # Validate shuffle
-    if shuffle is not None:
-        if not isinstance(shuffle, (bool, int)):
-            raise TypeError(f"Parameter 'shuffle' must be a boolean or integer, got {type(shuffle).__name__}.")
-        if isinstance(shuffle, int) and shuffle < 0:
-            raise ValueError(f"Parameter 'shuffle' seed must be non-negative, got {shuffle}.")
+    # Validate reverse
+    if not isinstance(reverse, bool):
+        raise TypeError(f"Parameter 'reverse' must be a boolean, got {type(reverse).__name__}.")
 
     # ========================================================================
     # Load/Parse Colors
     # ==========================================================================
 
     if isinstance(palette, str):
-        # Try palette name first
-        if palette in PALETTES_MAPPING:
-            colors_rgb = _load_palette_from_palettable(palette)
+        # Try palette name first (case-insensitive)
+        canonical_name = _PALETTE_NAMES_LOOKUP.get(palette.lower())
+        if canonical_name is not None:
+            colors_rgb = _load_palette_from_palettable(canonical_name)
         else:
             # Try as a single color string
             try:
@@ -766,6 +772,9 @@ def Palette(
     # ========================================================================
     # Apply Transformations
     # ========================================================================
+
+    if reverse:
+        sampled_colors = list(reversed(sampled_colors))
 
     if value is not None or saturation is not None:
         transformed = []
