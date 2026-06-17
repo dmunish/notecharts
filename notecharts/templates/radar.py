@@ -125,14 +125,15 @@ class Radar(Chart):
                     }
                 ],
                 "emphasis": {
+                    "focus": "series",
                     "lineStyle": {"width": 3, "opacity": 1},
-                    "itemStyle": {"opacity": 1},
-                    "areaStyle": {"opacity": 0.8} if not is_light else {},
+                    "itemStyle": {"opacity": 0.8},
+                    "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 1},
                 },
                 "blur": {
                     "lineStyle": {"width": 1, "opacity": 0.15},
                     "itemStyle": {"opacity": 0.15},
-                    "areaStyle": {"opacity": 0.05} if not is_light else {},
+                    "areaStyle": {"opacity": 0.05},
                 },
             }
 
@@ -145,7 +146,12 @@ class Radar(Chart):
                 if not is_light:
                     series_entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
                 series_entry["lineStyle"] = {"color": base_c, "width": 2}
-                if not is_light:
+                if is_light:
+                    series_entry["areaStyle"] = {
+                        "opacity": 0.05,
+                        "color": base_c,
+                    }
+                else:
                     series_entry["areaStyle"] = {
                         "opacity": 0.1,
                         "color": {
@@ -173,9 +179,7 @@ class Radar(Chart):
             "legend": {
                 "data": legend_names,
                 "bottom": 20,
-                "type": "scroll",
                 "icon": "circle",
-                "type": "scroll",
                 "itemWidth": 20,
                 "formatter": "{name}   "
             },
