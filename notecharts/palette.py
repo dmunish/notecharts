@@ -762,7 +762,10 @@ def Palette(
     # Sample Colors
     # ========================================================================
 
-    sampled_colors = _sample_colors(colors_rgb, n)
+    # Only apply padding (trimming extremes) for Palettable palettes.
+    # Custom lists from the user should interpolate across the full range.
+    _palettable_source = isinstance(palette, str) and palette.lower() in _PALETTE_NAMES_LOOKUP
+    sampled_colors = _sample_colors(colors_rgb, n, padding=0.1 if _palettable_source else 0.0)
 
     # ========================================================================
     # Apply Transformations
