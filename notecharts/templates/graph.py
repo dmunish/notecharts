@@ -63,7 +63,7 @@ class Graph(Chart):
                 pal = palette
                 pk = {}
             cat_fill = Palette(pal, n_cats, **pk)
-            cat_border = Palette(pal, n_cats, value=0.75, saturation=0.4, **pk)
+            cat_border = Palette(pal, n_cats, saturation="-0.4", **pk)
         else:
             cat_fill = cat_border = None
 
