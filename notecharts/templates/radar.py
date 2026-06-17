@@ -199,7 +199,7 @@ class Radar(Chart):
                     "left": "center"
                 })
                 if "textStyle" in base_options["title"]:
-                    base_options["title"]["textStyle"].update({"fontSize": 22, "fontWeight": 400})
+                    base_options["title"]["textStyle"].update({"fontSize": 22, "fontWeight": 600})
 
         super().__init__(
             options=base_options,
