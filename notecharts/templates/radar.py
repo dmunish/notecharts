@@ -175,9 +175,8 @@ class Radar(Chart):
                 "bottom": 20,
                 "type": "scroll",
                 "icon": "circle",
-                "itemGap": 40,
-                "itemWidth": 20,
-                "textStyle": {"fontSize": 13}
+                "itemGap": 20,
+                # "formatter": "{name}"
             },
             "toolbox": {
                 "feature": {
