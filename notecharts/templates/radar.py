@@ -110,6 +110,7 @@ class Radar(Chart):
             color_transparent = Palette(pal, n_series, alpha=0, value="-0.5", **pk)
 
         # 3. Assemble Core Series Configurations
+        is_light = theme == "light"
         series_list = []
         for i, (name, values) in enumerate(parsed_series):
             series_entry = {
@@ -122,7 +123,17 @@ class Radar(Chart):
                         "value": values,
                         "name": name
                     }
-                ]            
+                ],
+                "emphasis": {
+                    "lineStyle": {"width": 3, "opacity": 1},
+                    "itemStyle": {"opacity": 1},
+                    "areaStyle": {"opacity": 0.8} if not is_light else {},
+                },
+                "blur": {
+                    "lineStyle": {"width": 1, "opacity": 0.15},
+                    "itemStyle": {"opacity": 0.15},
+                    "areaStyle": {"opacity": 0.05} if not is_light else {},
+                },
             }
 
             # Inject procedural styling if a dynamic palette is present
@@ -130,14 +141,13 @@ class Radar(Chart):
                 base_c = color_base[i % len(color_base)]
                 trans_c = color_transparent[i % len(color_transparent)]
                 
-                is_light = theme == "light"
                 series_entry["itemStyle"] = {"color": base_c}
                 if not is_light:
                     series_entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
                 series_entry["lineStyle"] = {"color": base_c, "width": 2}
                 if not is_light:
                     series_entry["areaStyle"] = {
-                        "opacity": 0.6,
+                        "opacity": 0.1,
                         "color": {
                             "type": "linear",
                             "x": 0, "y": 0, "x2": 1, "y2": 1,
