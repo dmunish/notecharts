@@ -186,7 +186,9 @@ class Radar(Chart):
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "saveAsImage": {}
+                    "saveAsImage": {
+                        "pixelRatio": 3
+                    }
                 }
             },
             "radar": {
