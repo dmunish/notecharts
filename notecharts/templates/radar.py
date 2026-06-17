@@ -122,12 +122,7 @@ class Radar(Chart):
                         "value": values,
                         "name": name
                     }
-                ],
-                # "emphasis": {
-                #     "lineStyle": {
-                #         "width": 3
-                #     }
-                # }
+                ]            
             }
 
             # Inject procedural styling if a dynamic palette is present
@@ -135,22 +130,27 @@ class Radar(Chart):
                 base_c = color_base[i % len(color_base)]
                 trans_c = color_transparent[i % len(color_transparent)]
                 
-                series_entry["itemStyle"] = {"color": base_c, "shadowBlur": 10, "shadowColor": base_c}
+                is_light = theme == "light"
+                series_entry["itemStyle"] = {"color": base_c}
+                if not is_light:
+                    series_entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
                 series_entry["lineStyle"] = {"color": base_c, "width": 2}
-                series_entry["areaStyle"] = {
-                    "opacity": 0.8,
-                    "color": {
-                        "type": "linear",
-                        "x": 0, "y": 0, "x2": 1, "y2": 1,
-                        "colorStops": [
-                            {"offset": 0, "color": base_c},
-                            {"offset": 1, "color": trans_c}
-                        ]
+                if not is_light:
+                    series_entry["areaStyle"] = {
+                        "opacity": 0.6,
+                        "color": {
+                            "type": "linear",
+                            "x": 0, "y": 0, "x2": 1, "y2": 1,
+                            "colorStops": [
+                                {"offset": 0, "color": base_c},
+                                {"offset": 1, "color": trans_c}
+                            ]
+                        }
                     }
-                }
             series_list.append(series_entry)
 
         # 4. Standardized Base Options Framework
+        radar_center_y = "50%" if title else "42%"
         base_options: Option = {
             "tooltip": {
                 "trigger": "item",
@@ -177,7 +177,7 @@ class Radar(Chart):
             },
             "radar": {
                 "radius": "60%",
-                "center": ["50%", "55%"],
+                "center": ["50%", radar_center_y],
                 "startAngle": 90,
                 "triggerEvent": True,
                 "shape": "polygon",
