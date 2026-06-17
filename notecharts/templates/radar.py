@@ -1,5 +1,5 @@
 from typing import Union, List, Dict, Any
-from ..chart import Chart
+from ..chart import Chart, JSCode
 from ..palette import PaletteName, Palette
 from .utils import PaletteOptions, _apply_styling
 from ..option import Option
@@ -167,6 +167,7 @@ class Radar(Chart):
 
         # 4. Standardized Base Options Framework
         radar_center_y = "50%" if title else "42%"
+        _indicator_names = [ind["name"] for ind in resolved_indicators]
         base_options: Option = {
             "tooltip": {
                 "trigger": "item",
@@ -174,7 +175,23 @@ class Radar(Chart):
                 "padding": [14, 18],
                 "shadowBlur": 10,
                 "shadowColor": "rgba(0, 0, 0, 0.12)",
-                "extraCssText": "border-radius: 12px;"
+                "extraCssText": "border-radius: 12px;",
+                "formatter": JSCode(f"""
+                    function(params) {{
+                        var indNames = {_indicator_names};
+                        var html = '<div style="font-size:15px;font-weight:600;margin-bottom:4px;">' + params.marker + ' ' + params.name + '</div>';
+                        if (indNames.length > 0) {{
+                            html += '<hr style="margin:4px 0 8px;border:none;border-top:1px solid rgba(0,0,0,0.08);"/>';
+                            for (var i = 0; i < params.value.length; i++) {{
+                                html += '<div style="display:flex;justify-content:space-between;gap:24px;font-size:13px;padding:1px 0;">';
+                                html += '<span>' + indNames[i] + '</span>';
+                                html += '<span style="font-weight:600;">' + Number(params.value[i]).toLocaleString() + '</span>';
+                                html += '</div>';
+                            }}
+                        }}
+                        return html;
+                    }}
+                """),
             },
             "legend": {
                 "data": legend_names,
