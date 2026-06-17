@@ -165,9 +165,15 @@ class Radar(Chart):
                 "bottom": 20,
                 "type": "scroll",
                 "icon": "circle",
-                "itemGap": 25,
+                "itemGap": 40,
                 "itemWidth": 20,
                 "textStyle": {"fontSize": 13}
+            },
+            "toolbox": {
+                "feature": {
+                    "restore": {},
+                    "saveAsImage": {}
+                }
             },
             "radar": {
                 "radius": "60%",
