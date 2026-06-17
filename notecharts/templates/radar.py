@@ -168,15 +168,16 @@ class Radar(Chart):
                 "padding": [14, 18],
                 "shadowBlur": 10,
                 "shadowColor": "rgba(0, 0, 0, 0.12)",
-                "extraCssText": "border-radius: 12px;",
+                "extraCssText": "border-radius: 12px;"
             },
             "legend": {
                 "data": legend_names,
                 "bottom": 20,
                 "type": "scroll",
                 "icon": "circle",
-                "itemGap": 20,
-                # "formatter": "{name}"
+                "type": "scroll",
+                "itemWidth": 20,
+                "formatter": "{name}   "
             },
             "toolbox": {
                 "feature": {
