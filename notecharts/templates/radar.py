@@ -135,7 +135,7 @@ class Radar(Chart):
                 base_c = color_base[i % len(color_base)]
                 trans_c = color_transparent[i % len(color_transparent)]
                 
-                series_entry["itemStyle"] = {"color": base_c}
+                series_entry["itemStyle"] = {"color": base_c, "shadowBlur": 10, "shadowColor": base_c}
                 series_entry["lineStyle"] = {"color": base_c, "width": 2}
                 series_entry["areaStyle"] = {
                     "opacity": 0.8,
