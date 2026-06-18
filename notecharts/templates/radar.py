@@ -105,7 +105,10 @@ class Radar(Chart):
                 "bottom": 20,
                 "icon": "circle",
                 "itemWidth": 20,
-                "formatter": "{name}   "
+                "formatter": "{name}   ",
+                "itemStyle": {
+                    "opacity": 1
+                }
             },
             "toolbox": {
                 "feature": {
@@ -201,24 +204,25 @@ class Radar(Chart):
             "type": "radar",
             "symbol": "circle",
             "symbolSize": 10,
+            "itemStyle": {"opacity": 0},
             "data": [{"value": values, "name": name}],
             "emphasis": {
                 "focus": "series",
                 "lineStyle": {"width": 3, "opacity": 1},
-                "itemStyle": {"opacity": 0.8},
+                "itemStyle": {"opacity": 1},
                 "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 1.0},
             },
             "blur": {
-                "lineStyle": {"width": 1, "opacity": 0.15},
-                "itemStyle": {"opacity": 0.15},
-                "areaStyle": {"opacity": 0.05},
+                "lineStyle": {"width": 1, "opacity": 0.3},
+                "itemStyle": {"opacity": 0},
+                "areaStyle": {"opacity": 0.02} if is_light else {"opacity": 0.2},
             },
         }
 
         if color_base is not None:
             base_c = color_base[i % len(color_base)]
             trans_c = color_transparent[i % len(color_transparent)]
-            entry["itemStyle"] = {"color": base_c}
+            entry["itemStyle"].update({"color": base_c})
             if not is_light:
                 entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
             entry["lineStyle"] = {"color": base_c, "width": 2}
@@ -226,7 +230,7 @@ class Radar(Chart):
                 {"opacity": 0.05, "color": base_c}
                 if is_light else
                 {
-                    "opacity": 0.1,
+                    "opacity": 0.3,
                     "color": {
                         "type": "linear",
                         "x": 0, "y": 0, "x2": 1, "y2": 1,
