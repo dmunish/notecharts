@@ -1,173 +1,80 @@
-from typing import Union, List, Dict, Any
+from typing import Union, List, Dict, Any, Optional
 from ..chart import Chart, JSCode
 from ..palette import PaletteName, Palette
 from .utils import PaletteOptions, _apply_styling
 from ..option import Option
 
+
 class Radar(Chart):
     """Pre-built modern Radar Chart with subtle linear gradients and rounded tooltips.
 
     Args:
-        data (dict, list of dicts, or DataFrame, optional): Dataset containing keys/columns 
-            for indicators and data series values.
-        indicators (list of dicts or list of str, optional): Radar dimensions, e.g.,
-            [{"name": "A", "max": 100}, {"name": "B", "max": 150}] or just names if auto-scaled.
-        metrics (list of str, optional): If passing a DataFrame, these are the columns
-            to use as axes for the radar indicators.
-        series_names (list of str, optional): Custom names for each mapped data series line.
-        title (str, optional): Chart title. Defaults to None.
-        palette (str, PaletteName, PaletteOptions dict, or list, optional):
-            Color palette specification parsed through the Palette generator layer.
+        data (dict or DataFrame): Series data. Dict format: {"Series A": [v1, v2, ...], ...}.
+            DataFrame rows become series; use `series_col` to specify the label column.
+        axes (list of str or list of dicts, optional): Radar spoke definitions. Pass a list of
+            column/key names for auto-scaled axes, or dicts like {"name": "Speed", "max": 120}
+            for explicit control. For DataFrames, inferred automatically by excluding
+            `series_col` (or the first column if `series_col` is not set).
+        series_col (str, optional): DataFrame column whose values label each series.
+            If omitted, row index labels are used (e.g. "Series 1").
+        max_values (float, list, or dict, optional): Override auto-scaled axis maximums.
+            Pass a single float to apply to all axes, a list aligned to `axes`, or a
+            dict mapping axis names to their max values.
+        title (str, optional): Chart title.
+        palette (str, PaletteName, PaletteOptions dict, or list, optional): Color palette.
         width (str, optional): CSS width. Defaults to "99%".
         height (str, optional): CSS height. Defaults to "500px".
         renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
         theme (str, optional): 'light' or 'dark'. Defaults to "light".
+        font (str, optional): Font family for the chart.
         options (dict, optional): ECharts options to merge/override.
-        font (str, optional): Font family to use for the chart. Defaults to None.
         **kwargs: Forwarded to the base Chart class.
     """
 
     def __init__(
         self,
         data: Any = None,
-        indicators: Union[List[Dict[str, Any]], List[str], None] = None,
-        metrics: List[str] = None,
-        series_names: List[str] = None,
+        axes: Union[List[str], List[Dict[str, Any]], None] = None,
+        series_col: Optional[str] = None,
+        max_values: Union[float, List[float], Dict[str, float], None] = None,
         title: str = None,
         palette: Union[PaletteName, str, PaletteOptions, List[str], None] = None,
         width: str = "99%",
         height: str = "500px",
         renderer: str = "canvas",
         theme: str = "light",
-        options: Option = None,
         font: str = None,
+        options: Option = None,
         **kwargs
     ):
-        # 1. Standardize and Extract Multi-Series Radar Input Arrays
-        parsed_series = []  # List of tuples: (series_name, value_list)
-        resolved_indicators = []
-
-        # Handle DataFrames (using duck typing for compatibility with any DataFrame-like object)
-        if hasattr(data, 'columns') and hasattr(data, '__getitem__'):
-            target_metrics = metrics if metrics else [col for col in data.columns if col != data.columns[0]]
-            
-            # Determine indicators from metrics
-            if indicators and isinstance(indicators[0], dict):
-                resolved_indicators = indicators
-            else:
-                for m in target_metrics:
-                    max_val = float(data[m].max()) * 1.1 if not data[m].empty else 100
-                    resolved_indicators.append({"name": m, "max": round(max_val) if max_val > 0 else 100})
-
-            # Check if rows or columns represent distinct target series lines
-            if series_names:
-                for i, name in enumerate(series_names):
-                    if i < len(data):
-                        row_vals = [data.at[i, m] for m in target_metrics]
-                        parsed_series.append((str(name), row_vals))
-            else:
-                # Default fallback fallback to indexing
-                for idx, row in data.iterrows():
-                    name = str(row.iloc[0]) if len(data.columns) > len(target_metrics) else f"Series {idx + 1}"
-                    row_vals = [row[m] for m in target_metrics]
-                    parsed_series.append((name, row_vals))
-
-        # Handle dictionaries or native structures
-        elif isinstance(data, dict):
-            # Format: {"Primary Weights": [4600, 13000, ...], "Secondary Weights": [...]}
-            for name, vals in data.items():
-                parsed_series.append((str(name), vals))
-            resolved_indicators = indicators if indicators else []
-            
-        else:
-            # Fallback to direct series arrays passing
-            if isinstance(data, list) and len(data) > 0 and isinstance(data[0], tuple):
-                parsed_series = data
-            elif data is not None:
-                name = series_names[0] if series_names else "Data Series"
-                parsed_series = [(name, data)]
-            resolved_indicators = indicators if indicators else []
-
-        # Normalize simple list-of-string indicators
-        if resolved_indicators and isinstance(resolved_indicators[0], str):
-            resolved_indicators = [{"name": ind, "max": 100} for ind in resolved_indicators]
+        # 1. Parse Input into (name, values) pairs and resolved indicator dicts
+        parsed_series, resolved_indicators = self._parse_data(data, axes, series_col, max_values)
 
         n_series = len(parsed_series)
-        legend_names = [item[0] for item in parsed_series]
+        legend_names = [name for name, _ in parsed_series]
 
-        # 2. Resolve Color Gradients and Alpha Variations via Palette Layer
-        if palette is None:
-            color_base = color_transparent = None
-        else:
+        # 2. Resolve Color Palette
+        color_base = color_transparent = None
+        if palette is not None:
             if isinstance(palette, dict):
                 pk = palette.copy()
                 pal = pk.pop("palette")
             else:
-                pal = palette
-                pk = {}
-
+                pal, pk = palette, {}
             color_base = Palette(pal, n_series, **pk)
             color_transparent = Palette(pal, n_series, alpha=0, value="-0.5", **pk)
 
-        # 3. Assemble Core Series Configurations
+        # 3. Build Series Configurations
         is_light = theme == "light"
-        series_list = []
-        for i, (name, values) in enumerate(parsed_series):
-            series_entry = {
-                "name": name,
-                "type": "radar",
-                "symbol": "circle",
-                "symbolSize": 10,
-                "data": [
-                    {
-                        "value": values,
-                        "name": name
-                    }
-                ],
-                "emphasis": {
-                    "focus": "series",
-                    "lineStyle": {"width": 3, "opacity": 1},
-                    "itemStyle": {"opacity": 0.8},
-                    "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 1},
-                },
-                "blur": {
-                    "lineStyle": {"width": 1, "opacity": 0.15},
-                    "itemStyle": {"opacity": 0.15},
-                    "areaStyle": {"opacity": 0.05},
-                },
-            }
+        series_list = [
+            self._build_series(i, name, values, is_light, color_base, color_transparent)
+            for i, (name, values) in enumerate(parsed_series)
+        ]
 
-            # Inject procedural styling if a dynamic palette is present
-            if color_base is not None:
-                base_c = color_base[i % len(color_base)]
-                trans_c = color_transparent[i % len(color_transparent)]
-                
-                series_entry["itemStyle"] = {"color": base_c}
-                if not is_light:
-                    series_entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
-                series_entry["lineStyle"] = {"color": base_c, "width": 2}
-                if is_light:
-                    series_entry["areaStyle"] = {
-                        "opacity": 0.05,
-                        "color": base_c,
-                    }
-                else:
-                    series_entry["areaStyle"] = {
-                        "opacity": 0.1,
-                        "color": {
-                            "type": "linear",
-                            "x": 0, "y": 0, "x2": 1, "y2": 1,
-                            "colorStops": [
-                                {"offset": 0, "color": base_c},
-                                {"offset": 1, "color": trans_c}
-                            ]
-                        }
-                    }
-            series_list.append(series_entry)
-
-        # 4. Standardized Base Options Framework
+        # 4. Assemble Base Options
         radar_center_y = "50%" if title else "42%"
         _indicator_names = [ind["name"] for ind in resolved_indicators]
+
         base_options: Option = {
             "tooltip": {
                 "trigger": "item",
@@ -203,9 +110,7 @@ class Radar(Chart):
             "toolbox": {
                 "feature": {
                     "restore": {},
-                    "saveAsImage": {
-                        "pixelRatio": 3
-                    }
+                    "saveAsImage": {"pixelRatio": 3}
                 }
             },
             "radar": {
@@ -221,18 +126,13 @@ class Radar(Chart):
             "series": series_list
         }
 
-        # 5. Overrides, Layout Adjustments, and Structural Title Interpolations
+        # 5. Apply Styling Overrides and Title Layout
         _apply_styling(base_options, title=title, font=font, options=options)
 
-        # Reposition title configurations seamlessly to match target layout blueprint
-        if "title" in base_options:
-            if title:  # Keep specific styling defaults intact unless handled natively
-                base_options["title"].update({
-                    "top": 24,
-                    "left": "center"
-                })
-                if "textStyle" in base_options["title"]:
-                    base_options["title"]["textStyle"].update({"fontSize": 22, "fontWeight": 600})
+        if title and "title" in base_options:
+            base_options["title"].update({"top": 24, "left": "center"})
+            if "textStyle" in base_options["title"]:
+                base_options["title"]["textStyle"].update({"fontSize": 22, "fontWeight": 600})
 
         super().__init__(
             options=base_options,
@@ -242,3 +142,100 @@ class Radar(Chart):
             theme=theme,
             **kwargs
         )
+
+    @staticmethod
+    def _parse_data(data, axes, series_col, max_values):
+        parsed_series = []
+
+        if hasattr(data, "columns") and hasattr(data, "__getitem__"):
+            # DataFrame: each row is a series
+            exclude = {series_col} if series_col else {data.columns[0]}
+            axis_names = axes if axes else [c for c in data.columns if c not in exclude]
+            for idx, row in data.iterrows():
+                name = str(row[series_col]) if series_col else f"Series {idx + 1}"
+                parsed_series.append((name, [row[a] for a in axis_names]))
+            resolved_indicators = Radar._resolve_indicators(axis_names, max_values, data=data)
+
+        elif isinstance(data, dict):
+            # Dict: {"Series Name": [values...], ...}
+            axis_names = axes if axes else []
+            for name, vals in data.items():
+                parsed_series.append((str(name), vals))
+            resolved_indicators = Radar._resolve_indicators(axis_names, max_values)
+
+        else:
+            axis_names = axes if axes else []
+            resolved_indicators = Radar._resolve_indicators(axis_names, max_values)
+
+        return parsed_series, resolved_indicators
+
+    @staticmethod
+    def _resolve_indicators(axes, max_values, data=None):
+        if not axes:
+            return []
+
+        # Already fully specified as dicts — use as-is unless max_values overrides
+        if axes and isinstance(axes[0], dict):
+            if max_values is None:
+                return axes
+            axes = [a["name"] for a in axes]
+
+        def get_max(name, i):
+            if max_values is None:
+                if data is not None:
+                    col_max = float(data[name].max())
+                    return round(col_max * 1.1) if col_max > 0 else 100
+                return 100
+            if isinstance(max_values, dict):
+                return max_values.get(name, 100)
+            if isinstance(max_values, list):
+                return max_values[i] if i < len(max_values) else 100
+            return float(max_values)
+
+        return [{"name": name, "max": get_max(name, i)} for i, name in enumerate(axes)]
+
+    @staticmethod
+    def _build_series(i, name, values, is_light, color_base, color_transparent):
+        entry = {
+            "name": name,
+            "type": "radar",
+            "symbol": "circle",
+            "symbolSize": 10,
+            "data": [{"value": values, "name": name}],
+            "emphasis": {
+                "focus": "series",
+                "lineStyle": {"width": 3, "opacity": 1},
+                "itemStyle": {"opacity": 0.8},
+                "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 0.8},
+            },
+            "blur": {
+                "lineStyle": {"width": 1, "opacity": 0.15},
+                "itemStyle": {"opacity": 0.15},
+                "areaStyle": {"opacity": 0.05},
+            },
+        }
+
+        if color_base is not None:
+            base_c = color_base[i % len(color_base)]
+            trans_c = color_transparent[i % len(color_transparent)]
+            entry["itemStyle"] = {"color": base_c}
+            if not is_light:
+                entry["itemStyle"].update({"shadowBlur": 10, "shadowColor": base_c})
+            entry["lineStyle"] = {"color": base_c, "width": 2}
+            entry["areaStyle"] = (
+                {"opacity": 0.05, "color": base_c}
+                if is_light else
+                {
+                    "opacity": 0.1,
+                    "color": {
+                        "type": "linear",
+                        "x": 0, "y": 0, "x2": 1, "y2": 1,
+                        "colorStops": [
+                            {"offset": 0, "color": base_c},
+                            {"offset": 1, "color": trans_c}
+                        ]
+                    }
+                }
+            )
+
+        return entry
