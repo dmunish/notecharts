@@ -816,26 +816,22 @@ def PaletteBrowser(
     mode: Literal["discrete", "gradient"] = "discrete", 
     height: int = 50, 
     width: int = 250,
-    n: int = 6,
-    value: Optional[Union[float, str]] = None,
-    saturation: Optional[Union[float, str]] = None,
-    alpha: Optional[float] = None
+    n: int = 6
 ) -> None:
     """Displays an interactive, premium responsive color grid browser with copy-on-click."""
     targets = {}
-    kw = {"n": n, "value": value, "saturation": saturation, "alpha": alpha}
 
     # 1. Normalize Inputs
     if isinstance(palette, str):
         if palette.strip().lower() == "all":
             for k in sorted(PALETTES_MAPPING.keys(), key=str.lower):
-                try: targets[k] = Palette(k, **kw)
+                try: targets[k] = Palette(k, n)
                 except Exception: continue
         else:
             canonical = _PALETTE_NAMES_LOOKUP.get(palette.lower())
-            if canonical: targets[canonical] = Palette(canonical, **kw)
+            if canonical: targets[canonical] = Palette(canonical, n)
             else:
-                try: targets["Custom Color"] = Palette(palette, **kw)
+                try: targets["Custom Color"] = Palette(palette, n)
                 except ValueError: raise ValueError(f"Invalid preset/color: '{palette}'")
                 
     elif isinstance(palette, list):
@@ -843,12 +839,12 @@ def PaletteBrowser(
         if _PALETTE_NAMES_LOOKUP.get(str(palette[0]).lower()):
             for item in palette:
                 canonical = _PALETTE_NAMES_LOOKUP.get(str(item).lower())
-                if canonical: targets[canonical] = Palette(canonical, **kw)
+                if canonical: targets[canonical] = Palette(canonical)
         else:
             try: 
                 # Keep original color count if custom array matches or exceeds target resolution steps
                 custom_n = len(palette) if len(palette) >= n else n
-                targets["Custom Palette"] = Palette(palette, n=custom_n, value=value, saturation=saturation, alpha=alpha)
+                targets["Custom Palette"] = Palette(palette, n=custom_n)
             except Exception as e: raise ValueError("Invalid web color strings.") from e
     else:
         raise TypeError("Palette must be a string or a list of strings.")
