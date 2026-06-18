@@ -19,9 +19,9 @@ Apache ECharts is an incredibly powerful web plotting library. While there have 
 
 **notecharts** bridges this gap. It provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, dynamic palettes, and serialization.
 
-| Force Directed Graph | Multi-Line |
+| Force Directed Graph | Stacked Bar |
 |:---:|:---:|
-| [![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/force-directed-graph.ipynb) | [![Multi-Line](https://github.com/dmunish/notecharts/blob/main/assets/line.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/line-bar.ipynb) |
+| [![Force Directed Graph](https://github.com/dmunish/notecharts/blob/main/assets/force-directed-graph.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/force-directed-graph.ipynb) | [![Stacked Bar](https://github.com/dmunish/notecharts/blob/main/assets/bar.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/line-bar.ipynb) |
 | **Geo/Map** | **3D Scatter** |
 | [![Map](https://github.com/dmunish/notecharts/blob/main/assets/geo.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/geo.ipynb) | [![Scatter 3D](https://github.com/dmunish/notecharts/blob/main/assets/scatter-3d.png?raw=true)](https://github.com/dmunish/notecharts/blob/main/examples/scatter-3D.ipynb) |
 
