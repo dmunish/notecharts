@@ -196,38 +196,36 @@ PALETTES_MAPPING = {
 }
 
 PaletteName = Literal[
-    "Accent", "Acton", "Algae", "Amp", "Antique", "Aquatic1", "Aquatic2",
-    "Aquatic3", "ArmyRose", "Balance", "Bamako", "Batlow", "Berlin", "Bilbao",
-    "BluGrn", "BluYl", "BlueDarkOrange12", "BlueDarkOrange18", "BlueDarkRed12",
-    "BlueDarkRed18", "BlueGray", "BlueGreen", "BlueGrey", "BlueOrange10",
-    "BlueOrange12", "BlueOrange8", "BlueOrangeRed", "BlueRed", "Blues",
-    "Blues10", "Blues7", "Bold", "BrBG", "Broc", "BrownBlue10",
-    "BrownBlue12", "BrwnYl", "BuGn", "BuPu", "Buda", "Burg", "BurgYl",
-    "Cavalcanti", "Chevalier", "ColorBlind",
-    "Cork", "Cube1", "CubeYF", "Curl", "Darjeeling1",
-    "Darjeeling2", "Darjeeling3", "Darjeeling4", "Dark2", "DarkMint", "Davos",
-    "Deep", "Delta", "Dense", "Devon", "Earth", "Emrld", "Fall",
-    "FantasticFox1", "FantasticFox2", "Geyser", "GnBu", "GrandBudapest1",
-    "GrandBudapest2", "GrandBudapest3", "GrandBudapest4", "GrandBudapest5",
-    "Gray", "GrayC", "GreenMagenta", "GreenOrange", "Greens", "Greys",
-    "Haline", "Hawaii", "Ice", "Imola", "Inferno", "IsleOfDogs1",
-    "IsleOfDogs2", "IsleOfDogs3", "LaJolla", "LaPaz",
-    "LinearL", "Lisbon", "Magenta", "Magma", "Margot1", "Margot2", "Margot3",
-    "Matter", "Mendl", "Mint", "Moonrise1", "Moonrise2",
-    "Moonrise3", "Moonrise4", "Moonrise5", "Moonrise6", "Moonrise7",
-    "Nuuk", "Oleron", "OrRd", "OrYel", "Oranges", "Oslo", "Oxy",
-    "PRGn", "Paired", "Pastel", "Pastel1", "Pastel2", "Peach",
-    "Phase", "PiYG", "PinkYl", "Plasma", "Prism", "PuBu", "PuBuGn", "PuOr",
-    "PuRd", "Purp", "PurpOr", "PurpleGray", "Purples", "RdBu", "RdGy", "RdPu",
-    "RdYlBu", "RdYlGn", "RedOr", "RedYellowBlue", "Reds", "Roma", "Royal1",
-    "Royal2", "Royal3", "Safe", "Set1", "Set2", "Set3",
-    "Solar", "Spectral", "Speed", "Sunset", "SunsetDark", "Tableau",
-    "TableauLight", "TableauMedium", "Teal", "TealGrn",
-    "TealRose", "Tempo", "Temps", "Thermal", "Tofino", "Tokyo",
-    "TrafficLight", "Tropic", "Turbid", "Turku", "Vik", "Viridis", "Vivid",
-    "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", "Zissou",
-    "agGrnYl", "agSunset", "classic", "cubehelix1", "cubehelix2", "cubehelix3",
-    "jim_special", "perceptual_rainbow", "purple", "red"
+    "Accent", "Acton", "agGrnYl", "agSunset", "Algae", "Amp", "Antique", 
+    "Aquatic1", "Aquatic2", "Aquatic3", "ArmyRose", "Balance", "Bamako", 
+    "Batlow", "Berlin", "Bilbao", "BluGrn", "Blues", "Blues10", "Blues7", 
+    "BlueDarkOrange12", "BlueDarkOrange18", "BlueDarkRed12", "BlueDarkRed18", 
+    "BlueGray", "BlueGreen", "BlueGrey", "BlueOrange10", "BlueOrange12", 
+    "BlueOrange8", "BlueOrangeRed", "BlueRed", "BluYl", "Bold", "BrBG", 
+    "Broc", "BrownBlue10", "BrownBlue12", "BrwnYl", "BuGn", "Buda", "BuPu", 
+    "Burg", "BurgYl", "Cavalcanti", "Chevalier", "classic", "ColorBlind", 
+    "Cork", "Cube1", "cubehelix1", "cubehelix2", "cubehelix3", "CubeYF", 
+    "Curl", "Darjeeling1", "Darjeeling2", "Darjeeling3", "Darjeeling4", 
+    "Dark2", "DarkMint", "Davos", "Deep", "Delta", "Dense", "Devon", 
+    "Earth", "Emrld", "Fall", "FantasticFox1", "FantasticFox2", "Geyser", 
+    "GnBu", "GrandBudapest1", "GrandBudapest2", "GrandBudapest3", 
+    "GrandBudapest4", "GrandBudapest5", "Gray", "GrayC", "GreenMagenta", 
+    "GreenOrange", "Greens", "Greys", "Haline", "Hawaii", "Ice", "Imola", 
+    "Inferno", "IsleOfDogs1", "IsleOfDogs2", "IsleOfDogs3", "jim_special", 
+    "LaJolla", "LaPaz", "LinearL", "Lisbon", "Magenta", "Magma", "Margot1", 
+    "Margot2", "Margot3", "Matter", "Mendl", "Mint", "Moonrise1", "Moonrise2", 
+    "Moonrise3", "Moonrise4", "Moonrise5", "Moonrise6", "Moonrise7", "Nuuk", 
+    "Oleron", "Oranges", "OrRd", "OrYel", "Oslo", "Oxy", "Paired", "Pastel", 
+    "Pastel1", "Pastel2", "Peach", "perceptual_rainbow", "Phase", "Pie", 
+    "PinkYl", "PiYG", "Plasma", "PRGn", "Prism", "PuBu", "PuBuGn", "PuOr", 
+    "purple", "PurpleGray", "Purples", "PuRd", "Purp", "PurpOr", "RdBu", 
+    "red", "RedOr", "Reds", "RedYellowBlue", "RdGy", "RdPu", "RdYlBu", 
+    "RdYlGn", "Roma", "Royal1", "Royal2", "Royal3", "Safe", "Set1", "Set2", 
+    "Set3", "Solar", "Spectral", "Speed", "Sunset", "SunsetDark", "Tableau", 
+    "TableauLight", "TableauMedium", "Teal", "TealGrn", "TealRose", "Tempo", 
+    "Temps", "Thermal", "Tofino", "Tokyo", "TrafficLight", "Tropic", "Turbid", 
+    "Turku", "Vik", "Viridis", "Vivid", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd", 
+    "Zissou"
 ]
 
 # Case-insensitive lookup: lowercase name -> canonical name
@@ -557,42 +555,10 @@ def _load_palette_from_palettable(palette_name: str) -> List[Tuple[float, float,
             f"Could not load palette '{palette_name}' from palettable."
         ) from e
 
-# ============================================================================
-# Palette Preview Function
-# ============================================================================
-
-def render_palette(palette, mode: Literal["discrete", "gradient"] = "discrete", height=60, width=700):
-    """
-    Displays a list of colors as either distinct blocks or a smooth gradient.
-    
-    :param palette: List of color strings (hex or RGB)
-    :param mode: 'discrete' for individual blocks, 'gradient' for a smooth gradient
-    :param height: Height of the bar in pixels
-    :param width: Maximum width of the palette block
-    """
-    container_style = f"width: 100%; max-width: {width}px; height: {height}px; box-sizing: border-box;"
-    
-    if mode == "gradient":
-        gradient_stops = ", ".join(palette)
-        html_content = f'''
-        <div style="{container_style} background: linear-gradient(to right, {gradient_stops});"></div>
-        '''
-    elif mode == "discrete":
-        blocks = "".join([
-            f'<div style="flex: 1; background-color: {color}; height: 100%;"></div>'
-            for color in palette
-        ])
-        html_content = f'''
-        <div style="display: flex; {container_style}">
-            {blocks}
-        </div>
-        '''        
-    display(HTML(html_content))
 
 # ============================================================================
 # Main Palette Function
 # ============================================================================
-
 
 def Palette(
     palette: Union[PaletteName, str, List[str]],
@@ -840,3 +806,107 @@ def Palette(
         return [_rgb_to_hsv_string(rgb) for rgb in sampled_colors]
     else:  # format == "rgba"
         return [_rgb_to_rgb_string(rgb, alpha) for rgb in sampled_colors]
+
+# ============================================================================
+# Palette Viewer
+# ============================================================================
+
+def PaletteBrowser(
+    palette: Union[str, List[str], PaletteName, List[PaletteName]] = "all", 
+    mode: Literal["discrete", "gradient"] = "discrete", 
+    height: int = 50, 
+    width: int = 250,
+    n: int = 6,
+    value: Optional[Union[float, str]] = None,
+    saturation: Optional[Union[float, str]] = None,
+    alpha: Optional[float] = None
+) -> None:
+    """Displays an interactive, premium responsive color grid browser with copy-on-click."""
+    targets = {}
+    kw = {"n": n, "value": value, "saturation": saturation, "alpha": alpha}
+
+    # 1. Normalize Inputs
+    if isinstance(palette, str):
+        if palette.strip().lower() == "all":
+            for k in sorted(PALETTES_MAPPING.keys(), key=str.lower):
+                try: targets[k] = Palette(k, **kw)
+                except Exception: continue
+        else:
+            canonical = _PALETTE_NAMES_LOOKUP.get(palette.lower())
+            if canonical: targets[canonical] = Palette(canonical, **kw)
+            else:
+                try: targets["Custom Color"] = Palette(palette, **kw)
+                except ValueError: raise ValueError(f"Invalid preset/color: '{palette}'")
+                
+    elif isinstance(palette, list):
+        if not palette: raise ValueError("Palette array cannot be empty.")
+        if _PALETTE_NAMES_LOOKUP.get(str(palette[0]).lower()):
+            for item in palette:
+                canonical = _PALETTE_NAMES_LOOKUP.get(str(item).lower())
+                if canonical: targets[canonical] = Palette(canonical, **kw)
+        else:
+            try: 
+                # Keep original color count if custom array matches or exceeds target resolution steps
+                custom_n = len(palette) if len(palette) >= n else n
+                targets["Custom Palette"] = Palette(palette, n=custom_n, value=value, saturation=saturation, alpha=alpha)
+            except Exception as e: raise ValueError("Invalid web color strings.") from e
+    else:
+        raise TypeError("Palette must be a string or a list of strings.")
+
+    if not targets: return
+
+    # 2. Render Interactive DOM Architecture
+    cards = []
+    for name, colors in targets.items():
+        if mode == "gradient":
+            bar = f'<div style="width: 100%; height: {height}px; background: linear-gradient(90deg, {", ".join(colors)}); border-radius: 10px;"></div>'
+        else:
+            blocks = "".join(f'''
+                <div onclick="
+                    navigator.clipboard.writeText('{c}');
+                    let lbl = this.parentElement.nextElementSibling;
+                    let orig = lbl.innerText; lbl.innerText = 'Copied: {c}'; lbl.style.opacity = 1;
+                    setTimeout(() => {{ lbl.innerText = orig; lbl.style.opacity = 0.9; }}, 1000);
+                " 
+                title="Click to copy {c}"
+                style="flex: 1; background: {c}; height: 100%; cursor: pointer; transition: flex 0.25s ease;">
+                </div>
+            ''' for c in colors)
+            
+            bar = f'''
+            <div class="nc-bar" style="display: flex; width: 100%; height: {height}px; border-radius: 10px; overflow: hidden;">
+                {blocks}
+            </div>
+            '''
+
+        cards.append(f'''
+        <div style="flex: 0 0 {width}px; width: {width}px; display: flex; flex-direction: column; gap: 8px;">
+            {bar}
+            <div style="
+                padding: 0 4px;
+                font-family: SFMono-Regular, Consolas, monospace;
+                font-size: 13px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                color: currentColor;
+                opacity: 0.9;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                transition: all 0.1s ease-out;
+            ">{name}</div>
+        </div>
+        ''')
+
+    # 3. Assemble Grid Container & Styles
+    grid_style = f"display: flex; flex-wrap: wrap; gap: 24px 18px; padding: 12px 4px; max-height: 540px; overflow-y: auto; width: 100%; box-sizing: border-box;"
+    
+    styles = """
+    <style>
+        .nc-bar:hover div { flex: 0.75 !important; }
+        .nc-bar div:hover { flex: 1.8 !important; }
+    </style>
+    """
+    
+    html_out = cards[0] if len(cards) == 1 else f'<div style="{grid_style}">{"".join(cards)}</div>'
+    display(HTML(styles + html_out))
