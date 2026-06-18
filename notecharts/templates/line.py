@@ -68,9 +68,9 @@ class Line(Chart):
                 grad_bottom = Palette(palette, n_series, alpha=0.0)
 
             elif isinstance(palette, list):
-                colors = Palette(palette, n_series).reverse()
-                grad_top = Palette(palette, n_series, alpha=0.7).reverse()
-                grad_bottom = Palette(palette, n_series, alpha=0.0).reverse()
+                colors = Palette(palette, n_series)
+                grad_top = Palette(palette, n_series, alpha=0.7)
+                grad_bottom = Palette(palette, n_series, alpha=0.0)
 
         # Extract columns from dataframe if provided
         if dataframe is not None and hasattr(dataframe, 'columns') and hasattr(dataframe, '__getitem__'):
@@ -102,7 +102,8 @@ class Line(Chart):
                             {"offset": 0, "color": grad_top[i]},
                             {"offset": 1, "color": grad_bottom[i]}
                         ]
-                    }
+                    },
+                    "opacity": 0.0 if theme=='light' else 0.5
                 }
 
             series.append(ser)
