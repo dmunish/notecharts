@@ -860,7 +860,7 @@ def PaletteBrowser(
             blocks = "".join(f'''
                 <div onclick="
                     navigator.clipboard.writeText('{c}');
-                    let lbl = this.parentElement.nextElementSibling;
+                    let lbl = this.parentElement.nextElementSibling.firstElementChild;
                     let orig = lbl.innerText; lbl.innerText = 'Copied: {c}'; lbl.style.opacity = 1;
                     setTimeout(() => {{ lbl.innerText = orig; lbl.style.opacity = 0.9; }}, 1000);
                 " 
@@ -878,19 +878,32 @@ def PaletteBrowser(
         cards.append(f'''
         <div style="flex: 0 0 {width}px; width: {width}px; display: flex; flex-direction: column; gap: 8px;">
             {bar}
-            <div style="
-                padding: 0 4px;
-                font-family: SFMono-Regular, Consolas, monospace;
-                font-size: 13px;
-                font-weight: 500;
-                letter-spacing: 0.5px;
-                color: currentColor;
-                opacity: 0.9;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                transition: all 0.1s ease-out;
-            ">{name}</div>
+            <div style="padding: 0 4px;">
+                <div onclick="
+                    navigator.clipboard.writeText('{name}');
+                    let orig = this.innerText;
+                    this.innerText = 'Copied: ' + orig;
+                    this.style.opacity = 1;
+                    setTimeout(() => {{
+                        this.innerText = orig;
+                        this.style.opacity = 0.9;
+                    }}, 1000);
+                " style="
+                    display: inline-block;
+                    font-family: SFMono-Regular, Consolas, monospace;
+                    font-size: 13px;
+                    font-weight: 500;
+                    letter-spacing: 0.5px;
+                    color: currentColor;
+                    opacity: 0.9;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    transition: all 0.1s ease-out;
+                    cursor: pointer;
+                    max-width: 100%;
+                ">{name}</div>
+            </div>
         </div>
         ''')
 
