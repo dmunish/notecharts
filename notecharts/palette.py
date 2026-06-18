@@ -1,5 +1,6 @@
 import re
 import importlib
+from IPython.display import HTML, display
 from typing import Literal, Union, List, Tuple, Optional
 
 # ============================================================================
@@ -556,6 +557,37 @@ def _load_palette_from_palettable(palette_name: str) -> List[Tuple[float, float,
             f"Could not load palette '{palette_name}' from palettable."
         ) from e
 
+# ============================================================================
+# Palette Preview Function
+# ============================================================================
+
+def render_palette(palette, mode: Literal["discrete", "gradient"] = "discrete", height=60, width=700):
+    """
+    Displays a list of colors as either distinct blocks or a smooth gradient.
+    
+    :param palette: List of color strings (hex or RGB)
+    :param mode: 'discrete' for individual blocks, 'gradient' for a smooth gradient
+    :param height: Height of the bar in pixels
+    :param max_width: Maximum width of the palette block
+    """
+    container_style = f"width: 100%; max-width: {width}px; height: {height}px; box-sizing: border-box;"
+    
+    if mode == "gradient":
+        gradient_stops = ", ".join(palette)
+        html_content = f'''
+        <div style="{container_style} background: linear-gradient(to right, {gradient_stops});"></div>
+        '''
+    elif mode == "discrete":
+        blocks = "".join([
+            f'<div style="flex: 1; background-color: {color}; height: 100%;"></div>'
+            for color in palette
+        ])
+        html_content = f'''
+        <div style="display: flex; {container_style}">
+            {blocks}
+        </div>
+        '''        
+    display(HTML(html_content))
 
 # ============================================================================
 # Main Palette Function
