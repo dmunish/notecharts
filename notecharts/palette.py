@@ -568,7 +568,7 @@ def render_palette(palette, mode: Literal["discrete", "gradient"] = "discrete", 
     :param palette: List of color strings (hex or RGB)
     :param mode: 'discrete' for individual blocks, 'gradient' for a smooth gradient
     :param height: Height of the bar in pixels
-    :param max_width: Maximum width of the palette block
+    :param width: Maximum width of the palette block
     """
     container_style = f"width: 100%; max-width: {width}px; height: {height}px; box-sizing: border-box;"
     
