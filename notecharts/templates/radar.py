@@ -206,7 +206,7 @@ class Radar(Chart):
                 "focus": "series",
                 "lineStyle": {"width": 3, "opacity": 1},
                 "itemStyle": {"opacity": 0.8},
-                "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 0.8},
+                "areaStyle": {"opacity": 0.5} if is_light else {"opacity": 1.0},
             },
             "blur": {
                 "lineStyle": {"width": 1, "opacity": 0.15},
