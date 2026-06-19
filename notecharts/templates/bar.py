@@ -1,5 +1,6 @@
 from typing import Union, List
 from ..chart import Chart
+from ..option import Option
 from ..palette import PaletteName
 from .utils import PaletteOptions, _resolve_palette, _apply_styling, _extract_column, _extract_columns_dict
 
@@ -43,7 +44,7 @@ class Bar(Chart):
         height="500px",
         renderer="canvas",
         theme="light",
-        options=None,
+        options:Option=None,
         dataframe=None,
         font=None,
         **kwargs
