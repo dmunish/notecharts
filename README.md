@@ -32,7 +32,7 @@ Click on the images above to view code for making them.
 - **Declarative API:** Pass a dictionary, get a chart. No complex class hierarchies to learn.
 - **`JSCode` Support:** Inject raw JavaScript functions for formatters, tooltips, and custom processing logic.
 - **Font Injection:** Automatically detect font declarations in your config, fetch the corresponding fonts (if available) from Google Fonts.
-- **Rich Color Palettes:** Access 196 professionally-designed customizable color palettes from [Palettable](https://jiffyclub.github.io/palettable/), or make your own through interpolation.
+- **Rich Color Palettes:** Access 185 professionally-designed customizable color palettes from [Palettable](https://jiffyclub.github.io/palettable/), or make your own through interpolation.
 - **Pre-built Charts:** Includes pre-built primitives like `Bar`, `Line`, `Scatter`, and `Radar` with beautiful defaults.
 - **Environment Agnostic:** Works seamlessly in VS Code, JupyterLab, and Google Colab.
 - **Compression:** Compresses the data and config objects so the notebook doesn't balloon in size.
