@@ -1,5 +1,6 @@
 from typing import Union, List
 from ..chart import Chart
+from ..option import Option
 from ..palette import PaletteName, Palette
 from .utils import PaletteOptions, _extract_column, _extract_columns_dict, _apply_styling
 
@@ -43,7 +44,7 @@ class Line(Chart):
         height="500px",
         renderer="canvas",
         theme="light",
-        options=None,
+        options:Option=None,
         dataframe=None,
         font=None,
         **kwargs
