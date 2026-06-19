@@ -52,7 +52,7 @@ Use the built-in PaletteBrowser to explore available palettes, or visualize cust
 ```python
 from notecharts import PaletteBrowser
 
-PaletteBrowser(n=5)
+PaletteBrowser(n=6)
 ```
 <img src="https://github.com/dmunish/notecharts/blob/main/assets/browser.png?raw=true" alt="Palette Browser" width="100%" border="0"></img>
 
