@@ -62,6 +62,9 @@ class Radar(Chart):
             else:
                 pal, pk = palette, {}
             color_base = Palette(pal, n_series, **pk)
+            # Remove keys from pk that are explicitly overridden for the transparent variant
+            for key in ("value", "alpha"):
+                pk.pop(key, None)
             color_transparent = Palette(pal, n_series, alpha=0, value="-0.5", **pk)
 
         # 3. Build Series Configurations
