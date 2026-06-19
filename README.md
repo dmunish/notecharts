@@ -4,8 +4,9 @@
 
 [![PyPI](https://img.shields.io/pypi/v/notecharts.svg?style=for-the-badge)](https://pypi.org/project/notecharts)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Try on Colab](https://img.shields.io/badge/Try%20on-Colab-F9AB00?style=for-the-badge&labelColor=555555)](https://colab.research.google.com/drive/16kv-MJ4yuTcnSDQelMJm8QyDiaHJuEFz)
 
-**notecharts** (note-charts or not-echarts) is designed for web-quality, interactive charts in Jupyter notebooks through Apache ECharts. It faithfully brings the full power of ECharts' declarative JSON-like API directly into Python notebooks, with a few notable enhancements.
+**notecharts** brings modern, interactive charts to Jupyter notebooks. Apache ECharts has some of the best charting APIs out there. notecharts just makes it work in Jupyter.
 
 ## Why notecharts?
 
@@ -17,7 +18,7 @@ Apache ECharts is an incredibly powerful web plotting library. While there have 
 - **pyecharts:** Powerful, but introduces a deep "Pythonic" abstraction. This deviates from the official ECharts API, making it difficult to translate JavaScript examples from the docs into Python.
 - **ipecharts:** Provides widget integration, but can have inconsistent interactivity and currently lacks support for environments like Google Colab.
 
-**notecharts** bridges this gap. It provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, dynamic palettes, and serialization.
+**notecharts** provides a thin layer that allows you to write ECharts options exactly as they appear in the official docs, while handling the heavy lifting of library loading, font injection, dynamic palettes, and serialization.
 
 | Stacked Bar | Force Directed Graph |
 |:---:|:---:|
@@ -159,8 +160,8 @@ options: Option = {
 Chart(options, width="700px").display()
 ```
 
-## Disclaimer
-
+## Notes
+- **Name:** Pronounced ***note-charts*** or ***not-echarts***.
 - **Security:** Use of `JSCode` allows for arbitrary JavaScript execution in the browser/notebook context. Always ensure you are passing trusted code and data to your charts.
 - **Connectivity:** This library is lightweight because it fetches the ECharts, ECharts-GL and fflate (for data decompression) minified code from `cdn.jsdelivr.net` at runtime, so an active internet connection is required to render charts for the first time. These are then cached in the browser/IDE context and subsequent renders can work offline.
 
@@ -174,5 +175,4 @@ Chart(options, width="700px").display()
 ## Links
 - [Official Docs](https://echarts.apache.org/en/option.html)
 - [ECharts Official Gallery](https://echarts.apache.org/examples/en/index.html)
-- [Demo notebook on Colab](https://colab.research.google.com/drive/16kv-MJ4yuTcnSDQelMJm8QyDiaHJuEFz)
 - [Community Gallery (CN)](https://www.isqqw.com/)
