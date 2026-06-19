@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notecharts"
-version = "0.5.0"
+version = "0.5.1"
 description = "Modern, interactive charts for Jupyter notebooks"
 readme = "README.md"
 license = "MIT"
@@ -32,3 +32,6 @@ Issues = "https://github.com/dmunish/notecharts/issues"
 
 [tool.setuptools.packages.find]
 include = ["notecharts*"]
+
+[tool.setuptools.package-data]
+notecharts = ["*.js"]
