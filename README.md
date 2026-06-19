@@ -57,7 +57,7 @@ PaletteBrowser(n=5)
 
 
 ### Templates
-Use the pre-configured temaplates for common visualizations, and optionally override any default styling of the class.
+Use the pre-configured templates for common visualizations, and optionally override any default styling of the class.
 
 ```python
 from notecharts import Line
