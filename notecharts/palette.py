@@ -818,7 +818,22 @@ def PaletteBrowser(
     width: int = 250,
     n: int = 6
 ) -> None:
-    """Displays an interactive, premium responsive color grid browser with copy-on-click."""
+    """
+    Displays an interactive responsive color palette browser with copy-on-click.
+
+    Parameters
+    ----------
+    palette : str, list of str, PaletteName, or list of PaletteName, optional
+        Visualize all palettes, a subset or custom palettes by passing a list of hex/rgb values.
+    mode : str, optional
+        Visualize palettes as discrete bands or smooth gradients.
+    height : int, optional
+        The height of the palette card.
+    width : int, optional
+        The width of the entire palette card.
+    n : int, optional
+        Number of palettes in each card in 'discrete' mode.
+    """
     targets = {}
 
     # 1. Normalize Inputs
