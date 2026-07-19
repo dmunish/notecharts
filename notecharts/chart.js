@@ -88,7 +88,29 @@
             }
             
             chart.setOption(options);
-            window.addEventListener('resize', function() { chart.resize(); });
+
+            if ('__MODE__' === 'image') {
+                setTimeout(function () {
+                    try {
+                        var dataURL = chart.getDataURL({
+                            type: 'png',
+                            pixelRatio: __DEVICE_PIXEL_RATIO__ || 1,
+                            backgroundColor: (options && options.backgroundColor) || '#fff'
+                        });
+                        var img = document.createElement('img');
+                        img.src = dataURL;
+                        img.style.width = dom.style.width || '100%';
+                        img.style.height = 'auto';
+                        img.style.maxWidth = '100%';
+                        dom.parentNode.replaceChild(img, dom);
+                        chart.dispose();
+                    } catch (e) {
+                        console.error('ECharts wrapper: image capture failed', e);
+                    }
+                }, 10);
+            } else {
+                window.addEventListener('resize', function () { chart.resize(); });
+            }
         });
     }
 
