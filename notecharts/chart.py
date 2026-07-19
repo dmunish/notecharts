@@ -4,8 +4,25 @@ import urllib.parse
 import base64
 import zlib
 from pathlib import Path
+from typing import Literal, get_args
 from IPython.display import display, HTML
 from .option import Option
+
+# ── Typed parameter domains ────────────────────────────────────────────
+Renderer = Literal["canvas", "svg"]
+Theme    = Literal["light", "dark"]
+Mode     = Literal["interactive", "image"]
+
+
+def _validate_param(value: str, allowed: type, name: str) -> str:
+    """Normalise *value* and raise ValueError if it is not a member of *allowed*."""
+    norm = value.strip().lower()
+    if norm not in get_args(allowed):
+        raise ValueError(
+            f"Invalid {name} {norm!r}. Supported: {', '.join(get_args(allowed))}."
+        )
+    return norm
+
 
 # Load the JavaScript template from the bundled file
 _JS_TEMPLATE_FILE = Path(__file__).parent / "chart.js"
@@ -77,7 +94,7 @@ class Chart:
         height: str = "500px",
         renderer: str = "canvas",
         theme: str = "light",
-        devicePixelRatio = 1,
+        devicePixelRatio: int = 1,
         maps: dict = None,
         compress: bool = True
     ):
@@ -108,30 +125,15 @@ class Chart:
                 f"Chart maps must be a dictionary or None, got {type(maps).__name__}."
             )
 
-        self.mode = mode.lower().strip()
-        if self.mode not in ["interactive", "image"]:
-            raise ValueError(
-                f"Invalid mode '{self.mode}'. Supported: 'interactive', 'image'."
-            )
+        self.mode              = _validate_param(mode,       Mode,     "mode")
+        self.renderer          = _validate_param(renderer,   Renderer, "renderer")
+        self.theme             = _validate_param(theme,      Theme,    "theme")
+        self.devicePixelRatio  = int(devicePixelRatio)
         
         self.options = options
         self.maps = maps or {}
         self.width = width.strip() if isinstance(width, str) else str(width)
         self.height = height.strip() if isinstance(height, str) else str(height)
-
-        self.renderer = renderer.lower().strip()
-        if self.renderer not in ["canvas", "svg"]:
-            raise ValueError(
-                f"Invalid renderer '{self.renderer}'. Supported: 'canvas', 'svg'."
-            )
-
-        self.theme = theme.lower().strip()
-        if self.theme not in ["light", "dark"]:
-            raise ValueError(
-                f"Invalid theme '{self.theme}'. Supported: 'light', 'dark'."
-            )
-        
-        self.devicePixelRatio = int(devicePixelRatio)
 
         if self.theme == "light" and "backgroundColor" not in self.options:
             self.options["backgroundColor"] = "white"
