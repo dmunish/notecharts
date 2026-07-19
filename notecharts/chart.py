@@ -50,6 +50,7 @@ class JSCode:
 
 class _EChartsEncoder(json.JSONEncoder):
     def __init__(self, *args, **kwargs):
+        kwargs.setdefault('default', self.default)
         super().__init__(*args, **kwargs)
         self.placeholders = {}
 
@@ -62,21 +63,6 @@ class _EChartsEncoder(json.JSONEncoder):
 
 
 class Chart:
-    """Renders Apache ECharts directly in a Jupyter notebook from a Python 'options' dict.
-
-    Features include automatic Google Fonts loading from any 'fontFamily' value found
-    inside the options dictionary and global font setting via `textStyle.fontFamily`.
-    Supports registering GeoJSON maps for map-type charts.
-
-    Attributes:
-        options (dict): The ECharts option dictionary.
-        maps (dict): Dictionary mapping map names to GeoJSON data.
-        width (str): CSS width of the chart container.
-        height (str): CSS height of the chart container.
-        renderer (str): The renderer type ('canvas' or 'svg').
-        theme (str): The chart theme ('light' or 'dark').
-        devicePixelRatio (str): The pixel ratio at which to render when using Canvas. Default is 1.
-    """
 
     # Generic CSS font families that should not be loaded from Google Fonts
     _GENERIC_FONTS = {
@@ -98,22 +84,25 @@ class Chart:
         maps: dict = None,
         compress: bool = True
     ):
-        """Initializes the Chart with options and display settings.
+        """Render an Apache ECharts figure in a Jupyter notebook.
+
+        Google Fonts are auto-loaded for any ``fontFamily`` value found inside
+        *options*.  GeoJSON maps can be registered via the *maps* parameter.
 
         Args:
-            options (dict): The ECharts option dictionary.
-            mode (str, optional): 'interactive' or 'image'. Defaults to "interactive".
-            width (str, optional): CSS width. Defaults to "99%".
-            height (str, optional): CSS height. Defaults to "500px".
-            renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
-            theme (str, optional): 'light' or 'dark'. Defaults to "light".
-            devicePixelRatio(int, optional): The pixel ratio at which to render when using Canvas. Default is 1.
-            maps (dict, optional): Dictionary mapping map names to GeoJSON data. Defaults to None.
-            compress (bool, optional): Whether to compress options using zlib. Defaults to True.
+            options: The ECharts option dictionary.
+            mode: ``"interactive"`` (default) or ``"image"``.
+            width: CSS width of the chart container.  Default ``"99%"``.
+            height: CSS height of the chart container.  Default ``"500px"``.
+            renderer: ``"canvas"`` (default) or ``"svg"``.
+            theme: ``"light"`` (default) or ``"dark"``.
+            devicePixelRatio: Pixel ratio for canvas rendering.  Default ``1``.
+            maps: Map name → GeoJSON data.  Default ``None``.
+            compress: Compress the option payload with zlib.  Default ``True``.
 
         Raises:
-            TypeError: If options is not a dictionary or maps is not a dictionary/None.
-            ValueError: If renderer, theme, or mode is invalid.
+            TypeError: *options* is not a dict, or *maps* is not dict/None.
+            ValueError: *renderer*, *theme*, or *mode* has an invalid value.
         """
         if not isinstance(options, dict):
             raise TypeError(
