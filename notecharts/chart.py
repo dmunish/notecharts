@@ -72,6 +72,7 @@ class Chart:
     def __init__(
         self,
         options: Option,
+        mode: str = "interactive",
         width: str = "99%",
         height: str = "500px",
         renderer: str = "canvas",
@@ -84,6 +85,7 @@ class Chart:
 
         Args:
             options (dict): The ECharts option dictionary.
+            mode (str, optional): 'interactive' or 'image'. Defaults to "interactive".
             width (str, optional): CSS width. Defaults to "99%".
             height (str, optional): CSS height. Defaults to "500px".
             renderer (str, optional): 'canvas' or 'svg'. Defaults to "canvas".
@@ -94,7 +96,7 @@ class Chart:
 
         Raises:
             TypeError: If options is not a dictionary or maps is not a dictionary/None.
-            ValueError: If renderer or theme is invalid.
+            ValueError: If renderer, theme, or mode is invalid.
         """
         if not isinstance(options, dict):
             raise TypeError(
@@ -104,6 +106,12 @@ class Chart:
         if maps is not None and not isinstance(maps, dict):
             raise TypeError(
                 f"Chart maps must be a dictionary or None, got {type(maps).__name__}."
+            )
+
+        self.mode = mode.lower().strip()
+        if self.mode not in ["interactive", "image"]:
+            raise ValueError(
+                f"Invalid mode '{self.mode}'. Supported: 'interactive', 'image'."
             )
         
         self.options = options
@@ -130,7 +138,9 @@ class Chart:
 
         self.compress = compress
 
-        # Discover all custom font families from the options dict
+        if self.mode == "image":
+            self.options.setdefault("animation", False)
+
         self.fonts = list(self._discover_fonts(self.options))
 
     # ------------------------------------------------------------------
@@ -251,6 +261,7 @@ class Chart:
             .replace('__HAS_MAPS__', has_maps)
             .replace('__MAPS_DATA__', maps_json)
             .replace('__HAS_FONTS__', has_fonts)
+            .replace('__MODE__', self.mode)
         )
 
         return f"""
