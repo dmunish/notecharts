@@ -3,7 +3,7 @@ import struct
 import uuid
 import urllib.parse
 import copy
-import zlib
+import zstandard as zstd
 from pathlib import Path
 from typing import Literal, get_args
 from IPython.display import display, HTML
@@ -244,7 +244,7 @@ class Chart:
             theme: ``"light"`` (default) or ``"dark"``.
             devicePixelRatio: Pixel ratio for canvas rendering.  Default ``1``.
             maps: Map name → GeoJSON data.  Default ``None``.
-            compress: Compress the option payload with zlib.  Default ``True``.
+            compress: Compress the option payload with zstd.  Default ``True``.
 
         Raises:
             TypeError: *options* is not a dict, or *maps* is not dict/None.
@@ -350,17 +350,17 @@ class Chart:
             if columnar_blob:
                 packed = struct.pack('<I', len(options_json)) + \
                          options_json.encode('utf-8') + columnar_blob
-                compressed = zlib.compress(packed, level=6)
+                compressed = zstd.compress(packed, 6)
                 options_js_code = f"'{_z85_encode(compressed)}'"
                 compress_format = 'columnar'
             else:
-                compressed = zlib.compress(options_json.encode('utf-8'), level=6)
+                compressed = zstd.compress(options_json.encode('utf-8'), 6)
                 options_js_code = f"'{_z85_encode(compressed)}'"
                 compress_format = 'z85'
 
             if self.maps:
                 maps_raw = json.dumps(self.maps)
-                maps_compressed = zlib.compress(maps_raw.encode('utf-8'), level=6)
+                maps_compressed = zstd.compress(maps_raw.encode('utf-8'), 6)
                 maps_json = f"'{_z85_encode(maps_compressed)}'"
                 maps_compressed_flag = "true"
             else:
