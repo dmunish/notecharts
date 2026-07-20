@@ -35,4 +35,4 @@ Issues = "https://github.com/dmunish/notecharts/issues"
 include = ["notecharts*"]
 
 [tool.setuptools.package-data]
-notecharts = ["*.js"]
+notecharts = ["*.html"]
