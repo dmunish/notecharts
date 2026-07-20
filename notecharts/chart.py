@@ -1,7 +1,8 @@
 import json
+import struct
 import uuid
 import urllib.parse
-import base64
+import copy
 import zlib
 from pathlib import Path
 from typing import Literal, get_args
@@ -22,6 +23,151 @@ def _validate_param(value: str, allowed: type, name: str) -> str:
             f"Invalid {name} {norm!r}. Supported: {', '.join(get_args(allowed))}."
         )
     return norm
+
+
+# ── Z85 encoding (4 bytes → 5 chars, 25% overhead vs base64's 33%) ────
+_Z85_ENC = b'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#'
+
+
+def _z85_encode(data: bytes) -> str:
+    chars = []
+    for i in range(0, len(data), 4):
+        chunk = data[i:i + 4]
+        pad = 4 - len(chunk)
+        if pad:
+            chunk = chunk + b'\0' * pad
+        n = int.from_bytes(chunk, 'big')
+        for j in range(4, -1, -1):
+            chars.append(chr(_Z85_ENC[(n // (85 ** j)) % 85]))
+    extra = (4 - len(data) % 4) % 4
+    return ''.join(chars[:len(chars) - extra])
+
+
+# ── Columnar-binary helpers ────────────────────────────────────────────
+
+def _zigzag(n: int) -> int:
+    return (n << 1) ^ (n >> 63)
+
+
+def _write_varint(buf: bytearray, value: int) -> None:
+    zig = _zigzag(value)
+    while zig > 0x7f:
+        buf.append((zig & 0x7f) | 0x80)
+        zig >>= 7
+    buf.append(zig & 0x7f)
+
+
+def _is_columnar_candidate(data) -> bool:
+    if not isinstance(data, list) or len(data) < 4:
+        return False
+    if all(isinstance(x, (int, float)) for x in data):
+        return True
+    if isinstance(data[0], list) and data[0] and isinstance(data[0][0], (int, float)):
+        if all(isinstance(r, list) and len(r) == len(data[0]) for r in data):
+            return True
+    if isinstance(data[0], dict):
+        keys = list(data[0].keys())
+        return all(isinstance(item, dict) and all(k in item for k in keys)
+                   for item in data)
+    return False
+
+
+def _extract_columnar(options: dict) -> tuple[dict, bytes]:
+    tables = []
+
+    def _walk(obj):
+        if isinstance(obj, dict):
+            for key in ('data', 'source'):
+                if key in obj and _is_columnar_candidate(obj[key]):
+                    idx = len(tables)
+                    tables.append(obj[key])
+                    obj[key] = f'@@C{idx}@@'
+            for v in obj.values():
+                _walk(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                _walk(item)
+
+    _walk(options)
+    if not tables:
+        return options, b''
+
+    blob = bytearray()
+    blob.extend(struct.pack('<H', len(tables)))
+    offset = 2 + 4 * len(tables)
+    for t in tables:
+        buf = _encode_table(t)
+        blob.extend(struct.pack('<I', offset))
+        offset += len(buf)
+    for t in tables:
+        blob.extend(_encode_table(t))
+    return options, bytes(blob)
+
+
+def _encode_table(data: list) -> bytearray:
+    buf = bytearray()
+    if all(isinstance(x, (int, float)) for x in data):
+        buf.append(0)
+        columns = [data]
+    elif isinstance(data[0], list):
+        buf.append(1)
+        ncols = len(data[0])
+        columns = [[data[r][c] for r in range(len(data))] for c in range(ncols)]
+    elif isinstance(data[0], dict):
+        buf.append(2)
+        keys = list(data[0].keys())
+        columns = [[item[k] for item in data] for k in keys]
+    else:
+        return bytearray()
+
+    buf.extend(struct.pack('<B', len(columns)))
+    
+    if buf[0] == 2:
+        for k in keys:
+            encoded = k.encode('utf-8')
+            buf.extend(struct.pack('<H', len(encoded)))
+            buf.extend(encoded)
+    
+    buf.extend(struct.pack('<I', len(columns[0])))
+
+    for col in columns:
+        if all(not isinstance(x, (int, float)) or isinstance(x, bool) for x in col):
+            buf.append(2)
+            _encode_string_column(buf, [str(x) for x in col])
+        elif all(isinstance(x, int) or (isinstance(x, float) and x == int(x))
+                 for x in col):
+            buf.append(0)
+            _encode_int_column(buf, [int(x) for x in col])
+        else:
+            buf.append(1)
+            _encode_float_column(buf, [float(x) for x in col])
+    return buf
+
+
+def _encode_int_column(buf: bytearray, values: list[int]) -> None:
+    _write_varint(buf, values[0])
+    for i in range(1, len(values)):
+        _write_varint(buf, values[i] - values[i - 1])
+
+
+def _encode_float_column(buf: bytearray, values: list[float]) -> None:
+    for v in values:
+        buf.extend(struct.pack('<d', v))
+
+
+def _encode_string_column(buf: bytearray, values: list[str]) -> None:
+    unique = {}
+    for v in values:
+        if v not in unique:
+            unique[v] = len(unique)
+    strings = list(unique.keys())
+    buf.extend(struct.pack('<H', len(strings)))
+    for s in strings:
+        encoded = s.encode('utf-8')
+        buf.extend(struct.pack('<H', len(encoded)))
+        buf.extend(encoded)
+    for v in values:
+        _write_varint(buf, unique[v])
 
 
 # Load the JavaScript template from the bundled file
@@ -180,37 +326,14 @@ class Chart:
     # ------------------------------------------------------------------
     # Serialisation
     # ------------------------------------------------------------------
-    def _serialise_options(self) -> str:
+    def _serialise_options(self, obj=None) -> str:
+        if obj is None:
+            obj = self.options
         encoder = _EChartsEncoder()
-        json_str = encoder.encode(self.options)
+        json_str = encoder.encode(obj)
         for placeholder, js_code in encoder.placeholders.items():
             json_str = json_str.replace(f'"{placeholder}"', js_code)
         return json_str
-
-    def _compress_options(self, options_str: str) -> tuple:
-        """Compress options string using zlib and base64 encoding.
-        
-        Args:
-            options_str (str): The serialized options string.
-            
-        Returns:
-            tuple: (options_data, is_compressed) where options_data is either the
-                   compressed base64 string or the original string, and is_compressed
-                   is a boolean flag indicating if compression was applied.
-        """
-        if not self.compress:
-            return options_str, False
-        
-        try:
-            # Compress the options string
-            compressed = zlib.compress(options_str.encode('utf-8'), level=9)
-            # Encode as base64 for safe HTML embedding
-            encoded = base64.b64encode(compressed).decode('ascii')
-            return encoded, True
-        except Exception as e:
-            # Graceful fallback on compression failure
-            print(f"Warning: Compression failed ({e}), falling back to uncompressed options.")
-            return options_str, False
 
     # ------------------------------------------------------------------
     # HTML generation
@@ -218,18 +341,37 @@ class Chart:
     def _make_chart_html(self, chart_id=None) -> str:
         if chart_id is None:
             chart_id = f"echart_{uuid.uuid4().hex}"
-        
-        options_js_raw = self._serialise_options()
-        options_js, is_compressed = self._compress_options(options_js_raw)
-        
-        # If compressed, wrap in quotes; if not, use as raw JS
-        if is_compressed:
-            options_js_code = f"'{options_js}'"
+
+        if self.compress:
+            working_options = copy.deepcopy(self.options)
+            skeleton, columnar_blob = _extract_columnar(working_options)
+            options_json = self._serialise_options(skeleton)
+
+            if columnar_blob:
+                packed = struct.pack('<I', len(options_json)) + \
+                         options_json.encode('utf-8') + columnar_blob
+                compressed = zlib.compress(packed, level=6)
+                options_js_code = f"'{_z85_encode(compressed)}'"
+                compress_format = 'columnar'
+            else:
+                compressed = zlib.compress(options_json.encode('utf-8'), level=6)
+                options_js_code = f"'{_z85_encode(compressed)}'"
+                compress_format = 'z85'
+
+            if self.maps:
+                maps_raw = json.dumps(self.maps)
+                maps_compressed = zlib.compress(maps_raw.encode('utf-8'), level=6)
+                maps_json = f"'{_z85_encode(maps_compressed)}'"
+                maps_compressed_flag = "true"
+            else:
+                maps_json = "{}"
+                maps_compressed_flag = "false"
         else:
-            options_js_code = options_js
-        
-        # Serialize maps to JSON
-        maps_json = json.dumps(self.maps) if self.maps else "{}"
+            options_json = self._serialise_options()
+            options_js_code = options_json
+            compress_format = 'none'
+            maps_json = json.dumps(self.maps) if self.maps else "{}"
+            maps_compressed_flag = "false"
 
         font_link = ""
         if self.fonts:
@@ -240,7 +382,6 @@ class Chart:
 
         has_fonts = "true" if self.fonts else "false"
         has_maps = "true" if self.maps else "false"
-        is_compressed_js = "true" if is_compressed else "false"
 
         js_code = (_JS_TEMPLATE
             .replace('__CHART_ID__', chart_id)
@@ -248,9 +389,10 @@ class Chart:
             .replace('__RENDERER__', self.renderer)
             .replace('__DEVICE_PIXEL_RATIO__', str(self.devicePixelRatio))
             .replace('__OPTIONS_DATA__', options_js_code)
-            .replace('__IS_COMPRESSED__', is_compressed_js)
+            .replace('__COMPRESS_FORMAT__', compress_format)
             .replace('__HAS_MAPS__', has_maps)
             .replace('__MAPS_DATA__', maps_json)
+            .replace('__MAPS_COMPRESSED__', maps_compressed_flag)
             .replace('__HAS_FONTS__', has_fonts)
             .replace('__MODE__', self.mode)
         )

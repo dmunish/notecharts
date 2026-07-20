@@ -23,41 +23,184 @@
     }
 
     // ── Decompress and parse options ────────────────────────────────
-    function parseOptions(rawOptions, isCompressed, fflate) {
+
+    function decodeZ85(str) {
+        var alpha = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#';
+        var table = {};
+        for (var i = 0; i < 85; i++) table[alpha[i]] = i;
+
+        var pad = (5 - str.length % 5) % 5;
+        for (var i = 0; i < pad; i++) str += '\0';
+
+        var outLen = Math.floor(str.length / 5) * 4 - pad;
+        var out = new Uint8Array(outLen);
+        var oi = 0;
+        for (var i = 0; i < str.length; i += 5) {
+            var n = ((((table[str[i]] * 85 + table[str[i+1]]) * 85
+                     + table[str[i+2]]) * 85 + table[str[i+3]]) * 85
+                     + table[str[i+4]]);
+            if (oi < outLen) out[oi++] = (n >>> 24) & 255;
+            if (oi < outLen) out[oi++] = (n >>> 16) & 255;
+            if (oi < outLen) out[oi++] = (n >>> 8) & 255;
+            if (oi < outLen) out[oi++] = n & 255;
+        }
+        return out;
+    }
+
+    function readVarint(bytes, offset) {
+        var result = 0, factor = 1;
+        while (true) {
+            var b = bytes[offset++];
+            result += (b & 0x7f) * factor;
+            if (!(b & 0x80)) break;
+            factor *= 128;
+        }
+        return { value: (result >>> 1) ^ (-(result & 1)), offset: offset };
+    }
+
+    function decodeColumnarTable(bytes, offset, ncols, nrows, format, keys) {
+        var columns = [];
+        for (var c = 0; c < ncols; c++) {
+            var type = bytes[offset++];
+            var col = [];
+            if (type === 0) {
+                var r = readVarint(bytes, offset);
+                col.push(r.value); offset = r.offset;
+                for (var i = 1; i < nrows; i++) {
+                    r = readVarint(bytes, offset);
+                    col.push(col[i - 1] + r.value);
+                    offset = r.offset;
+                }
+            } else if (type === 1) {
+                var slice = bytes.slice(offset, offset + nrows * 8);
+                var view = new DataView(slice.buffer);
+                for (var i = 0; i < nrows; i++) {
+                    col.push(view.getFloat64(i * 8, true));
+                }
+                offset += nrows * 8;
+            } else if (type === 2) {
+                var nstrings = bytes[offset] | (bytes[offset + 1] << 8);
+                offset += 2;
+                var strings = [];
+                for (var i = 0; i < nstrings; i++) {
+                    var slen = bytes[offset] | (bytes[offset + 1] << 8);
+                    offset += 2;
+                    strings.push(new TextDecoder().decode(
+                        bytes.slice(offset, offset + slen)));
+                    offset += slen;
+                }
+                for (var i = 0; i < nrows; i++) {
+                    var rr = readVarint(bytes, offset);
+                    col.push(strings[rr.value]);
+                    offset = rr.offset;
+                }
+            }
+            columns.push(col);
+        }
+
+        var rows = [];
+        if (format === 2) {
+            for (var r = 0; r < nrows; r++) {
+                var row = {};
+                for (var c = 0; c < ncols; c++) {
+                    row[keys[c]] = columns[c][r];
+                }
+                rows.push(row);
+            }
+        } else {
+            for (var r = 0; r < nrows; r++) {
+                var row = [];
+                for (var c = 0; c < ncols; c++) {
+                    row.push(columns[c][r]);
+                }
+                rows.push(row);
+            }
+        }
+        return { rows: rows, offset: offset };
+    }
+
+    function rehydrateColumnar(obj, blob) {
+        if (!blob || blob.length === 0) return;
+        var nTables = blob[0] | (blob[1] << 8);
+        var tables = [];
+        for (var i = 0; i < nTables; i++) {
+            var off = 2 + i * 4;
+            var dataStart = blob[off] | (blob[off + 1] << 8)
+                          | (blob[off + 2] << 16) | (blob[off + 3] << 24);
+            var format = blob[dataStart];
+            var pos = dataStart + 1;
+            var ncols = blob[pos++];
+            var keys = [];
+            if (format === 2) {
+                for (var k = 0; k < ncols; k++) {
+                    var klen = blob[pos] | (blob[pos + 1] << 8);
+                    pos += 2;
+                    keys.push(new TextDecoder().decode(blob.slice(pos, pos + klen)));
+                    pos += klen;
+                }
+            }
+            var nrows = blob[pos] | (blob[pos + 1] << 8)
+                      | (blob[pos + 2] << 16) | (blob[pos + 3] << 24);
+            var result = decodeColumnarTable(blob, pos + 4, ncols, nrows, format, keys);
+            tables.push(result.rows);
+        }
+        var re = /^@@C(\d+)@@$/;
+        function walk(o) {
+            if (Array.isArray(o)) {
+                for (var j = 0; j < o.length; j++) walk(o[j]);
+            } else if (o && typeof o === 'object') {
+                var keys = Object.keys(o);
+                for (var k = 0; k < keys.length; k++) {
+                    var v = o[keys[k]];
+                    if (typeof v === 'string') {
+                        var m = v.match(re);
+                        if (m) {
+                            var idx = parseInt(m[1], 10);
+                            if (idx < tables.length) o[keys[k]] = tables[idx];
+                        }
+                    } else {
+                        walk(v);
+                    }
+                }
+            }
+        }
+        walk(obj);
+    }
+
+    function parseOptions(rawOptions, format, fflate) {
         var finalOptions;
         try {
-            if (isCompressed) {
-                if (!fflate) {
-                    console.error('ECharts wrapper: fflate library not available for decompression. Available:', typeof window.fflate);
-                    return null;
-                }
-                if (!fflate.unzlibSync) {
-                    console.error('ECharts wrapper: fflate.unzlibSync not available');
-                    return null;
-                }
-                // Decode base64 to Uint8Array
-                var binaryString = window.atob(rawOptions);
-                var len = binaryString.length;
-                var bytes = new Uint8Array(len);
-                for (var i = 0; i < len; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                var decompressed = fflate.unzlibSync(bytes);
-                var decoder = new TextDecoder();
-                var optionsString = decoder.decode(decompressed);
-                finalOptions = new Function('return ' + optionsString)();
-            } else {
-                // Uncompressed
+            if (format === 'none') {
                 finalOptions = rawOptions;
+            } else if (format === 'z85' || format === 'columnar') {
+                if (!fflate) {
+                    console.error('ECharts wrapper: fflate not available');
+                    return null;
+                }
+                var bytes = decodeZ85(rawOptions);
+                var decompressed = fflate.unzlibSync(bytes);
+                if (format === 'columnar') {
+                    var jsonLen = decompressed[0] | (decompressed[1] << 8)
+                                | (decompressed[2] << 16) | (decompressed[3] << 24);
+                    var jsonBytes = decompressed.slice(4, 4 + jsonLen);
+                    var blob = decompressed.slice(4 + jsonLen);
+                    var optionsString = new TextDecoder().decode(jsonBytes);
+                    finalOptions = new Function('return ' + optionsString)();
+                    rehydrateColumnar(finalOptions, blob);
+                } else {
+                    var optionsString = new TextDecoder().decode(decompressed);
+                    finalOptions = new Function('return ' + optionsString)();
+                }
+            } else {
+                console.error('ECharts wrapper: unknown compress format:', format);
+                return null;
             }
             return finalOptions;
         } catch (e) {
             console.error('ECharts wrapper: Error parsing options:', e);
-            console.error('  isCompressed:', isCompressed);
+            console.error('  format:', format);
             console.error('  fflate available:', !!fflate);
-            if (e.stack) {
-                console.error('  Stack:', e.stack);
-            }
+            if (e.stack) console.error('  Stack:', e.stack);
             return null;
         }
     }
@@ -68,11 +211,10 @@
             var chart = ec.init(dom, '__THEME__', {
                 renderer: '__RENDERER__', devicePixelRatio: __DEVICE_PIXEL_RATIO__
             });
-            
-            // Parse the options (handles both compressed and uncompressed)
+
             var rawOptions = __OPTIONS_DATA__;
-            var isCompressed = __IS_COMPRESSED__;
-            var options = parseOptions(rawOptions, isCompressed, fflate);
+            var format = '__COMPRESS_FORMAT__';
+            var options = parseOptions(rawOptions, format, fflate);
             
             if (!options) {
                 console.error('ECharts wrapper: Failed to parse options');
@@ -81,7 +223,13 @@
             
             // Register maps if provided
             if (__HAS_MAPS__) {
-                var maps = __MAPS_DATA__;
+                if (__MAPS_COMPRESSED__) {
+                    var mapBytes = decodeZ85(__MAPS_DATA__);
+                    var mapDecompressed = fflate.unzlibSync(mapBytes);
+                    var maps = new Function('return ' + new TextDecoder().decode(mapDecompressed))();
+                } else {
+                    var maps = __MAPS_DATA__;
+                }
                 Object.entries(maps).forEach(function([name, data]) {
                     ec.registerMap(name, data);
                 });
@@ -116,8 +264,8 @@
 
     // ── Check if echarts and fflate are already loaded ─────────────────
     function modulesReady(cb) {
-        var needsFflate = __IS_COMPRESSED__;
-        
+        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
+
         if (typeof window.echarts !== 'undefined') {
             if (needsFflate && typeof window.fflate === 'undefined') {
                 return false;
@@ -143,7 +291,6 @@
                 }
             }
         }
-        // Not loaded yet, fall through to load it
         return false;
     }
 
@@ -157,8 +304,8 @@
     }
 
     function loadViaScript() {
+        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
         if (typeof window.echarts !== 'undefined') {
-            var needsFflate = __IS_COMPRESSED__;
             if (needsFflate && typeof window.fflate === 'undefined') {
                 loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js', function() {
                     initChart(window.echarts, window.fflate);
@@ -170,7 +317,6 @@
         }
         loadScript('https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js', function() {
             loadScript('https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js', function() {
-                var needsFflate = __IS_COMPRESSED__;
                 if (needsFflate && typeof window.fflate === 'undefined') {
                     loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js', function() {
                         initChart(window.echarts, window.fflate);
@@ -184,14 +330,14 @@
 
     // ── RequireJS loader (VS Code webview) ────────────────────────────
     function loadViaRequire() {
-        var needsFflate = __IS_COMPRESSED__;
+        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
         var paths = {
             'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min',
             'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min'
         };
-        
+
         require.config({ paths: paths });
-        
+
         function doLoadEcharts() {
             require(['echarts'], function(ec) {
                 require(['echarts-gl'], function() {
