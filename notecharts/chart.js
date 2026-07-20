@@ -167,18 +167,18 @@
         walk(obj);
     }
 
-    function parseOptions(rawOptions, format, fflate) {
+    function parseOptions(rawOptions, format, fzstd) {
         var finalOptions;
         try {
             if (format === 'none') {
                 finalOptions = rawOptions;
             } else if (format === 'z85' || format === 'columnar') {
-                if (!fflate) {
-                    console.error('ECharts wrapper: fflate not available');
+                if (!fzstd) {
+                    console.error('ECharts wrapper: fzstd not available');
                     return null;
                 }
                 var bytes = decodeZ85(rawOptions);
-                var decompressed = fflate.unzlibSync(bytes);
+                var decompressed = fzstd.decompress(bytes);
                 if (format === 'columnar') {
                     var jsonLen = decompressed[0] | (decompressed[1] << 8)
                                 | (decompressed[2] << 16) | (decompressed[3] << 24);
@@ -199,14 +199,14 @@
         } catch (e) {
             console.error('ECharts wrapper: Error parsing options:', e);
             console.error('  format:', format);
-            console.error('  fflate available:', !!fflate);
+            console.error('  fzstd available:', !!fzstd);
             if (e.stack) console.error('  Stack:', e.stack);
             return null;
         }
     }
 
     // ── chart init ─────
-    function initChart(ec, fflate) {
+    function initChart(ec, fzstd) {
         waitForDom('__CHART_ID__', function(dom) {
             var chart = ec.init(dom, '__THEME__', {
                 renderer: '__RENDERER__', devicePixelRatio: __DEVICE_PIXEL_RATIO__
@@ -214,18 +214,18 @@
 
             var rawOptions = __OPTIONS_DATA__;
             var format = '__COMPRESS_FORMAT__';
-            var options = parseOptions(rawOptions, format, fflate);
-            
+            var options = parseOptions(rawOptions, format, fzstd);
+
             if (!options) {
                 console.error('ECharts wrapper: Failed to parse options');
                 return;
             }
-            
+
             // Register maps if provided
             if (__HAS_MAPS__) {
                 if (__MAPS_COMPRESSED__) {
                     var mapBytes = decodeZ85(__MAPS_DATA__);
-                    var mapDecompressed = fflate.unzlibSync(mapBytes);
+                    var mapDecompressed = fzstd.decompress(mapBytes);
                     var maps = new Function('return ' + new TextDecoder().decode(mapDecompressed))();
                 } else {
                     var maps = __MAPS_DATA__;
@@ -262,25 +262,25 @@
         });
     }
 
-    // ── Check if echarts and fflate are already loaded ─────────────────
+    // ── Check if echarts and fzstd are already loaded ─────────────────
     function modulesReady(cb) {
-        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
+        var needsFzstd = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
 
         if (typeof window.echarts !== 'undefined') {
-            if (needsFflate && typeof window.fflate === 'undefined') {
+            if (needsFzstd && typeof window.fzstd === 'undefined') {
                 return false;
             }
-            cb(window.echarts, window.fflate);
+            cb(window.echarts, window.fzstd);
             return;
         }
         if (typeof require !== 'undefined' && typeof require.config === 'function') {
             if (require.defined && (require.defined('echarts') || require.defined('echarts-gl'))) {
-                if (needsFflate) {
-                    if (typeof window.fflate === 'undefined') {
+                if (needsFzstd) {
+                    if (typeof window.fzstd === 'undefined') {
                         return false;
                     }
                     require(['echarts'], function(ec) {
-                        cb(ec, window.fflate);
+                        cb(ec, window.fzstd);
                     });
                     return;
                 } else {
@@ -304,25 +304,25 @@
     }
 
     function loadViaScript() {
-        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
+        var needsFzstd = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
         if (typeof window.echarts !== 'undefined') {
-            if (needsFflate && typeof window.fflate === 'undefined') {
-                loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js', function() {
-                    initChart(window.echarts, window.fflate);
+            if (needsFzstd && typeof window.fzstd === 'undefined') {
+                loadScript('https://cdn.jsdelivr.net/npm/fzstd@0.1.1/umd/index.js', function() {
+                    initChart(window.echarts, window.fzstd);
                 });
             } else {
-                initChart(window.echarts, window.fflate || undefined);
+                initChart(window.echarts, window.fzstd || undefined);
             }
             return;
         }
         loadScript('https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js', function() {
             loadScript('https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js', function() {
-                if (needsFflate && typeof window.fflate === 'undefined') {
-                    loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js', function() {
-                        initChart(window.echarts, window.fflate);
+                if (needsFzstd && typeof window.fzstd === 'undefined') {
+                    loadScript('https://cdn.jsdelivr.net/npm/fzstd@0.1.1/umd/index.js', function() {
+                        initChart(window.echarts, window.fzstd);
                     });
                 } else {
-                    initChart(window.echarts, window.fflate || undefined);
+                    initChart(window.echarts, window.fzstd || undefined);
                 }
             });
         });
@@ -330,7 +330,7 @@
 
     // ── RequireJS loader (VS Code webview) ────────────────────────────
     function loadViaRequire() {
-        var needsFflate = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
+        var needsFzstd = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
         var paths = {
             'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min',
             'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min'
@@ -341,15 +341,15 @@
         function doLoadEcharts() {
             require(['echarts'], function(ec) {
                 require(['echarts-gl'], function() {
-                    initChart(ec, window.fflate);
+                    initChart(ec, window.fzstd);
                 });
             }, function(err) {
                 console.error('ECharts wrapper: RequireJS failed to load echarts modules:', err);
             });
         }
 
-        if (needsFflate && typeof window.fflate === 'undefined') {
-            fetch('https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js')
+        if (needsFzstd && typeof window.fzstd === 'undefined') {
+            fetch('https://cdn.jsdelivr.net/npm/fzstd@0.1.1/umd/index.js')
                 .then(function(res) { return res.text(); })
                 .then(function(text) {
                     var wrapper = new Function('module', 'exports', 'define', text);
@@ -357,7 +357,7 @@
                     doLoadEcharts();
                 })
                 .catch(function(err) {
-                    console.error('ECharts wrapper: Failed to fetch fflate:', err);
+                    console.error('ECharts wrapper: Failed to fetch fzstd:', err);
                 });
         } else {
             doLoadEcharts();
