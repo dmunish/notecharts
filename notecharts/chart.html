@@ -1,6 +1,8 @@
+__FONT_LINK__
+<div id="__CHART_ID__" style="width:__WIDTH__;height:__HEIGHT__;"></div>
+<script>
 (function() {
 
-    // ── wait for the div to exist in the DOM ──────────────────────────
     function waitForDom(id, cb) {
         var dom = document.getElementById(id);
         if (dom) { cb(dom); return; }
@@ -22,27 +24,36 @@
         }, 100);
     }
 
-    // ── Decompress and parse options ────────────────────────────────
+    // ── Codec ────────────────────────────────────────────────────────
 
     function decodeZ85(str) {
         var alpha = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-:+=^!/*?&<>()[]{}@%$#';
         var table = {};
         for (var i = 0; i < 85; i++) table[alpha[i]] = i;
 
-        var pad = (5 - str.length % 5) % 5;
-        for (var i = 0; i < pad; i++) str += '\0';
-
-        var outLen = Math.floor(str.length / 5) * 4 - pad;
+        var nFull = Math.floor(str.length / 5);
+        var tail = str.length % 5;
+        var outLen = nFull * 4 + (tail ? tail - 1 : 0);
         var out = new Uint8Array(outLen);
         var oi = 0;
-        for (var i = 0; i < str.length; i += 5) {
-            var n = ((((table[str[i]] * 85 + table[str[i+1]]) * 85
-                     + table[str[i+2]]) * 85 + table[str[i+3]]) * 85
-                     + table[str[i+4]]);
-            if (oi < outLen) out[oi++] = (n >>> 24) & 255;
-            if (oi < outLen) out[oi++] = (n >>> 16) & 255;
-            if (oi < outLen) out[oi++] = (n >>> 8) & 255;
-            if (oi < outLen) out[oi++] = n & 255;
+
+        for (var i = 0; i < nFull; i++) {
+            var base = i * 5;
+            var n = ((((table[str[base]] * 85 + table[str[base+1]]) * 85
+                     + table[str[base+2]]) * 85 + table[str[base+3]]) * 85
+                     + table[str[base+4]]);
+            out[oi++] = (n >>> 24) & 255;
+            out[oi++] = (n >>> 16) & 255;
+            out[oi++] = (n >>> 8) & 255;
+            out[oi++] = n & 255;
+        }
+
+        if (tail) {
+            var n = 0;
+            for (var j = 0; j < tail; j++)
+                n = n * 85 + table[str[nFull * 5 + j]];
+            for (var j = tail - 2; j >= 0; j--)
+                out[oi++] = (n >>> (j * 8)) & 255;
         }
         return out;
     }
@@ -102,17 +113,13 @@
         if (format === 2) {
             for (var r = 0; r < nrows; r++) {
                 var row = {};
-                for (var c = 0; c < ncols; c++) {
-                    row[keys[c]] = columns[c][r];
-                }
+                for (var c = 0; c < ncols; c++) row[keys[c]] = columns[c][r];
                 rows.push(row);
             }
         } else {
             for (var r = 0; r < nrows; r++) {
                 var row = [];
-                for (var c = 0; c < ncols; c++) {
-                    row.push(columns[c][r]);
-                }
+                for (var c = 0; c < ncols; c++) row.push(columns[c][r]);
                 rows.push(row);
             }
         }
@@ -168,73 +175,66 @@
     }
 
     function parseOptions(rawOptions, format, fzstd) {
-        var finalOptions;
         try {
-            if (format === 'none') {
-                finalOptions = rawOptions;
-            } else if (format === 'z85' || format === 'columnar') {
-                if (!fzstd) {
-                    console.error('ECharts wrapper: fzstd not available');
-                    return null;
-                }
-                var bytes = decodeZ85(rawOptions);
-                var decompressed = fzstd.decompress(bytes);
-                if (format === 'columnar') {
-                    var jsonLen = decompressed[0] | (decompressed[1] << 8)
-                                | (decompressed[2] << 16) | (decompressed[3] << 24);
-                    var jsonBytes = decompressed.slice(4, 4 + jsonLen);
-                    var blob = decompressed.slice(4 + jsonLen);
-                    var optionsString = new TextDecoder().decode(jsonBytes);
-                    finalOptions = new Function('return ' + optionsString)();
-                    rehydrateColumnar(finalOptions, blob);
-                } else {
-                    var optionsString = new TextDecoder().decode(decompressed);
-                    finalOptions = new Function('return ' + optionsString)();
-                }
-            } else {
+            if (format === 'none') return rawOptions;
+            if (format !== 'z85' && format !== 'columnar') {
                 console.error('ECharts wrapper: unknown compress format:', format);
                 return null;
+            }
+            if (!fzstd) {
+                console.error('ECharts wrapper: fzstd not available');
+                return null;
+            }
+            var bytes = decodeZ85(rawOptions);
+            var decompressed = fzstd.decompress(bytes);
+            var optionsString;
+            var finalOptions;
+            if (format === 'columnar') {
+                var jsonLen = decompressed[0] | (decompressed[1] << 8)
+                            | (decompressed[2] << 16) | (decompressed[3] << 24);
+                optionsString = new TextDecoder().decode(
+                    decompressed.slice(4, 4 + jsonLen));
+                finalOptions = new Function('return ' + optionsString)();
+                rehydrateColumnar(finalOptions, decompressed.slice(4 + jsonLen));
+            } else {
+                optionsString = new TextDecoder().decode(decompressed);
+                finalOptions = new Function('return ' + optionsString)();
             }
             return finalOptions;
         } catch (e) {
             console.error('ECharts wrapper: Error parsing options:', e);
             console.error('  format:', format);
-            console.error('  fzstd available:', !!fzstd);
+            console.error('  fzstd:', !!fzstd);
             if (e.stack) console.error('  Stack:', e.stack);
             return null;
         }
     }
 
-    // ── chart init ─────
+    // ── Init ──────────────────────────────────────────────────────────
+
     function initChart(ec, fzstd) {
         waitForDom('__CHART_ID__', function(dom) {
             var chart = ec.init(dom, '__THEME__', {
                 renderer: '__RENDERER__', devicePixelRatio: __DEVICE_PIXEL_RATIO__
             });
 
-            var rawOptions = __OPTIONS_DATA__;
-            var format = '__COMPRESS_FORMAT__';
-            var options = parseOptions(rawOptions, format, fzstd);
+            var options = parseOptions(__OPTIONS_DATA__, '__COMPRESS_FORMAT__', fzstd);
+            if (!options) return;
 
-            if (!options) {
-                console.error('ECharts wrapper: Failed to parse options');
-                return;
-            }
-
-            // Register maps if provided
             if (__HAS_MAPS__) {
                 if (__MAPS_COMPRESSED__) {
                     var mapBytes = decodeZ85(__MAPS_DATA__);
-                    var mapDecompressed = fzstd.decompress(mapBytes);
-                    var maps = new Function('return ' + new TextDecoder().decode(mapDecompressed))();
+                    var mapDec = fzstd.decompress(mapBytes);
+                    var maps = new Function('return ' + new TextDecoder().decode(mapDec))();
                 } else {
                     var maps = __MAPS_DATA__;
                 }
-                Object.entries(maps).forEach(function([name, data]) {
+                Object.entries(maps).forEach(function(_a) {
+                    var name = _a[0], data = _a[1];
                     ec.registerMap(name, data);
                 });
             }
-            
+
             chart.setOption(options);
 
             if ('__MODE__' === 'image') {
@@ -262,39 +262,30 @@
         });
     }
 
-    // ── Check if echarts and fzstd are already loaded ─────────────────
+    // ── Loader ────────────────────────────────────────────────────────
+
     function modulesReady(cb) {
         var needsFzstd = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
 
         if (typeof window.echarts !== 'undefined') {
-            if (needsFzstd && typeof window.fzstd === 'undefined') {
-                return false;
-            }
+            if (needsFzstd && typeof window.fzstd === 'undefined') return false;
             cb(window.echarts, window.fzstd);
             return;
         }
         if (typeof require !== 'undefined' && typeof require.config === 'function') {
             if (require.defined && (require.defined('echarts') || require.defined('echarts-gl'))) {
                 if (needsFzstd) {
-                    if (typeof window.fzstd === 'undefined') {
-                        return false;
-                    }
-                    require(['echarts'], function(ec) {
-                        cb(ec, window.fzstd);
-                    });
-                    return;
+                    if (typeof window.fzstd === 'undefined') return false;
+                    require(['echarts'], function(ec) { cb(ec, window.fzstd); });
                 } else {
-                    require(['echarts'], function(ec) {
-                        cb(ec, undefined);
-                    });
-                    return;
+                    require(['echarts'], function(ec) { cb(ec, undefined); });
                 }
+                return;
             }
         }
         return false;
     }
 
-    // ── plain <script> loader (Colab / plain Jupyter) ─────────────────
     function loadScript(url, cb) {
         var s = document.createElement('script');
         s.src = url;
@@ -328,14 +319,12 @@
         });
     }
 
-    // ── RequireJS loader (VS Code webview) ────────────────────────────
     function loadViaRequire() {
         var needsFzstd = '__COMPRESS_FORMAT__' !== 'none' || __MAPS_COMPRESSED__;
         var paths = {
             'echarts': 'https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min',
             'echarts-gl': 'https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min'
         };
-
         require.config({ paths: paths });
 
         function doLoadEcharts() {
@@ -364,11 +353,8 @@
         }
     }
 
-    // ── font gate → then load echarts ─────────────────────────────────
     function loadEchartsAndInit() {
-        if (modulesReady(initChart) !== false) {
-            return;
-        }
+        if (modulesReady(initChart) !== false) return;
         if (typeof require !== 'undefined' && typeof require.config === 'function') {
             loadViaRequire();
         } else {
@@ -386,3 +372,4 @@
         loadEchartsAndInit();
     }
 })();
+</script>
