@@ -21,9 +21,10 @@ classifiers = [
 ]
 requires-python = ">=3.8"
 dependencies = [
-    "IPython",
+    "build>=1.2.2.post1",
+    "ipython",
     "palettable",
-    "zstandard"
+    "zstandard",
 ]
 
 [project.urls]
