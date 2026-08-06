@@ -141,8 +141,15 @@ def _encode_int_column(buf: bytearray, values: list[int]) -> None:
 
 
 def _encode_float_column(buf: bytearray, values: list[float]) -> None:
+    k = 0
     for v in values:
-        buf.extend(struct.pack('<d', v))
+        s = repr(v)
+        if '.' in s and 'e' not in s and 'E' not in s:
+            k = max(k, len(s.split('.')[1]))
+    k = min(k, 5)
+    scale = 10 ** k
+    buf.append(k)
+    _encode_int_column(buf, [round(v * scale) for v in values])
 
 
 def _encode_string_column(buf: bytearray, values: list[str]) -> None:

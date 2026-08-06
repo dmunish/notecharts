@@ -66,7 +66,8 @@ __FONT_LINK__
             if (!(b & 0x80)) break;
             factor *= 128;
         }
-        return { value: (result >>> 1) ^ (-(result & 1)), offset: offset };
+        var value = (result % 2 === 0) ? result / 2 : -(result + 1) / 2;
+        return { value: value, offset: offset };
     }
 
     function decodeColumnarTable(bytes, offset, ncols, nrows, format, keys) {
@@ -83,12 +84,13 @@ __FONT_LINK__
                     offset = r.offset;
                 }
             } else if (type === 1) {
-                var slice = bytes.slice(offset, offset + nrows * 8);
-                var view = new DataView(slice.buffer);
+                var scale = Math.pow(10, bytes[offset++]);
+                var acc = 0, fr;
                 for (var i = 0; i < nrows; i++) {
-                    col.push(view.getFloat64(i * 8, true));
+                    fr = readVarint(bytes, offset);
+                    acc += fr.value; offset = fr.offset;
+                    col.push(acc / scale);
                 }
-                offset += nrows * 8;
             } else if (type === 2) {
                 var nstrings = bytes[offset] | (bytes[offset + 1] << 8);
                 offset += 2;
@@ -116,6 +118,8 @@ __FONT_LINK__
                 for (var c = 0; c < ncols; c++) row[keys[c]] = columns[c][r];
                 rows.push(row);
             }
+        } else if (format === 0) {
+            rows = columns[0];
         } else {
             for (var r = 0; r < nrows; r++) {
                 var row = [];
