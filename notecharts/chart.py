@@ -1,11 +1,12 @@
 import copy
 import json
+import requests
 import urllib.parse
 import uuid
 from pathlib import Path
 from typing import Literal, get_args
 
-from IPython.display import HTML, display
+from IPython.display import HTML, Image, display
 
 from ._codec import PackedPayload, extract_columnar, pack_and_compress, compress_maps
 from ._fonts import discover_fonts
@@ -14,9 +15,10 @@ from .option import Option
 
 __all__ = ['Chart', 'JSCode', 'Mode', 'Renderer', 'Theme']
 
+RENDERER_URL = 'https://notecharts--notecharts-renderer-renderer-render.modal.run'
 Renderer = Literal['canvas', 'svg']
 Theme = Literal['light', 'dark']
-Mode = Literal['interactive', 'image']
+Mode = Literal['interactive', 'static']
 
 _HTML_TEMPLATE_FILE = Path(__file__).parent / 'chart.html'
 with open(_HTML_TEMPLATE_FILE, encoding='utf-8') as _f:
@@ -67,9 +69,6 @@ class Chart:
 
         if self.theme == 'light' and 'backgroundColor' not in self.options:
             self.options['backgroundColor'] = 'white'
-        if self.mode == 'image':
-            self.options.setdefault('animation', False)
-
         self.fonts = list(discover_fonts(self.options, JSCode))
 
     def _make_chart_html(self, chart_id: str | None = None) -> str:
@@ -130,11 +129,45 @@ class Chart:
         return f'<link href="{base}?{qs}" rel="stylesheet">'
 
     def display(self) -> None:
-        display(HTML(self._make_chart_html()))
+        if self.mode == 'static':
+            self._display_static()
+        else:
+            display(HTML(self._make_chart_html()))
+
+    def _display_static(self) -> None:
+        if _contains_jscode(self.options):
+            raise ValueError('mode="static" does not support JSCode options.')
+        response = requests.post(
+            RENDERER_URL,
+            json={
+                'options': self.options,
+                'maps': self.maps,
+                'width': self.width,
+                'height': self.height,
+                'renderer': self.renderer,
+                'theme': self.theme,
+                'devicePixelRatio': self.devicePixelRatio,
+            },
+            timeout=20,
+        )
+        response.raise_for_status()
+        display(Image(data=response.content, format='png'))
 
     def _repr_html_(self) -> str:
+        if self.mode == 'static':
+            raise RuntimeError("mode='static' must be rendered with Chart.display().")
         return self._make_chart_html()
 
 
 def _bool_js(value) -> str:
     return 'true' if value else 'false'
+
+
+def _contains_jscode(value) -> bool:
+    if isinstance(value, JSCode):
+        return True
+    if isinstance(value, dict):
+        return any(_contains_jscode(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_contains_jscode(item) for item in value)
+    return False
