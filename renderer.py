@@ -9,7 +9,7 @@ from typing import Any
 import modal
 from fastapi import FastAPI, HTTPException, Response
 
-APP_NAME = "notecharts-renderer"
+APP_NAME = "render"
 LOCAL_URL = "http://127.0.0.1:8000/render"
 WIDTH = 700
 HEIGHT = 500
@@ -190,7 +190,7 @@ class Renderer:
     async def stop(self) -> None:
         await self.pool.close()
 
-    @modal.fastapi_endpoint(method="POST")
+    @modal.fastapi_endpoint(method="POST", label="r")
     async def render(self, request: dict[str, Any]) -> Response:
         if not isinstance(request, dict) or not isinstance(request.get("options"), dict):
             raise HTTPException(status_code=400, detail="request.options must be a JSON object")
