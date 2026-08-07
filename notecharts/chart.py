@@ -172,7 +172,20 @@ class Chart:
             timeout=20,
         )
         response.raise_for_status()
-        display(Image(data=response.content, format='png'))
+        display(
+            Image(
+                data=response.content,
+                format='png',
+                width=self._css_pixel(self.width),
+                height=self._css_pixel(self.height),
+            )
+        )
+
+    @staticmethod
+    def _css_pixel(value: str) -> int | None:
+        if value.endswith('px'):
+            return int(float(value[:-2]))
+        return None
 
     def _repr_html_(self) -> str:
         if self.mode == 'static':
