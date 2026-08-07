@@ -39,15 +39,36 @@ class Chart:
     def __init__(
         self,
         options: Option,
-        mode: str = 'interactive',
+        mode: Literal['interactive', 'static'] = 'interactive',
         width: str = '99%',
         height: str = '500px',
-        renderer: str = 'canvas',
-        theme: str = 'light',
+        renderer: Literal['canvas', 'svg'] = 'canvas',
+        theme: Literal['light', 'dark'] = 'light',
         devicePixelRatio: int = 1,
         maps: dict | None = None,
         compress: bool = True,
     ):
+        """
+        Render an Apache ECharts figure in a Jupyter notebook.
+
+        Google Fonts are auto-loaded for any ``fontFamily`` value found inside
+        *options*.  GeoJSON maps can be registered via the *maps* parameter.
+
+        Args:
+            options: The ECharts option dictionary.
+            mode: ``"interactive"`` (default) or ``"static"``.
+            width: CSS width of the chart container.  Default ``"99%"``.
+            height: CSS height of the chart container.  Default ``"500px"``.
+            renderer: ``"canvas"`` (default) or ``"svg"``.
+            theme: ``"light"`` (default) or ``"dark"``.
+            devicePixelRatio: Pixel ratio for canvas rendering.  Default ``1``.
+            maps: Map name → GeoJSON data.  Default ``None``.
+            compress: Compress the option payload.  Default ``True``.
+
+        Raises:
+            TypeError: *options* is not a dict, or *maps* is not dict/None.
+            ValueError: *renderer*, *theme*, or *mode* has an invalid value.
+        """
         if not isinstance(options, dict):
             raise TypeError(
                 f'Chart options must be a dictionary, got {type(options).__name__}.'
