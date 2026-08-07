@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import urllib.parse
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -24,6 +25,40 @@ image = (
     .run_commands("playwright install chromium --with-deps")
 )
 
+_GENERIC_FONTS = {
+    'serif', 'sans-serif', 'monospace', 'cursive', 'fantasy',
+    'system-ui', 'ui-serif', 'ui-sans-serif', 'ui-monospace',
+    'ui-rounded', 'math', 'emoji', 'fangsong',
+    'inherit', 'initial', 'unset',
+}
+
+
+def _discover_fonts(obj: Any, found: set[str] | None = None) -> set[str]:
+    if found is None:
+        found = set()
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if key == 'fontFamily':
+                for name in str(value).split(','):
+                    name = name.strip().strip("'\"")
+                    if name and name.lower() not in _GENERIC_FONTS:
+                        found.add(name)
+            else:
+                _discover_fonts(value, found)
+    elif isinstance(obj, list):
+        for item in obj:
+            _discover_fonts(item, found)
+    return found
+
+
+def _font_link(options: dict[str, Any]) -> str:
+    fonts = sorted(_discover_fonts(options))
+    if not fonts:
+        return ''
+    params = {'family': fonts, 'display': 'swap'}
+    qs = urllib.parse.urlencode(params, doseq=True)
+    return f'<link href="https://fonts.googleapis.com/css2?{qs}" rel="stylesheet">'
+
 
 def chart_html(
         options: dict[str, Any],
@@ -39,6 +74,7 @@ def chart_html(
   <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js"></script>
+    {_font_link(options)}
     <style>html, body {{ margin: 0; }} #chart {{ width: {width}; height: {height}; }}</style>
 </head>
 <body>
@@ -97,9 +133,14 @@ class BrowserPool:
                     "typeof echarts !== 'undefined'",
                     timeout=RENDER_TIMEOUT_SECONDS * 1000,
                 )
+                fonts = sorted(_discover_fonts(options))
                 data_url = await page.evaluate(
                     """
-                    async ({options, maps, theme, devicePixelRatio}) => {
+                    async ({options, maps, theme, devicePixelRatio, fonts}) => {
+                        await Promise.all(fonts.map(font => document.fonts.load(
+                            `16px "${font}"`
+                        )));
+                        await document.fonts.ready;
                         const chart = echarts.init(
                             document.getElementById('chart'),
                             theme,
@@ -111,6 +152,8 @@ class BrowserPool:
                         const rendered = new Promise(resolve => chart.on('finished', resolve));
                         chart.setOption(options);
                         await rendered;
+                        await new Promise(requestAnimationFrame);
+                        chart.resize();
                         const dataURL = chart.getDataURL({
                             type: 'png',
                             pixelRatio: devicePixelRatio,
@@ -120,7 +163,10 @@ class BrowserPool:
                         return dataURL;
                     }
                     """,
-                    request,
+                    {
+                        **request,
+                        "fonts": fonts,
+                    },
                 )
                 return base64.b64decode(data_url.split(",", 1)[1])
             finally:
