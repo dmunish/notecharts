@@ -37,8 +37,8 @@ def chart_html(
 <html>
 <head>
   <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.1.0/dist/echarts-gl.min.js"></script>
     <style>html, body {{ margin: 0; }} #chart {{ width: {width}; height: {height}; }}</style>
 </head>
 <body>
@@ -160,15 +160,15 @@ class Renderer:
 
 def create_local_app() -> FastAPI:
     pool = BrowserPool(CONTEXT_POOL_SIZE)
-    api = FastAPI()
-
-    @api.on_event("startup")
-    async def start_pool() -> None:
+    @asynccontextmanager
+    async def lifespan(_api: FastAPI):
         await pool.start()
+        try:
+            yield
+        finally:
+            await pool.close()
 
-    @api.on_event("shutdown")
-    async def stop_pool() -> None:
-        await pool.close()
+    api = FastAPI(lifespan=lifespan)
 
     @api.post("/render")
     async def render_local(request: dict[str, Any]) -> Response:
