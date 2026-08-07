@@ -15,7 +15,7 @@ from .option import Option
 
 __all__ = ['Chart', 'JSCode', 'Mode', 'Renderer', 'Theme']
 
-RENDERER_URL = 'https://notecharts--notecharts-renderer-renderer-render.modal.run'
+RENDERER_URL = 'https://notecharts--r.modal.run'
 Renderer = Literal['canvas', 'svg']
 Theme = Literal['light', 'dark']
 Mode = Literal['interactive', 'static']
