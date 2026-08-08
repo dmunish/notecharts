@@ -6,7 +6,7 @@ import uuid
 from pathlib import Path
 from typing import Literal, get_args
 
-from IPython.display import HTML, display
+from IPython.display import HTML, Image, display
 
 from ._codec import PackedPayload, extract_columnar, pack_and_compress, compress_maps
 from ._export import render_to_bytes
@@ -19,6 +19,7 @@ __all__ = ['Chart', 'JSCode', 'Renderer', 'Theme']
 Renderer = Literal['canvas', 'svg']
 Theme = Literal['light', 'dark']
 Format = Literal['html', 'png', 'jpeg', 'svg']
+DisplayMode = Literal['interactive', 'static']
 
 _HTML_TEMPLATE_FILE = Path(__file__).parent / 'chart.html'
 with open(_HTML_TEMPLATE_FILE, encoding='utf-8') as _f:
@@ -196,8 +197,38 @@ class Chart:
         Path(path).write_bytes(payload)
         return None
 
-    def display(self) -> None:
-        display(HTML(self._make_chart_html()))
+    def display(
+        self,
+        mode: Literal['interactive', 'static'] = 'interactive',
+    ) -> None:
+        """
+        Render the chart in the notebook.
+
+        Args:
+            mode: ``"interactive"`` (default) embeds the live ECharts HTML;
+                ``"static"`` renders a remote PNG and embeds it as an image.
+
+        Raises:
+            ValueError: *mode* is invalid, or *options* contain ``JSCode``
+                when ``mode="static"`` is requested.
+        """
+        if _validate_param(mode, DisplayMode, 'mode') == 'static':
+            display(
+                Image(
+                    data=self.save(format='png'),
+                    format='png',
+                    width=self._css_pixel(self.width),
+                    height=self._css_pixel(self.height),
+                )
+            )
+        else:
+            display(HTML(self._make_chart_html()))
+
+    @staticmethod
+    def _css_pixel(value: str) -> int | None:
+        if value.endswith('px'):
+            return int(float(value[:-2]))
+        return None
 
     def _repr_html_(self) -> str:
         return self._make_chart_html()
