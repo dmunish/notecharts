@@ -160,6 +160,15 @@ options: Option = {
 Chart(options, width="700px").display()
 ```
 
+### Saving Charts
+Use `save()` to export the chart as raw bytes in `html`, `png` (default), `jpeg`, or `svg` format. Raster and vector formats are rendered remotely at the configured resolution (`devicePixelRatio`). Pass a `path` to write directly to a file; the format is inferred from the file extension.
+
+```python
+png = Chart(options, devicePixelRatio=2).save("png")   # -> bytes
+Chart(options).save(path="chart.png")                  # writes file, returns None
+Chart(options).save(path="chart.svg")                 # inferred from extension
+```
+
 ## Notes
 - **Name:** Pronounced ***note-charts*** or ***not-echarts***.
 - **Security:** Use of `JSCode` allows for arbitrary JavaScript execution in the browser/notebook context. Always ensure you are passing trusted code and data to your charts.
