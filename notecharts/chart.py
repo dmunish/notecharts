@@ -1,24 +1,24 @@
 import copy
 import json
-import requests
+import os
 import urllib.parse
 import uuid
 from pathlib import Path
 from typing import Literal, get_args
 
-from IPython.display import HTML, Image, display
+from IPython.display import HTML, display
 
 from ._codec import PackedPayload, extract_columnar, pack_and_compress, compress_maps
+from ._export import render_to_bytes
 from ._fonts import discover_fonts
 from ._serialize import JSCode, serialize_options
 from .option import Option
 
-__all__ = ['Chart', 'JSCode', 'Mode', 'Renderer', 'Theme']
+__all__ = ['Chart', 'JSCode', 'Renderer', 'Theme']
 
-RENDERER_URL = 'https://notecharts--r.modal.run'
 Renderer = Literal['canvas', 'svg']
 Theme = Literal['light', 'dark']
-Mode = Literal['interactive', 'static']
+Format = Literal['html', 'png', 'jpeg', 'svg']
 
 _HTML_TEMPLATE_FILE = Path(__file__).parent / 'chart.html'
 with open(_HTML_TEMPLATE_FILE, encoding='utf-8') as _f:
@@ -39,7 +39,6 @@ class Chart:
     def __init__(
         self,
         options: Option,
-        mode: Literal['interactive', 'static'] = 'interactive',
         width: str = '99%',
         height: str = '500px',
         renderer: Literal['canvas', 'svg'] = 'canvas',
@@ -56,7 +55,6 @@ class Chart:
 
         Args:
             options: The ECharts option dictionary.
-            mode: ``"interactive"`` (default) or ``"static"``.
             width: CSS width of the chart container.  Default ``"99%"``.
             height: CSS height of the chart container.  Default ``"500px"``.
             renderer: ``"canvas"`` (default) or ``"svg"``.
@@ -67,7 +65,7 @@ class Chart:
 
         Raises:
             TypeError: *options* is not a dict, or *maps* is not dict/None.
-            ValueError: *renderer*, *theme*, or *mode* has an invalid value.
+            ValueError: *renderer* or *theme* has an invalid value.
         """
         if not isinstance(options, dict):
             raise TypeError(
@@ -78,7 +76,6 @@ class Chart:
                 f'Chart maps must be a dictionary or None, got {type(maps).__name__}.'
             )
 
-        self.mode = _validate_param(mode, Mode, 'mode')
         self.renderer = _validate_param(renderer, Renderer, 'renderer')
         self.theme = _validate_param(theme, Theme, 'theme')
         self.devicePixelRatio = int(devicePixelRatio)
@@ -117,7 +114,6 @@ class Chart:
             .replace('__MAPS_DATA__', self._maps_code)
             .replace('__MAPS_COMPRESSED__', _bool_js(self._maps_compressed))
             .replace('__HAS_FONTS__', _bool_js(self.fonts))
-            .replace('__MODE__', self.mode)
         )
 
     def _compress_payload(self) -> None:
@@ -149,47 +145,61 @@ class Chart:
         qs = urllib.parse.urlencode(params, doseq=True)
         return f'<link href="{base}?{qs}" rel="stylesheet">'
 
-    def display(self) -> None:
-        if self.mode == 'static':
-            self._display_static()
+    def save(
+        self,
+        format: Literal['html', 'png', 'jpeg', 'svg'] | None = None,
+        path: str | os.PathLike | None = None,
+    ) -> bytes | None:
+        """
+        Export the chart to raw bytes, or to a file when *path* is given.
+
+        Args:
+            format: ``"html"``, ``"png"``, ``"jpeg"``, or ``"svg"``.  Defaults to
+                ``"png"``, or is inferred from the *path* suffix when provided.
+                Raster and vector formats are rendered by the remote renderer.
+            path: Optional destination file path.  When given, the bytes are
+                written there and *None* is returned.
+
+        Returns:
+            The chart payload in the requested format, or *None* when *path*
+            is given.
+
+        Raises:
+            ValueError: *format* is unsupported, or *options* contain ``JSCode``
+                when a non-HTML format is requested.
+        """
+        if format is None:
+            format = Path(path).suffix.lstrip('.').lower() if path else 'png'
+        format = _validate_param(format, Format, 'format')
+
+        if format == 'html':
+            payload = self._make_chart_html().encode('utf-8')
         else:
-            display(HTML(self._make_chart_html()))
-
-    def _display_static(self) -> None:
-        if _contains_jscode(self.options):
-            raise ValueError('mode="static" does not support JSCode options.')
-        response = requests.post(
-            RENDERER_URL,
-            json={
-                'options': self.options,
-                'maps': self.maps,
-                'width': self.width,
-                'height': self.height,
-                'renderer': self.renderer,
-                'theme': self.theme,
-                'devicePixelRatio': self.devicePixelRatio,
-            },
-            timeout=20,
-        )
-        response.raise_for_status()
-        display(
-            Image(
-                data=response.content,
-                format='png',
-                width=self._css_pixel(self.width),
-                height=self._css_pixel(self.height),
+            if _contains_jscode(self.options):
+                raise ValueError(
+                    'JSCode options can only be exported as HTML. '
+                    'Use save(format="html").'
+                )
+            payload = render_to_bytes(
+                options=self.options,
+                maps=self.maps,
+                width=self.width,
+                height=self.height,
+                renderer=self.renderer,
+                theme=self.theme,
+                device_pixel_ratio=self.devicePixelRatio,
+                format=format,
             )
-        )
 
-    @staticmethod
-    def _css_pixel(value: str) -> int | None:
-        if value.endswith('px'):
-            return int(float(value[:-2]))
+        if path is None:
+            return payload
+        Path(path).write_bytes(payload)
         return None
 
+    def display(self) -> None:
+        display(HTML(self._make_chart_html()))
+
     def _repr_html_(self) -> str:
-        if self.mode == 'static':
-            raise RuntimeError("mode='static' must be rendered with Chart.display().")
         return self._make_chart_html()
 
 
