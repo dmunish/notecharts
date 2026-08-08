@@ -32,6 +32,12 @@ _GENERIC_FONTS = {
     'inherit', 'initial', 'unset',
 }
 
+FORMAT_MEDIA_TYPES = {
+    'png': 'image/png',
+    'jpeg': 'image/jpeg',
+    'svg': 'image/svg+xml',
+}
+
 
 def _discover_fonts(obj: Any, found: set[str] | None = None) -> set[str]:
     if found is None:
@@ -60,13 +66,7 @@ def _font_link(options: dict[str, Any]) -> str:
     return f'<link href="https://fonts.googleapis.com/css2?{qs}" rel="stylesheet">'
 
 
-def chart_html(
-        options: dict[str, Any],
-        width: int,
-        height: int,
-        device_pixel_ratio: int,
-        theme: str,
-) -> str:
+def chart_html(options: dict[str, Any], width: str, height: str) -> str:
     return f"""
 <!doctype html>
 <html>
@@ -121,12 +121,14 @@ class BrowserPool:
         height = request.get("height", f"{HEIGHT}px")
         device_pixel_ratio = request.get("devicePixelRatio", 1)
         theme = request.get("theme", "light")
+        renderer = request.get("renderer", "canvas")
+        export_format = request.get("format", "png")
         async with self.checkout() as context:
             page = await context.new_page()
             try:
                 page.set_default_timeout(RENDER_TIMEOUT_SECONDS * 1000)
                 await page.set_content(
-                    chart_html(options, width, height, device_pixel_ratio, theme),
+                    chart_html(options, width, height),
                     wait_until="load",
                 )
                 await page.wait_for_function(
@@ -136,7 +138,7 @@ class BrowserPool:
                 fonts = sorted(_discover_fonts(options))
                 data_url = await page.evaluate(
                     """
-                    async ({options, maps, theme, devicePixelRatio, fonts}) => {
+                    async ({options, maps, theme, devicePixelRatio, fonts, format, renderer}) => {
                         await Promise.all(fonts.map(font => document.fonts.load(
                             `16px "${font}"`
                         )));
@@ -144,7 +146,7 @@ class BrowserPool:
                         const chart = echarts.init(
                             document.getElementById('chart'),
                             theme,
-                            {devicePixelRatio}
+                            {renderer: format === 'svg' ? 'svg' : renderer, devicePixelRatio}
                         );
                         Object.entries(maps || {}).forEach(([name, data]) => {
                             echarts.registerMap(name, data);
@@ -155,7 +157,7 @@ class BrowserPool:
                         await new Promise(requestAnimationFrame);
                         chart.resize();
                         const dataURL = chart.getDataURL({
-                            type: 'png',
+                            type: format,
                             pixelRatio: devicePixelRatio,
                             backgroundColor: options.backgroundColor || '#fff'
                         });
@@ -168,7 +170,11 @@ class BrowserPool:
                         "fonts": fonts,
                     },
                 )
-                return base64.b64decode(data_url.split(",", 1)[1])
+                # SVG data URLs are percent-encoded; PNG/JPEG are base64.
+                payload = data_url.split(",", 1)[1]
+                if export_format == "svg":
+                    return urllib.parse.unquote_to_bytes(payload)
+                return base64.b64decode(payload)
             finally:
                 await page.close()
 
@@ -192,16 +198,20 @@ class Renderer:
 
     @modal.fastapi_endpoint(method="POST", label="r")
     async def render(self, request: dict[str, Any]) -> Response:
-        if not isinstance(request, dict) or not isinstance(request.get("options"), dict):
-            raise HTTPException(status_code=400, detail="request.options must be a JSON object")
-        try:
-            image = await asyncio.wait_for(
-                self.pool.render(request),
-                timeout=RENDER_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError as exc:
-            raise HTTPException(status_code=504, detail="chart rendering timed out") from exc
-        return Response(content=image, media_type="image/png")
+        return await _render_image(self.pool, request)
+
+
+async def _render_image(pool: BrowserPool, request: dict[str, Any]) -> Response:
+    if not isinstance(request, dict) or not isinstance(request.get("options"), dict):
+        raise HTTPException(status_code=400, detail="request.options must be a JSON object")
+    export_format = request.get("format", "png")
+    if export_format not in FORMAT_MEDIA_TYPES:
+        raise HTTPException(status_code=400, detail=f"Unsupported format: {export_format!r}")
+    try:
+        image = await asyncio.wait_for(pool.render(request), timeout=RENDER_TIMEOUT_SECONDS)
+    except asyncio.TimeoutError as exc:
+        raise HTTPException(status_code=504, detail="chart rendering timed out") from exc
+    return Response(content=image, media_type=FORMAT_MEDIA_TYPES[export_format])
 
 
 def create_local_app() -> FastAPI:
@@ -218,16 +228,7 @@ def create_local_app() -> FastAPI:
 
     @api.post("/render")
     async def render_local(request: dict[str, Any]) -> Response:
-        if not isinstance(request, dict) or not isinstance(request.get("options"), dict):
-            raise HTTPException(status_code=400, detail="request.options must be a JSON object")
-        try:
-            image = await asyncio.wait_for(
-                pool.render(request),
-                timeout=RENDER_TIMEOUT_SECONDS,
-            )
-        except asyncio.TimeoutError as exc:
-            raise HTTPException(status_code=504, detail="chart rendering timed out") from exc
-        return Response(content=image, media_type="image/png")
+        return await _render_image(pool, request)
 
     return api
 
